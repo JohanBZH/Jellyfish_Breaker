@@ -18,7 +18,7 @@ int vx=1;
 int vy=-1;
 //position du rectangle
 int xRect=10;
-int yRect=980;
+int yRect=920;
 int vxRect=1;  //vitesse de la raquette
 //couleur de la balle de base
 int r=247;
@@ -70,7 +70,6 @@ void init_game(){
 
 void jellyfish(int a, int b){
     sprite(a,b,"jellyfish.bmp");
-    actualize();
 }
 
 void obstaclesPrint(){
@@ -80,6 +79,7 @@ void obstaclesPrint(){
         jellyfish(presenceObjet[0][j],presenceObjet[1][j]);
       }
     }
+  actualize();
 }
 
 void interaction(){  //fait le lien entre coordonnées et index dans le tableau puis agir
@@ -123,7 +123,7 @@ void rebond(){
       couleurAleatoire();
       vy=vy*-1;
     }
-    else if(y>(yRect-8) && x>xRect && x<(xRect+200)){  //modifier la condition (rebondi sous la raquette)
+    else if(y>(yRect-8) && x>xRect && x<(xRect+200)){  //hit box à affiner
       vy=vy*-1;
       couleurAleatoire();
     }
@@ -143,7 +143,8 @@ void raquette(){
     else if(xRect>800){
       xRect=800;
     }
-    drawRect(xRect,yRect,200, 10);
+    sprite(xRect,yRect,"turtle.bmp");
+    usleep(100000 / FPS);
 }
 
 void drawGame(){
