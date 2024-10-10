@@ -3,12 +3,11 @@
 #include "function.h"
 #include <time.h>
 
-#define WINDOW_WIDTH 700
-#define WINDOW_HEIGHT 920
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 1000
 #define FPS 60
 
 //changer la vitesse
-//pour éviter la raquette qui devient transparente faire un supérieur ou égal
 //créer des briques et faire disparaître les briques au rebond (tableau)
 //message (image) quand on perd
 //faire un fond 
@@ -20,7 +19,7 @@ int vx=1;
 int vy=1;
 //position du rectangle
 int xRect=10;
-int yRect=890;
+int yRect=980;
 int vxRect=1;  //vitesse de la raquette
 //couleur de la balle de base
 int r=247;
@@ -48,7 +47,7 @@ void speed(){
 }
 
 void rebond(){  //attention, là balle qui colle à la bordure
-    if (x>(689)){   //window_width-rayon de la balle-1 pour éviter le contact
+    if (x>(989)){   //window_width-rayon de la balle-1 pour éviter le contact
       vx=vx*-1;
       couleurAleatoire();
       vxRect=vxRect*-1;
@@ -70,14 +69,16 @@ void rebond(){  //attention, là balle qui colle à la bordure
 
 void raquette(){
     changeColor(247,146,1);
-    drawRect(xRect,yRect,200, 15);
+    if(xRect<0){
+      xRect=0;
+    }
+    else if(xRect>800){
+      xRect=800;
+    }
+    drawRect(xRect,yRect,200, 10);
 }
 
 void drawGame(){
-    /* Ici je dessine mon jeu
-     * exemple position x, y modifiés dans KeyPressed() et utilisés pour
-     * pouvoir deplacer la figure à chaque boucle de gameLoop()
-     */
     clear();
     speed();
     rebond();
@@ -88,8 +89,6 @@ void drawGame(){
     usleep(500000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
 }
 void KeyPressed(SDL_Keycode touche){
-    /** @brief event.key.keysym.sym renvoi la touche appuyé
-     */
    
     switch (touche) {
         case SDLK_q:
@@ -119,15 +118,12 @@ void KeyPressed(SDL_Keycode touche){
             break;
     }
 }
-void joyButtonPressed(){
-}
 
 void gameLoop() {
     int programLaunched = 1;
     while (programLaunched == 1) {
-        // Boucle pour garder le programme ouvert
-        // lorsque programLaunched est different de 1
-        // on sort de la boucle, donc de la fonction
+        /* Boucle pour garder le programme ouvert lorsque programLaunched est different de 1
+        on sort de la boucle, donc de la fonction*/
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             // boucle pour la gestion d'évenement
@@ -142,25 +138,13 @@ void gameLoop() {
                     // quand on clique sur fermer la fénêtre en haut à droite
                     programLaunched = 0;
                     break;
-                case SDL_MOUSEBUTTONUP:
-                    /* clique de la souris
-                     * event.motion.y | event.motion.x pour les positions de la souris
-                     */
-                    printf("position de la souris x : %d , y : %d\n", event.motion.x, event.motion.y);
-                    break;
                 case SDL_KEYDOWN:
                     KeyPressed(event.key.keysym.sym);
-                    break;
-                case SDL_JOYBUTTONDOWN:
                     break;
                 default:
                     break;
             }
         }
-        /* coder ici pour que le code s'execute après chaque évenement
-         * exemple dessiner un carré avec position int x, int y qu'on peut
-         * deplacer lorsqu'on appuie sur une touche
-         */
         drawGame();
     }
 }
