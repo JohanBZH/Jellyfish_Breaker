@@ -7,16 +7,15 @@
 #define WINDOW_HEIGHT 1000
 #define FPS 60
 
-//changer la vitesse
 //créer des briques et faire disparaître les briques au rebond (tableau)
 //message (image) quand on perd
-//faire un fond 
+//sectoriser la barre (rebond normal sur la moitiée du milieu et renvoi dans la même direction pour les quarts des côtés
 
 //position de la balle dessiné dans drawGame()
-int x = 40;
-int y = 40;
+int x = 500;
+int y = 800;
 int vx=1;
-int vy=1;
+int vy=-1;
 //position du rectangle
 int xRect=10;
 int yRect=980;
@@ -28,8 +27,11 @@ int b=1;
 //position de la raquette
 int a=10;
 //variable de la vitesse
-    int speedx=1;
-    int speedy=1;
+int speedVar=1;
+
+int presenceObjet[3][100];   //table pour stocker les coordonnées et présence d'ennemis sur la case
+int nbEnemy; //défini si rocher, enemy ou rien
+int indexInteraction; //index pour générer une interaction avec les obstacles
 
 void couleurAleatoire(){
       r=rand()%256;
@@ -37,18 +39,78 @@ void couleurAleatoire(){
       b=rand()%256;
 }
 
-void init_game(){
 
+//début import à modifier
+
+void init_game(){
+  int index=0;
+  int xScan=0;
+  int yScan=0;
+  for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille (10x10)
+    yScan=yScan+50*i;
+    for (int j=0;j<20;j++){
+      xScan=xScan+50*j;
+      for (int i=0;i<3;i++){   //pour chaque cellule, enregistre les coordonnées et initialise présence d'une brique
+        if (i==0){       
+          presenceObjet[i][index]=xScan;
+        }
+        else if(i==1){
+          presenceObjet[i][index]=yScan; 
+        }
+        else{
+          presenceObjet[i][index]=1;
+        }
+      }
+    index=index+1;
+    xScan=0;
+    }
+  yScan=0;
+  }
+}
+
+void jellyfish(int a, int b){
+    sprite(a,b,"jellyfish.bmp");
+    actualize();
+}
+
+void obstaclesPrint(){
+  int index=0;
+    for (int j=0;j<100;j++){
+      if (presenceObjet[2][j]==1){
+        jellyfish(presenceObjet[0][j],presenceObjet[1][j]);
+      }
+    }
+}
+
+void interaction(){  //fait le lien entre coordonnées et index dans le tableau puis agir
+    for (int j=0;j<100;j++){
+      if (x==(presenceObjet[0][j]) && y==(presenceObjet[1][j])){
+          indexInteraction=j;
+      }
+    }
+    if ((presenceObjet[2][indexInteraction])==1){ 
+          presenceObjet[2][indexInteraction]=0;
+    }
+}
+
+//fin import à modifier
+
+
+
+
+void background(){
+    sprite(0,0,"background.bmp");
 }
 
 void speed(){
-    x=x+vx;
-    y=y+vy;
+    x=x+vx*speedVar;
+    y=y+vy*speedVar;
 }
 
-void rebond(){  //attention, là balle qui colle à la bordure
+//interactions avec les bords, créer interaction avec briques
+void rebond(){
     if (x>(989)){   //window_width-rayon de la balle-1 pour éviter le contact
-      vx=vx*-1;
+      vx=vx*-1;         //renvoyer dans l'autre sens
       couleurAleatoire();
       vxRect=vxRect*-1;
     }
@@ -61,9 +123,15 @@ void rebond(){  //attention, là balle qui colle à la bordure
       couleurAleatoire();
       vy=vy*-1;
     }
-    else if(y>(yRect-8) && x>xRect && x<(xRect+200)){
+    else if(y>(yRect-8) && x>xRect && x<(xRect+200)){  //modifier la condition (rebondi sous la raquette)
       vy=vy*-1;
       couleurAleatoire();
+    }
+    else if(y>1000){
+      sprite (350,395,"Lost.bmp");
+      actualize();
+      usleep(100000000 / FPS);
+      freeAndTerminate();
     }
 }
 
@@ -80,7 +148,10 @@ void raquette(){
 
 void drawGame(){
     clear();
+    background();
     speed();
+    obstaclesPrint();
+    interaction();
     rebond();
     changeColor(r,g,b);
     drawCircle(x,y,10);
@@ -97,20 +168,18 @@ void KeyPressed(SDL_Keycode touche){
         case SDLK_d:
             xRect=xRect+40;
             break;
-/*        case SDLK_p:
-            speedx=speedx+2;
-            speedy=speedy+2;
-            vx=vx*speedx;
-            vy=vy*speedy;
-            printf("speedx %d\n",speedx);
+        case SDLK_p:
+            speedVar=speedVar+2;
+            if (speedVar>=15){
+              speedVar=14;
+            }
             break;
         case SDLK_m:
-            speedx=speedx-2;
-            speedy=speedy-2;
-            vx=vx*speedx;
-            vy=vy*speedy;
-            printf("speedx %d\n",speedx);
-            break;*/
+            speedVar=speedVar/2;
+            if (speedVar==0){
+              speedVar=1;
+            }
+            break;
         case SDLK_ESCAPE:
             freeAndTerminate();
             break;
