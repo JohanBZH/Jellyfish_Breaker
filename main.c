@@ -17,11 +17,11 @@
 //position de la balle dessiné dans drawGame()
 int x = 40;
 int y = 40;
-int vx=0;
-int vy=0;
+int vx=1;
+int vy=1;
 //position du rectangle
 int xRect=10;
-int yRect=909;
+int yRect=890;
 int vxRect=1;  //vitesse de la raquette
 //couleur de la balle de base
 int r=247;
@@ -46,23 +46,24 @@ void init_game(){
 void speed(){
     x=x+vx;
     y=y+vy;
-    xRect=xRect+vxRect;
 }
 
 void rebond(){  //attention, là balle qui colle à la bordure
     if (x>(689)){   //window_width-rayon de la balle-1 pour éviter le contact
       vx=vx*-1;
       couleurAleatoire();
+      vxRect=vxRect*-1;
     }
     else if(x<11){
       vx=vx*-1;
+      vxRect=vxRect*-1;
       couleurAleatoire();
     }
     else if(y<11){
       couleurAleatoire();
       vy=vy*-1;
     }
-    else if(y>909){
+    else if(y>(yRect-8) && x>xRect && x<(xRect+200)){
       vy=vy*-1;
       couleurAleatoire();
     }
@@ -70,7 +71,7 @@ void rebond(){  //attention, là balle qui colle à la bordure
 
 void raquette(){
     changeColor(247,146,1);
-    drawRect(xRect,yRect,100, 10);
+    drawRect(xRect,yRect,200, 15);
 }
 
 void drawGame(){
@@ -85,7 +86,7 @@ void drawGame(){
     drawCircle(x,y,10);
     raquette();
     actualize();
-    usleep(100000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
+    usleep(500000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
 }
 void KeyPressed(SDL_Keycode touche){
     /** @brief event.key.keysym.sym renvoi la touche appuyé
@@ -93,22 +94,12 @@ void KeyPressed(SDL_Keycode touche){
    
     switch (touche) {
         case SDLK_q:
-            vx=-1*speedx;
-            vy=0*speedy;
+            xRect=xRect-20;
             break;
         case SDLK_d:
-            vx=1*speedx;
-            vy=0*speedy;
+            xRect=xRect+20;
             break;
-        case SDLK_z:
-            vx=0*speedx;
-            vy=-1*speedy;
-            break;
-        case SDLK_s:
-            vx=0*speedx;
-            vy=1*speedy;
-            break;
-        case SDLK_p:
+/*        case SDLK_p:
             speedx=speedx+2;
             speedy=speedy+2;
             vx=vx*speedx;
@@ -121,7 +112,7 @@ void KeyPressed(SDL_Keycode touche){
             vx=vx*speedx;
             vy=vy*speedy;
             printf("speedx %d\n",speedx);
-            break;
+            break;*/
         case SDLK_ESCAPE:
             freeAndTerminate();
             break;
