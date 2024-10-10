@@ -7,12 +7,11 @@
 #define WINDOW_HEIGHT 920
 #define FPS 60
 
-//couleur aléatoire à chaque rebond
 //changer la vitesse
-//Créer une raquette qui se déplace de gauche à droite
 //pour éviter la raquette qui devient transparente faire un supérieur ou égal
-//faire une balle qui rebondi sur la raquette
 //créer des briques et faire disparaître les briques au rebond (tableau)
+//message (image) quand on perd
+//faire un fond 
 
 //position de la balle dessiné dans drawGame()
 int x = 40;
@@ -94,10 +93,10 @@ void KeyPressed(SDL_Keycode touche){
    
     switch (touche) {
         case SDLK_q:
-            xRect=xRect-20;
+            xRect=xRect-40;
             break;
         case SDLK_d:
-            xRect=xRect+20;
+            xRect=xRect+40;
             break;
 /*        case SDLK_p:
             speedx=speedx+2;
