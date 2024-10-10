@@ -8,14 +8,14 @@
 #define FPS 60
 
 //créer des briques et faire disparaître les briques au rebond (tableau)
-//message (image) quand on perd
-//sectoriser la barre (rebond normal sur la moitiée du milieu et renvoi dans la même direction pour les quarts des côtés
+//sectoriser la barre (rebond normal sur la moitiée du milieu et renvoi dans la même direction pour les quarts des côtés.
+//pb : flickering
 
 //position de la balle dessiné dans drawGame()
 int x = 500;
 int y = 800;
-int vx=1;
-int vy=-1;
+int vx=2;
+int vy=-2;
 //position du rectangle
 int xRect=10;
 int yRect=920;
@@ -38,9 +38,6 @@ void couleurAleatoire(){
       g=rand()%256;
       b=rand()%256;
 }
-
-
-//début import à modifier
 
 void init_game(){
   int index=0;
@@ -71,9 +68,8 @@ void init_game(){
 void jellyfish(int a, int b){
     sprite(a,b,"jellyfish.bmp");
 }
-
-void obstaclesPrint(){
-  int index=0;
+//imprimer les briques. Pb première cellule ne s'affiche pas. dans le tableau presence, bien mis à 1
+void jellyfishPrint(){
     for (int j=0;j<100;j++){
       if (presenceObjet[2][j]==1){
         jellyfish(presenceObjet[0][j],presenceObjet[1][j]);
@@ -82,21 +78,18 @@ void obstaclesPrint(){
   actualize();
 }
 
-void interaction(){  //fait le lien entre coordonnées et index dans le tableau puis agir
+void interaction(){  //fait rebondir contre la brique et la supprime
     for (int j=0;j<100;j++){
-      if (x==(presenceObjet[0][j]) && y==(presenceObjet[1][j])){
+      int xtest=presenceObjet[0][j];  //passage par des variables pour éviter un bug dans le if
+      int ytest=presenceObjet[1][j];
+        if (x>=xtest && x<(xtest+50) && y>=ytest && y<(ytest+50)){
           indexInteraction=j;
+        if ((presenceObjet[2][indexInteraction])==1){ 
+          presenceObjet[2][indexInteraction]=0;
+        }
       }
     }
-    if ((presenceObjet[2][indexInteraction])==1){ 
-          presenceObjet[2][indexInteraction]=0;
-    }
 }
-
-//fin import à modifier
-
-
-
 
 void background(){
     sprite(0,0,"background.bmp");
@@ -151,7 +144,7 @@ void drawGame(){
     clear();
     background();
     speed();
-    obstaclesPrint();
+    jellyfishPrint();
     interaction();
     rebond();
     changeColor(r,g,b);
