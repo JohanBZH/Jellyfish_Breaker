@@ -14,15 +14,24 @@
 //faire une balle qui rebondi sur la raquette
 //créer des briques et faire disparaître les briques au rebond (tableau)
 
-//position du carre dessiné dans drawGame()
+//position de la balle dessiné dans drawGame()
 int x = 40;
 int y = 40;
 int vx=0;
 int vy=0;
-//couleurs
+//position du rectangle
+int xRect=10;
+int yRect=909;
+int vxRect=1;  //vitesse de la raquette
+//couleur de la balle de base
 int r=247;
 int g=146;
 int b=1;
+//position de la raquette
+int a=10;
+//variable de la vitesse
+    int speedx=1;
+    int speedy=1;
 
 void couleurAleatoire(){
       r=rand()%256;
@@ -37,6 +46,7 @@ void init_game(){
 void speed(){
     x=x+vx;
     y=y+vy;
+    xRect=xRect+vxRect;
 }
 
 void rebond(){  //attention, là balle qui colle à la bordure
@@ -58,6 +68,11 @@ void rebond(){  //attention, là balle qui colle à la bordure
     }
 }
 
+void raquette(){
+    changeColor(247,146,1);
+    drawRect(xRect,yRect,100, 10);
+}
+
 void drawGame(){
     /* Ici je dessine mon jeu
      * exemple position x, y modifiés dans KeyPressed() et utilisés pour
@@ -68,15 +83,14 @@ void drawGame(){
     rebond();
     changeColor(r,g,b);
     drawCircle(x,y,10);
+    raquette();
     actualize();
     usleep(100000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
 }
 void KeyPressed(SDL_Keycode touche){
     /** @brief event.key.keysym.sym renvoi la touche appuyé
      */
-    int speedx=1;
-    int speedy=1;
-    
+   
     switch (touche) {
         case SDLK_q:
             vx=-1*speedx;
@@ -94,13 +108,19 @@ void KeyPressed(SDL_Keycode touche){
             vx=0*speedx;
             vy=1*speedy;
             break;
-        case SDLK_PLUS:
+        case SDLK_p:
             speedx=speedx+2;
             speedy=speedy+2;
+            vx=vx*speedx;
+            vy=vy*speedy;
+            printf("speedx %d\n",speedx);
             break;
-        case SDLK_MINUS:
+        case SDLK_m:
             speedx=speedx-2;
             speedy=speedy-2;
+            vx=vx*speedx;
+            vy=vy*speedy;
+            printf("speedx %d\n",speedx);
             break;
         case SDLK_ESCAPE:
             freeAndTerminate();
