@@ -7,12 +7,28 @@
 #define WINDOW_HEIGHT 920
 #define FPS 60
 
+//couleur aléatoire à chaque rebond
+//changer la vitesse
+//Créer une raquette qui se déplace de gauche à droite
+//pour éviter la raquette qui devient transparente faire un supérieur ou égal
+//faire une balle qui rebondi sur la raquette
+//créer des briques et faire disparaître les briques au rebond (tableau)
 
 //position du carre dessiné dans drawGame()
 int x = 40;
 int y = 40;
 int vx=0;
 int vy=0;
+//couleurs
+int r=247;
+int g=146;
+int b=1;
+
+void couleurAleatoire(){
+      r=rand()%256;
+      g=rand()%256;
+      b=rand()%256;
+}
 
 void init_game(){
 
@@ -26,15 +42,19 @@ void speed(){
 void rebond(){  //attention, là balle qui colle à la bordure
     if (x>(689)){   //window_width-rayon de la balle-1 pour éviter le contact
       vx=vx*-1;
+      couleurAleatoire();
     }
     else if(x<11){
       vx=vx*-1;
+      couleurAleatoire();
     }
     else if(y<11){
+      couleurAleatoire();
       vy=vy*-1;
     }
     else if(y>909){
       vy=vy*-1;
+      couleurAleatoire();
     }
 }
 
@@ -46,33 +66,41 @@ void drawGame(){
     clear();
     speed();
     rebond();
-    changeColor( 247, 146, 1 );
+    changeColor(r,g,b);
     drawCircle(x,y,10);
     actualize();
     usleep(100000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
 }
 void KeyPressed(SDL_Keycode touche){
     /** @brief event.key.keysym.sym renvoi la touche appuyé
-     *
      */
+    int speedx=1;
+    int speedy=1;
+    
     switch (touche) {
-        // Voir doc SDL_Keycode pour plus de touches https://wiki.libsdl.org/SDL_Keycode
-        // ici exemple ou appuyer sur les touches Q | D modifie x (position du carré dans drawGame())
         case SDLK_q:
-            vx=-1;
-            vy=0;
+            vx=-1*speedx;
+            vy=0*speedy;
             break;
         case SDLK_d:
-            vx=1;
-            vy=0;
+            vx=1*speedx;
+            vy=0*speedy;
             break;
         case SDLK_z:
-            vx=0;
-            vy=-1;
+            vx=0*speedx;
+            vy=-1*speedy;
             break;
         case SDLK_s:
-            vx=0;
-            vy=1;
+            vx=0*speedx;
+            vy=1*speedy;
+            break;
+        case SDLK_PLUS:
+            speedx=speedx+2;
+            speedy=speedy+2;
+            break;
+        case SDLK_MINUS:
+            speedx=speedx-2;
+            speedy=speedy-2;
             break;
         case SDLK_ESCAPE:
             freeAndTerminate();
