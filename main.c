@@ -16,22 +16,18 @@ int x = 500;
 int y = 800;
 int vx=4;
 int vy=-4;
-//position du rectangle
+//position de la tortue
 int xRect=10;
 int yRect=920;
-int vxRect=1;  //vitesse de la raquette
 //couleur de la balle de base
 int r=247;
 int g=146;
 int b=1;
-//position de la raquette
-int a=10;
 //variable de la vitesse
 int speedVar=1;
 
 int presenceObjet[3][100];   //table pour stocker les coordonnées et présence d'ennemis sur la case
 int nbEnemy; //défini si rocher, enemy ou rien
-int indexInteraction; //index pour générer une interaction avec les obstacles
 
 void couleurAleatoire(){
       r=rand()%256;
@@ -77,53 +73,28 @@ void jellyfishPrint(){
         jellyfish(presenceObjet[0][j],presenceObjet[1][j]);
       }
     }
-  actualize();
 }
 //fait rebondir contre la brique et la supprime
-//hitbox de la balle : rect de 10 de large (coordonnées x et y + ou -5)
+//hitbox de la balle : rect de 20 de large (coordonnées x et y + ou -10)
 
-//quand la balle rentre dans une brique, les conditions de toutes les briques de la ligne sont remplies : gérer un break
 void interaction(){
     for (int j=0;j<100;j++){
-      int xtest=presenceObjet[0][j];  //passage par des variables pour éviter un bug dans le if
-      int ytest=presenceObjet[1][j];
+      int xtest=presenceObjet[0][j];  //coordonnées du coin haut gauche de la brique
+      int ytest=presenceObjet[1][j];  //passage par des variables pour éviter un bug dans le if
       //contact par le bas
-        if (((x-5)>=xtest && (x-5)<(xtest+50) && (y-5)<=(ytest+50)) || ((x+5)>=xtest && (x+5)<(xtest+50) && (y-5)<=(ytest+50))){
-          indexInteraction=j;
-          if ((presenceObjet[2][indexInteraction])==1){ 
+        if (((y-10)<=(ytest+50)) && ((x+10)>=xtest || (x-10)<=(xtest+50))){ //conditions et / ou à revoir
+          if ((presenceObjet[2][j])==1){          
             vy=vy*-1;
-            presenceObjet[2][indexInteraction]=0;
-            y=ytest+56;
+            presenceObjet[2][j]=0;
+           // y=(ytest+61);    //remettre sous la brique
           }
         }
       //contact par le haut
-/*        else if (((x-5)>=xtest && (x-5)<(xtest+50) && (y+5)<=(ytest)) || ((x+5)>=xtest && (x+5)<(xtest+50) && (y+5)<=(ytest))){
-          indexInteraction=j;
-          if ((presenceObjet[2][indexInteraction])==1){ 
-            vy=vy*-1;
-            presenceObjet[2][indexInteraction]=0;
-            y=ytest-6;
-          }
-        }
-      //contact par la gauche a maj
-        else if (((x+5)>=xtest && (y-5)<(ytest+50) && (y-5)>=(ytest)) || ((x+5)>=xtest && (y+5)<(ytest+50) && (y+5)>=(ytest))){
-          indexInteraction=j;
-          if ((presenceObjet[2][indexInteraction])==1){ 
-            vx=vx*-1;
-            presenceObjet[2][indexInteraction]=0;
-            x=xtest-6;
-          }
-        }
-      //contact par la droite a maj
-        else if (((x-5)<=xtest && (y-5)<(ytest+50) && (y-5)>=(ytest)) || ((x-5)<=xtest && (y+5)<(ytest+50) && (y+5)>=(ytest))){
-          indexInteraction=j;
-          if ((presenceObjet[2][indexInteraction])==1){ 
-            vx=vx*-1;
-            presenceObjet[2][indexInteraction]=0;
-            x=xtest+56;
-          }
-        }
-        else{}*/
+
+      //contact par la gauche
+
+      //contact par la droite
+
     }
 }
 
@@ -156,18 +127,16 @@ void speed(){
     y=y+vy*speedVar;
 }
 
-//interactions avec les bords, créer interaction avec briques
+//interactions avec les bords et la tortue
 void rebond(){
     if (x>(989)){   //window_width-rayon de la balle-1 pour éviter le contact
       vx=vx*-1;         //renvoye dans l'autre sens
       x=989;
       //couleurAleatoire();
-      vxRect=vxRect*-1;
     }
     else if(x<11){
       vx=vx*-1;
       x=11;
-      vxRect=vxRect*-1;
       //couleurAleatoire();
     }
     else if(y<11){
@@ -210,7 +179,7 @@ void rebond(){
     }
 }
 
-void raquette(){
+void turtle(){
     changeColor(247,146,1);
     if(xRect<0){
       xRect=0;
@@ -219,7 +188,6 @@ void raquette(){
       xRect=800;
     }
     sprite(xRect,yRect,"turtle.bmp");
-    usleep(100000 / FPS);
 }
 
 void drawGame(){
@@ -231,7 +199,7 @@ void drawGame(){
     rebond();
     changeColor(r,g,b);
     drawCircle(x,y,10);
-    raquette();
+    turtle();
     actualize();
     usleep(500000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
    // gameEnd();
