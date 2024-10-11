@@ -14,8 +14,8 @@
 //position de la balle dessiné dans drawGame()
 int x = 500;
 int y = 800;
-int vx=2;
-int vy=-2;
+int vx=4;
+int vy=-4;
 //position du rectangle
 int xRect=10;
 int yRect=920;
@@ -38,17 +38,18 @@ void couleurAleatoire(){
       g=rand()%256;
       b=rand()%256;
 }
-
+//crée le tableau qui enregistre la position des briques et pilote leur présence
 void init_game(){
-  int index=0;
+  int index=0; //n° de cellule
+  //coordonnées de la cellule
   int xScan=0;
-  int yScan=0;
-  for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille (10x10)
+  int yScan=100;
+  for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
     yScan=yScan+50*i;
     for (int j=0;j<20;j++){
       xScan=xScan+50*j;
       for (int i=0;i<3;i++){   //pour chaque cellule, enregistre les coordonnées et initialise présence d'une brique
-        if (i==0){       
+        if (i==0){
           presenceObjet[i][index]=xScan;
         }
         else if(i==1){
@@ -61,14 +62,15 @@ void init_game(){
     index=index+1;
     xScan=0;
     }
-  yScan=0;
+  yScan=100;
   }
 }
 
+//imprimer les briques. Pb première cellule ne s'affiche pas. Dans le tableau présence, la première cellule indique bien une brique
 void jellyfish(int a, int b){
     sprite(a,b,"jellyfish.bmp");
 }
-//imprimer les briques. Pb première cellule ne s'affiche pas. dans le tableau presence, bien mis à 1
+
 void jellyfishPrint(){
     for (int j=0;j<100;j++){
       if (presenceObjet[2][j]==1){
@@ -77,17 +79,47 @@ void jellyfishPrint(){
     }
   actualize();
 }
+//fait rebondir contre la brique et la supprime
+//hitbox de la balle : rect de 10 de large (coordonnées x et y + ou -5)
 
-void interaction(){  //fait rebondir contre la brique et la supprime
+//quand la balle rentre dans une brique, les conditions de toutes les briques de la ligne sont remplies : gérer un break
+void interaction(){
     for (int j=0;j<100;j++){
       int xtest=presenceObjet[0][j];  //passage par des variables pour éviter un bug dans le if
       int ytest=presenceObjet[1][j];
-        if (x>=xtest && x<(xtest+50) && y>=ytest && y<(ytest+50)){
+      //contact par le bas
+        if (((x-5)>=xtest && (x-5)<(xtest+50) && (y-5)<=(ytest+50)) || ((x+5)>=xtest && (x+5)<(xtest+50) && (y-5)<=(ytest+50))){
           indexInteraction=j;
-        if ((presenceObjet[2][indexInteraction])==1){ 
-          presenceObjet[2][indexInteraction]=0;
+          if ((presenceObjet[2][indexInteraction])==1){ 
+            vy=vy*-1;
+            presenceObjet[2][indexInteraction]=0;
+          }
         }
-      }
+      //contact par le haut
+        else if (((x-5)>=xtest && (x-5)<(xtest+50) && (y+5)<=(ytest)) || ((x+5)>=xtest && (x+5)<(xtest+50) && (y+5)<=(ytest))){
+          indexInteraction=j;
+          if ((presenceObjet[2][indexInteraction])==1){ 
+            vy=vy*-1;
+            presenceObjet[2][indexInteraction]=0;
+          }
+        }
+      //contact par la gauche a maj
+        else if (((x+5)>=xtest && (y-5)<(ytest+50) && (y-5)>=(ytest)) || ((x+5)>=xtest && (y+5)<(ytest+50) && (y+5)>=(ytest))){
+          indexInteraction=j;
+          if ((presenceObjet[2][indexInteraction])==1){ 
+            vx=vx*-1;
+            presenceObjet[2][indexInteraction]=0;
+          }
+        }
+      //contact par la droite a maj
+        else if (((x-5)<=xtest && (y-5)<(ytest+50) && (y-5)>=(ytest)) || ((x-5)<=xtest && (y+5)<(ytest+50) && (y+5)>=(ytest))){
+          indexInteraction=j;
+          if ((presenceObjet[2][indexInteraction])==1){ 
+            vx=vx*-1;
+            presenceObjet[2][indexInteraction]=0;
+          }
+        }
+        else{}
     }
 }
 
@@ -116,14 +148,25 @@ void rebond(){
       couleurAleatoire();
       vy=vy*-1;
     }
-    else if(y>(yRect-8) && x>xRect && x<(xRect+200)){  //hit box à affiner
+    //comportement différent suivant là où on rebondi sur la tortue
+    else if(y>(yRect-8) && y<(yRect+10) && x>xRect && x<=(xRect+50)){
+      vy=vy*-1;
+      vx=vx*-1;      
+      couleurAleatoire();
+    }
+    else if(y>(yRect-8) && y<(yRect+10) && x>(xRect+50) && x<(xRect+150)){
       vy=vy*-1;
       couleurAleatoire();
     }
+    else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+150) && x<(xRect+200)){
+      vy=vy*-1;
+      vx=vx*-1;
+      couleurAleatoire();
+    }
     else if(y>1000){
-      sprite (350,395,"Lost.bmp");
+      sprite (0,0,"lost.bmp");
       actualize();
-      usleep(100000000 / FPS);
+      usleep(200000000 / FPS);
       freeAndTerminate();
     }
 }
@@ -138,6 +181,20 @@ void raquette(){
     }
     sprite(xRect,yRect,"turtle.bmp");
     usleep(100000 / FPS);
+}
+
+void gameEnd(){
+    for (int j=0;j<100;j++){
+      switch (presenceObjet[2][j]){
+        case 1 :       
+        break;
+        default :
+          sprite (0,0,"win.bmp");
+          actualize();
+          usleep(200000000 / FPS);
+          freeAndTerminate(); 
+      }
+    }
 }
 
 void drawGame(){
@@ -163,13 +220,13 @@ void KeyPressed(SDL_Keycode touche){
             xRect=xRect+40;
             break;
         case SDLK_p:
-            speedVar=speedVar+2;
+            speedVar=speedVar+1;
             if (speedVar>=15){
               speedVar=14;
             }
             break;
         case SDLK_m:
-            speedVar=speedVar/2;
+            speedVar=speedVar-1;
             if (speedVar==0){
               speedVar=1;
             }
@@ -209,6 +266,7 @@ void gameLoop() {
             }
         }
         drawGame();
+        gameEnd();
     }
 }
 
