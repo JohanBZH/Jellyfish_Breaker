@@ -93,14 +93,16 @@ void interaction(){
           if ((presenceObjet[2][indexInteraction])==1){ 
             vy=vy*-1;
             presenceObjet[2][indexInteraction]=0;
+            y=ytest+56;
           }
         }
       //contact par le haut
-        else if (((x-5)>=xtest && (x-5)<(xtest+50) && (y+5)<=(ytest)) || ((x+5)>=xtest && (x+5)<(xtest+50) && (y+5)<=(ytest))){
+/*        else if (((x-5)>=xtest && (x-5)<(xtest+50) && (y+5)<=(ytest)) || ((x+5)>=xtest && (x+5)<(xtest+50) && (y+5)<=(ytest))){
           indexInteraction=j;
           if ((presenceObjet[2][indexInteraction])==1){ 
             vy=vy*-1;
             presenceObjet[2][indexInteraction]=0;
+            y=ytest-6;
           }
         }
       //contact par la gauche a maj
@@ -109,6 +111,7 @@ void interaction(){
           if ((presenceObjet[2][indexInteraction])==1){ 
             vx=vx*-1;
             presenceObjet[2][indexInteraction]=0;
+            x=xtest-6;
           }
         }
       //contact par la droite a maj
@@ -117,10 +120,31 @@ void interaction(){
           if ((presenceObjet[2][indexInteraction])==1){ 
             vx=vx*-1;
             presenceObjet[2][indexInteraction]=0;
+            x=xtest+56;
           }
         }
-        else{}
+        else{}*/
     }
+}
+
+void gameEnd(){
+    int gameOn=0;
+    for (int j=0;j<100;j++){
+      if (presenceObjet[2][j]=1){
+        gameOn=1;
+      }     
+    }
+    switch (gameOn){
+      case 1:
+      gameOn=0;
+      printf("reached");
+      break;
+      case 0:
+          sprite (0,0,"win.bmp");
+          actualize();
+          usleep(200000000 / FPS);
+          freeAndTerminate(); 
+      }
 }
 
 void background(){
@@ -135,33 +159,48 @@ void speed(){
 //interactions avec les bords, créer interaction avec briques
 void rebond(){
     if (x>(989)){   //window_width-rayon de la balle-1 pour éviter le contact
-      vx=vx*-1;         //renvoyer dans l'autre sens
-      couleurAleatoire();
+      vx=vx*-1;         //renvoye dans l'autre sens
+      x=989;
+      //couleurAleatoire();
       vxRect=vxRect*-1;
     }
     else if(x<11){
       vx=vx*-1;
+      x=11;
       vxRect=vxRect*-1;
-      couleurAleatoire();
+      //couleurAleatoire();
     }
     else if(y<11){
-      couleurAleatoire();
+      //couleurAleatoire();
       vy=vy*-1;
+      y=11;
     }
     //comportement différent suivant là où on rebondi sur la tortue
+    //quart à gauche, renvoyer vers la gauche
     else if(y>(yRect-8) && y<(yRect+10) && x>xRect && x<=(xRect+50)){
       vy=vy*-1;
-      vx=vx*-1;      
-      couleurAleatoire();
+        if (vx>0){
+          vx=vx*-1;
+        }
+        else {}
+      y=yRect-10;
+      //couleurAleatoire();
     }
+    //centre, pas de modification de la direction
     else if(y>(yRect-8) && y<(yRect+10) && x>(xRect+50) && x<(xRect+150)){
       vy=vy*-1;
-      couleurAleatoire();
+      y=yRect-10;
+      //couleurAleatoire();
     }
+    //droite, renvoyer vers la droite
     else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+150) && x<(xRect+200)){
       vy=vy*-1;
-      vx=vx*-1;
-      couleurAleatoire();
+        if (vx<0){
+          vx=vx*-1;
+        }
+        else {}
+      y=yRect-10;
+      //couleurAleatoire();
     }
     else if(y>1000){
       sprite (0,0,"lost.bmp");
@@ -183,20 +222,6 @@ void raquette(){
     usleep(100000 / FPS);
 }
 
-void gameEnd(){
-    for (int j=0;j<100;j++){
-      switch (presenceObjet[2][j]){
-        case 1 :       
-        break;
-        default :
-          sprite (0,0,"win.bmp");
-          actualize();
-          usleep(200000000 / FPS);
-          freeAndTerminate(); 
-      }
-    }
-}
-
 void drawGame(){
     clear();
     background();
@@ -209,15 +234,16 @@ void drawGame(){
     raquette();
     actualize();
     usleep(500000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
+   // gameEnd();
 }
 void KeyPressed(SDL_Keycode touche){
    
     switch (touche) {
         case SDLK_q:
-            xRect=xRect-40;
+            xRect=xRect-100;
             break;
         case SDLK_d:
-            xRect=xRect+40;
+            xRect=xRect+100;
             break;
         case SDLK_p:
             speedVar=speedVar+1;
@@ -266,7 +292,6 @@ void gameLoop() {
             }
         }
         drawGame();
-        gameEnd();
     }
 }
 
