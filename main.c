@@ -101,16 +101,16 @@ void interaction(){
 void gameEnd(){
     int gameOn=0;
     for (int j=0;j<100;j++){
-      if (presenceObjet[2][j]=1){
+      if (presenceObjet[2][j]==1){   //ici 
         gameOn=1;
       }     
     }
     switch (gameOn){
       case 1:
       gameOn=0;
-      printf("reached");
       break;
       case 0:
+
           sprite (0,0,"win.bmp");
           actualize();
           usleep(200000000 / FPS);
@@ -202,7 +202,7 @@ void drawGame(){
     turtle();
     actualize();
     usleep(500000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
-   // gameEnd();
+    gameEnd();
 }
 void KeyPressed(SDL_Keycode touche){
    
