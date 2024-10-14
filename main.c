@@ -78,15 +78,17 @@ void jellyfishPrint(){
 //hitbox de la balle : rect de 20 de large (coordonnées x et y + ou -10)
 
 void interaction(){
+    printf("x %d, y %d\n",x,y);
+    
     for (int j=0;j<100;j++){
       int xtest=presenceObjet[0][j];  //coordonnées du coin haut gauche de la brique
-      int ytest=presenceObjet[1][j];  //passage par des variables pour éviter un bug dans le if
+      int ytest=presenceObjet[1][j];  //passage par des variables pour éviter un bug dans le if. Scanne bien tout le tableau
       //contact par le bas
-        if (((y-10)<=(ytest+50)) && ((x+10)>=xtest || (x-10)<=(xtest+50))){ //conditions et / ou à revoir
+        if (((y-10)<=(ytest+50)) && (((x-10)>=(xtest-10)) && ((x-10)<=(xtest+50)))){
           if ((presenceObjet[2][j])==1){          
             vy=vy*-1;
             presenceObjet[2][j]=0;
-           // y=(ytest+61);    //remettre sous la brique
+            y=(ytest+61); 
           }
         }
       //contact par le haut
@@ -233,7 +235,7 @@ void KeyPressed(SDL_Keycode touche){
     }
 }
 
-void gameLoop() {
+void gameLoop() {   //pour gérer de façon plus fluide le déplacement de la tortue et éviter le buffer de keydown, modifier une variable à keydown ET keyup.
     int programLaunched = 1;
     while (programLaunched == 1) {
         /* Boucle pour garder le programme ouvert lorsque programLaunched est different de 1
