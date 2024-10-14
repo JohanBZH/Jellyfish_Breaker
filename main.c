@@ -26,6 +26,10 @@ int b=1;
 //variable de la vitesse
 int speedVar=1;
 
+//active ou non le déplacement de la tortue via keyPressed et keyUp
+int deplacementGauche=0;
+int deplacementDroite=0;
+
 int presenceObjet[3][100];   //table pour stocker les coordonnées et présence d'ennemis sur la case
 int nbEnemy; //défini si rocher, enemy ou rien
 
@@ -201,6 +205,12 @@ void rebond(){
 
 void turtle(){
     changeColor(247,146,1);
+    if (deplacementGauche==1){
+      xRect=xRect-20;
+    }
+    else if (deplacementDroite==1){
+      xRect=xRect+20;    
+    }
     if(xRect<0){
       xRect=0;
     }
@@ -228,10 +238,10 @@ void KeyPressed(SDL_Keycode touche){
    
     switch (touche) {
         case SDLK_q:
-            xRect=xRect-100;
+            deplacementGauche=1;
             break;
         case SDLK_d:
-            xRect=xRect+100;
+            deplacementDroite=1;
             break;
         case SDLK_p:
             speedVar=speedVar+1;
@@ -247,6 +257,20 @@ void KeyPressed(SDL_Keycode touche){
             break;
         case SDLK_ESCAPE:
             freeAndTerminate();
+            break;
+        default:
+            break;
+    }
+}
+
+void KeyUp(SDL_Keycode touche){
+   
+    switch (touche) {
+        case SDLK_q:
+            deplacementGauche=0;
+            break;
+        case SDLK_d:
+            deplacementDroite=0;
             break;
         default:
             break;
@@ -274,6 +298,9 @@ void gameLoop() {   //pour gérer de façon plus fluide le déplacement de la to
                     break;
                 case SDL_KEYDOWN:
                     KeyPressed(event.key.keysym.sym);
+                    break;
+                case SDL_KEYUP:
+                    KeyUp(event.key.keysym.sym);
                     break;
                 default:
                     break;
