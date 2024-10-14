@@ -78,13 +78,13 @@ void jellyfishPrint(){
 //hitbox de la balle : rect de 20 de large (coordonnées x et y + ou -10)
 
 void interaction(){
-    printf("x %d, y %d\n",x,y);
-    
+   
     for (int j=0;j<100;j++){
       int xtest=presenceObjet[0][j];  //coordonnées du coin haut gauche de la brique
-      int ytest=presenceObjet[1][j];  //passage par des variables pour éviter un bug dans le if. Scanne bien tout le tableau
+      int ytest=presenceObjet[1][j];  //passage par des variables pour éviter un bug dans le if. Scanne bien tout le tableau. Border X ET Y pour la condition de rebond
       //contact par le bas
-        if (((y-10)<=(ytest+50)) && (((x-10)>=(xtest-10)) && ((x-10)<=(xtest+50)))){
+               //       printf("bas x %d, y %d xtest %d et ytest %d\n",x,y,xtest,ytest);
+        if (((y-10)<=(ytest+50)) && (((x-10)>=(xtest)) && ((x-10)<=(xtest+50)))){                         
           if ((presenceObjet[2][j])==1){          
             vy=vy*-1;
             presenceObjet[2][j]=0;
@@ -92,11 +92,29 @@ void interaction(){
           }
         }
       //contact par le haut
-
+        if (((y-10)<=(ytest)) && (((x-10)>=(xtest-10)) && ((x-10)<=(xtest+50)))){
+          if ((presenceObjet[2][j])==1){          
+            vy=vy*-1;
+            presenceObjet[2][j]=0;
+            y=(ytest-11); 
+          }
+        }
       //contact par la gauche
-
+        if (((x+10)>=(xtest)) && ((x+10)<=(xtest+50)) && (((y-10)>=(ytest)) && ((y-10)<=(ytest+50)))){
+          if ((presenceObjet[2][j])==1){          
+            vx=vx*-1;
+            presenceObjet[2][j]=0;
+            x=(xtest-11);
+          }                                  
+        }
       //contact par la droite
-
+        if (((x+10)>=(xtest)) && ((x-10)<=(xtest+50)) && (((y-10)>=(ytest)) && ((y-10)<=(ytest+50)))){
+          if ((presenceObjet[2][j])==1){          
+            vx=vx*-1;
+            presenceObjet[2][j]=0;
+            x=(xtest+61);
+          }                
+        } 
     }
 }
 
