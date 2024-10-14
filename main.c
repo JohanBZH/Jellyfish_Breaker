@@ -7,9 +7,7 @@
 #define WINDOW_HEIGHT 1000
 #define FPS 60
 
-//créer des briques et faire disparaître les briques au rebond (tableau)
-//sectoriser la barre (rebond normal sur la moitiée du milieu et renvoi dans la même direction pour les quarts des côtés.
-//pb : flickering
+//vie
 
 //position de la balle dessiné dans drawGame()
 int x = 500;
@@ -25,6 +23,10 @@ int g=146;
 int b=1;
 //variable de la vitesse
 int speedVar=1;
+//Nombre de vies
+int nbVie=3;
+int xheart=10;
+int yheart=10;
 
 //active ou non le déplacement de la tortue via keyPressed et keyUp
 int deplacementGauche=0;
@@ -87,7 +89,6 @@ void interaction(){
       int xtest=presenceObjet[0][j];  //coordonnées du coin haut gauche de la brique
       int ytest=presenceObjet[1][j];  //passage par des variables pour éviter un bug dans le if. Scanne bien tout le tableau. Border X ET Y pour la condition de rebond
       //contact par le bas
-               //       printf("bas x %d, y %d xtest %d et ytest %d\n",x,y,xtest,ytest);
         if ((vy<1) && ((y-10)<=(ytest+50)) && (((x-10)>=(xtest)) && ((x-10)<=(xtest+50)))){                         
           if ((presenceObjet[2][j])==1){          
             vy=vy*-1;
@@ -134,7 +135,6 @@ void gameEnd(){
       gameOn=0;
       break;
       case 0:
-
           sprite (0,0,"win.bmp");
           actualize();
           usleep(200000000 / FPS);
@@ -149,6 +149,31 @@ void background(){
 void speed(){
     x=x+vx*speedVar;
     y=y+vy*speedVar;
+}
+
+void vie(){
+    nbVie=nbVie-1;
+        if (nbVie>=0){
+        x=500;
+        y=800;
+        sprite (0,0,"goAgain.bmp");  //image à créer
+        actualize();
+        usleep(100000000 / FPS);
+        vx=4;
+        vy=-4;
+      }  
+      else{
+        sprite (0,0,"lost.bmp");
+        actualize();
+        usleep(200000000 / FPS);
+        freeAndTerminate();
+      }
+}
+void printVie(){
+    for (int i=0;i<=(nbVie);i++){
+        xheart=10+50*i;
+        sprite(xheart,yheart,"heart.bmp");
+    }
 }
 
 //interactions avec les bords et la tortue
@@ -196,10 +221,7 @@ void rebond(){
       //couleurAleatoire();
     }
     else if(y>1000){
-      sprite (0,0,"lost.bmp");
-      actualize();
-      usleep(200000000 / FPS);
-      freeAndTerminate();
+      vie();
     }
 }
 
@@ -223,6 +245,7 @@ void turtle(){
 void drawGame(){
     clear();
     background();
+    printVie();
     speed();
     jellyfishPrint();
     interaction();
