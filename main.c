@@ -7,7 +7,8 @@
 #define WINDOW_HEIGHT 1000
 #define FPS 60
 
-//vie
+//remplacer balle par la goutte et l'orienter dans le sens de son déplacement
+//check les variables d'interaction. Goutte 20/20
 
 //position de la balle dessiné dans drawGame()
 int x = 500;
@@ -242,6 +243,21 @@ void turtle(){
     sprite(xRect,yRect,"turtle.bmp");
 }
 
+void waterDrop(){
+    if (vx<0 && vy<0){
+        sprite(x,y,"waterDrophg.bmp");
+    }
+    else if (vx<0 && vy>0){
+        sprite(x,y,"waterDropbg.bmp");
+    }
+    if (vx>0 && vy<0){
+        sprite(x,y,"waterDrophd.bmp");
+    }
+    else if (vx>0 && vy>0){
+        sprite(x,y,"waterDropbd.bmp");
+    }
+}
+
 void drawGame(){
     clear();
     background();
@@ -251,7 +267,8 @@ void drawGame(){
     interaction();
     rebond();
     changeColor(r,g,b);
-    drawCircle(x,y,10);
+//    drawCircle(x,y,10);
+    waterDrop();
     turtle();
     actualize();
     usleep(500000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
