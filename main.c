@@ -88,7 +88,7 @@ void interaction(){
       int ytest=presenceObjet[1][j];  //passage par des variables pour éviter un bug dans le if. Scanne bien tout le tableau. Border X ET Y pour la condition de rebond
       //contact par le bas
                //       printf("bas x %d, y %d xtest %d et ytest %d\n",x,y,xtest,ytest);
-        if (((y-10)<=(ytest+50)) && (((x-10)>=(xtest)) && ((x-10)<=(xtest+50)))){                         
+        if ((vy<1) && ((y-10)<=(ytest+50)) && (((x-10)>=(xtest)) && ((x-10)<=(xtest+50)))){                         
           if ((presenceObjet[2][j])==1){          
             vy=vy*-1;
             presenceObjet[2][j]=0;
@@ -96,7 +96,7 @@ void interaction(){
           }
         }
       //contact par le haut
-        if (((y-10)<=(ytest)) && (((x-10)>=(xtest-10)) && ((x-10)<=(xtest+50)))){
+        if ((vy>1) && ((y-10)<=(ytest)) && (((x-10)>=(xtest-10)) && ((x-10)<=(xtest+50)))){
           if ((presenceObjet[2][j])==1){          
             vy=vy*-1;
             presenceObjet[2][j]=0;
@@ -104,7 +104,7 @@ void interaction(){
           }
         }
       //contact par la gauche
-        if (((x+10)>=(xtest)) && ((x+10)<=(xtest+50)) && (((y-10)>=(ytest)) && ((y-10)<=(ytest+50)))){
+        if ((vx>1) && ((x+10)>=(xtest)) && ((x+10)<=(xtest+50)) && (((y-10)>=(ytest)) && ((y-10)<=(ytest+50)))){
           if ((presenceObjet[2][j])==1){          
             vx=vx*-1;
             presenceObjet[2][j]=0;
@@ -112,7 +112,7 @@ void interaction(){
           }                                  
         }
       //contact par la droite
-        if (((x+10)>=(xtest)) && ((x-10)<=(xtest+50)) && (((y-10)>=(ytest)) && ((y-10)<=(ytest+50)))){
+        if ((vx<1) && ((x+10)>=(xtest)) && ((x-10)<=(xtest+50)) && (((y-10)>=(ytest)) && ((y-10)<=(ytest+50)))){
           if ((presenceObjet[2][j])==1){          
             vx=vx*-1;
             presenceObjet[2][j]=0;
