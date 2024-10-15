@@ -7,9 +7,13 @@
 #define WINDOW_HEIGHT 1000
 #define FPS 60
 
-//remplacer balle par la goutte et l'orienter dans le sens de son déplacement
-//check les variables d'interaction. Goutte 20/20
+//accélerer et ralentir la raquette. Mettre de l'inertie ?
+//Faire des angles différents de rebond
+//créer différents niveaux
+// créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
 
+//Lancement du jeu
+int launch=0;
 //position de la balle dessiné dans drawGame()
 int x = 500;
 int y = 800;
@@ -34,7 +38,6 @@ int deplacementGauche=0;
 int deplacementDroite=0;
 
 int presenceObjet[3][100];   //table pour stocker les coordonnées et présence d'ennemis sur la case
-int nbEnemy; //défini si rocher, enemy ou rien
 
 void couleurAleatoire(){
       r=rand()%256;
@@ -226,10 +229,17 @@ void rebond(){
     }
 }
 
+//Déplacement de la raquette
 void turtle(){
-    changeColor(247,146,1);
+    int vMax=30;
+    int vMin=10;
+    int vTurtle=vMin;
     if (deplacementGauche==1){
-      xRect=xRect-20;
+      for (int i=0; i<=10;i++){   //trop intense
+          vTurtle=vTurtle+5;
+          xRect=xRect-vTurtle;
+          usleep (50000 / FPS);
+      }
     }
     else if (deplacementDroite==1){
       xRect=xRect+20;    
@@ -266,8 +276,7 @@ void drawGame(){
     jellyfishPrint();
     interaction();
     rebond();
-    changeColor(r,g,b);
-//    drawCircle(x,y,10);
+//    changeColor(r,g,b);
     waterDrop();
     turtle();
     actualize();
@@ -295,6 +304,10 @@ void KeyPressed(SDL_Keycode touche){
               speedVar=1;
             }
             break;
+        case SDLK_SPACE:
+            launch=1;
+            ;
+            break;
         case SDLK_ESCAPE:
             freeAndTerminate();
             break;
@@ -317,21 +330,21 @@ void KeyUp(SDL_Keycode touche){
     }
 }
 
+void gameLauncher (){
+    if (launch==0) {
+        sprite (0,0,"launch.bmp");
+        actualize();
+    }
+    else{drawGame();
+    }
+}
+
 void gameLoop() {   //pour gérer de façon plus fluide le déplacement de la tortue et éviter le buffer de keydown, modifier une variable à keydown ET keyup.
     int programLaunched = 1;
     while (programLaunched == 1) {
-        /* Boucle pour garder le programme ouvert lorsque programLaunched est different de 1
-        on sort de la boucle, donc de la fonction*/
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
-            // boucle pour la gestion d'évenement
             switch (event.type) {
-                /** event.type renvoi le type d'evenement qui se passe
-                 * (si on appuie sur une touche, clique de souris...)
-                 * en fonction du type d'évènement on à alors
-                 * différentes information accessibles
-                 * voir doc pour plus d'event https://wiki.libsdl.org/SDL_EventType
-                 */
                 case SDL_QUIT:
                     // quand on clique sur fermer la fénêtre en haut à droite
                     programLaunched = 0;
@@ -346,9 +359,11 @@ void gameLoop() {   //pour gérer de façon plus fluide le déplacement de la to
                     break;
             }
         }
-        drawGame();
+        gameLauncher();
     }
 }
+
+
 
 int main(){
     /** @description 3 fonctions dans le main qui permettent de créer l'application et la maintenir ouverte :
