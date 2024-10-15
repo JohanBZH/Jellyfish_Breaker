@@ -2,24 +2,31 @@
 #include <unistd.h>
 #include "function.h"
 #include <time.h>
+#include <math.h>
 
 #define WINDOW_WIDTH 1000
 #define WINDOW_HEIGHT 1000
 #define FPS 60
 
+/*Compiler :
+gcc main.c function.c -o main.out -lSDL2main -lSDL2 -lm
+lm pour la librairie "math"
+
+
 //accélerer et ralentir la raquette. Mettre de l'inertie ?
 //Faire des angles différents de rebond
 //faire une barre de score, incrémenter un score pour chaque brique cassée. Briques rouges points *10
 //créer différents niveaux
-// créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
+// créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue 
+*/
 
 //Lancement du jeu
 int launch=0;
 //position de la balle dessiné dans drawGame()
-int x = 500;
-int y = 800;
-int vx=2;
-int vy=-2;
+float x = 500;
+float y = 800;
+float vx=2;
+float vy=-2;
 //position de la tortue
 int xRect=10;
 int yRect=920;
@@ -29,6 +36,8 @@ int g=146;
 int b=1;
 //variable de la vitesse
 int speedVar=1;
+//angle du rebond en degrés. Initialisation à 60°
+float angle=60;
 //Nombre de vies
 int nbVie=3;
 int xheart=10;
@@ -152,11 +161,6 @@ void background(){
     sprite(0,0,"background.bmp");
 }
 
-void speed(){
-    x=x+vx*speedVar;
-    y=y+vy*speedVar;
-}
-
 void vie(){
     nbVie=nbVie-1;
         if (nbVie>=0){
@@ -167,6 +171,7 @@ void vie(){
         usleep(100000000 / FPS);
         vx=4;
         vy=-4;
+        speedVar=1;
       }  
       else{
         sprite (0,0,"lost.bmp");
@@ -182,11 +187,53 @@ void printVie(){
     }
 }
 
+//vecteur de déplacement. Angle en degré converti en radians
+void speed(){
+    float rad = angle*(3.14/180);  
+    vx=cos(rad);
+    vy=sin(rad);
+    x=x+vx*speedVar;
+    y=y+vy*speedVar;
+}
 //interactions avec les bords et la tortue.
+  //faire évoluer la fonction speed en fonction des rebonds     
+    //créer un gradient de 0 à 100 pour modifier l'angle entre 30° et 60°, utiliser la fonction speed
+    
+void rebondTortue(){
+    if(y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+80)){
+      float posRebond;
+      posRebond = (x-xRect) / 100;
+      angle=posRebond*angle;
+      vy=vy*-1*posRebond*100;
+        if (vx>0){
+          vx=vx*-1;
+        }
+        else {}
+      y=yRect-10;
+    }
+    
+    
+    //centre, pas de modification de la direction
+    else if(y>(yRect-8) && y<(yRect+10) && x>(xRect+80) && x<(xRect+120)){
+      angle=60;
+      vy=vy*-1;
+      y=yRect-10;
+    }
+    //droite, renvoyer vers la droite
+    else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+120) && x<(xRect+200)){
 
-void rebond(){
+      vy=vy*-1;
+        if (vx<0){
+          vx=vx*-1;
+        }
+        else {}
+      y=yRect-10;
+    }
+}
+
+void rebondBords(){
     if (x>(979)){   //window_width-rayon de la balle-1 pour éviter le contact
-      vx=vx*-1;         //renvoye dans l'autre sens
+      vx=vx*-1;         //renvoie dans l'autre sens
       x=979;
     }
     else if(x<1){
@@ -197,37 +244,16 @@ void rebond(){
       vy=vy*-1;
       y=11;
     }
-    //comportement différent suivant là où on rebondi sur la tortue
-    //quart à gauche, renvoyer vers la gauche
-    
-    //créer un gradient de 0 à 100 pour augmenter l'angle
-    //pour gérer les angles qui augmentent, considérer l'écart entre le centre et les bords comme un pourcentage qui aumgente et qui va augmenter l'angle. laisser une zone neutre au milieu
-    else if(y>(yRect-8) && y<(yRect+10) && x>xRect && x<=(xRect+50)){
-      vy=vy*-1;
-        if (vx>0){
-          vx=vx*-1;
-        }
-        else {}
-      y=yRect-10;
+
+    else if (y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+200)) {
+      rebondTortue();
     }
-    //centre, pas de modification de la direction
-    else if(y>(yRect-8) && y<(yRect+10) && x>(xRect+50) && x<(xRect+150)){
-      vy=vy*-1;
-      y=yRect-10;
-    }
-    //droite, renvoyer vers la droite
-    else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+150) && x<(xRect+200)){
-      vy=vy*-1;
-        if (vx<0){
-          vx=vx*-1;
-        }
-        else {}
-      y=yRect-10;
-    }
-    else if(y>1000){
+    else if (y>1000){
       vie();
     }
+    else {}
 }
+
 
 //Déplacement de la raquette
 void turtle(){
@@ -271,7 +297,7 @@ void drawGame(){
     speed();
     jellyfishPrint();
     interaction();
-    rebond();
+    rebondBords();
 //    changeColor(r,g,b);
     waterDrop();
     turtle();
@@ -296,7 +322,7 @@ void KeyPressed(SDL_Keycode touche){
             break;
         case SDLK_m:
             speedVar=speedVar-1;
-            if (speedVar==0){
+            if (speedVar<=0){
               speedVar=1;
             }
             break;
