@@ -9,6 +9,7 @@
 
 //accélerer et ralentir la raquette. Mettre de l'inertie ?
 //Faire des angles différents de rebond
+//faire une barre de score, incrémenter un score pour chaque brique cassée. Briques rouges points *10
 //créer différents niveaux
 // créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
 
@@ -17,8 +18,8 @@ int launch=0;
 //position de la balle dessiné dans drawGame()
 int x = 500;
 int y = 800;
-int vx=4;
-int vy=-4;
+int vx=2;
+int vy=-2;
 //position de la tortue
 int xRect=10;
 int yRect=920;
@@ -48,11 +49,11 @@ void couleurAleatoire(){
 void init_game(){
   int index=0; //n° de cellule
   //coordonnées de la cellule
-  int xScan=0;
+  int xScan=50;
   int yScan=100;
   for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
     yScan=yScan+50*i;
-    for (int j=0;j<20;j++){
+    for (int j=0;j<18;j++){
       xScan=xScan+50*j;
       for (int i=0;i<3;i++){   //pour chaque cellule, enregistre les coordonnées et initialise présence d'une brique
         if (i==0){
@@ -66,7 +67,7 @@ void init_game(){
         }
       }
     index=index+1;
-    xScan=0;
+    xScan=50;
     }
   yScan=100;
   }
@@ -84,6 +85,7 @@ void jellyfishPrint(){
       }
     }
 }
+
 //fait rebondir contre la brique et la supprime
 //hitbox de la balle : rect de 20 de large (coordonnées x et y + ou -10)
 
@@ -180,25 +182,26 @@ void printVie(){
     }
 }
 
-//interactions avec les bords et la tortue
+//interactions avec les bords et la tortue.
+
 void rebond(){
-    if (x>(989)){   //window_width-rayon de la balle-1 pour éviter le contact
+    if (x>(979)){   //window_width-rayon de la balle-1 pour éviter le contact
       vx=vx*-1;         //renvoye dans l'autre sens
-      x=989;
-      //couleurAleatoire();
+      x=979;
     }
-    else if(x<11){
+    else if(x<1){
       vx=vx*-1;
-      x=11;
-      //couleurAleatoire();
+      x=1;
     }
     else if(y<11){
-      //couleurAleatoire();
       vy=vy*-1;
       y=11;
     }
     //comportement différent suivant là où on rebondi sur la tortue
     //quart à gauche, renvoyer vers la gauche
+    
+    //créer un gradient de 0 à 100 pour augmenter l'angle
+    //pour gérer les angles qui augmentent, considérer l'écart entre le centre et les bords comme un pourcentage qui aumgente et qui va augmenter l'angle. laisser une zone neutre au milieu
     else if(y>(yRect-8) && y<(yRect+10) && x>xRect && x<=(xRect+50)){
       vy=vy*-1;
         if (vx>0){
@@ -206,13 +209,11 @@ void rebond(){
         }
         else {}
       y=yRect-10;
-      //couleurAleatoire();
     }
     //centre, pas de modification de la direction
     else if(y>(yRect-8) && y<(yRect+10) && x>(xRect+50) && x<(xRect+150)){
       vy=vy*-1;
       y=yRect-10;
-      //couleurAleatoire();
     }
     //droite, renvoyer vers la droite
     else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+150) && x<(xRect+200)){
@@ -222,7 +223,6 @@ void rebond(){
         }
         else {}
       y=yRect-10;
-      //couleurAleatoire();
     }
     else if(y>1000){
       vie();
@@ -235,14 +235,10 @@ void turtle(){
     int vMin=10;
     int vTurtle=vMin;
     if (deplacementGauche==1){
-      for (int i=0; i<=10;i++){   //trop intense
-          vTurtle=vTurtle+5;
-          xRect=xRect-vTurtle;
-          usleep (50000 / FPS);
-      }
+      xRect=xRect-2*vTurtle;
     }
     else if (deplacementDroite==1){
-      xRect=xRect+20;    
+      xRect=xRect+2*vTurtle;    
     }
     if(xRect<0){
       xRect=0;
@@ -280,7 +276,7 @@ void drawGame(){
     waterDrop();
     turtle();
     actualize();
-    usleep(500000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
+    usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
     gameEnd();
 }
 void KeyPressed(SDL_Keycode touche){
