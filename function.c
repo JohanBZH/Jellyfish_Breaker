@@ -205,6 +205,12 @@ void drawLinePoints(Point point1, Point point2) {
 }
 
 void sprite(int posX, int posY, char *imgBMPSrc) {
+    int w;
+    int h;
+    sprite2(posX,posY,imgBMPSrc,&w,&h);
+}
+
+void sprite2(int posX, int posY, char *imgBMPSrc, int *w,int *h) {
     /** @brief affiche un image .bmp sur le renderer
      *  @param posX position sur l'axe horizontale du coin supérieur gauche de l'image
      *  @param posY position sur l'axe verticale du coin supérieur gauche de l'image
@@ -239,7 +245,49 @@ void sprite(int posX, int posY, char *imgBMPSrc) {
         freeAndTerminate();
     }
     freeTexture(textureImg);
+    *w=rectangle.w;
+    *h=rectangle.h;
+    
 }
+
+//trouver et désactiver la partie qui affiche l'image
+void sprite3(int posX, int posY, char *imgBMPSrc, int *w,int *h) {
+    /* @brief affiche un image .bmp sur le renderer
+     */
+    checkPos(posX, posY);
+    SDL_Texture *textureImg = NULL;
+    SDL_Surface *surfaceImg = NULL;
+    if (!(surfaceImg = SDL_LoadBMP(imgBMPSrc))) {
+        SDL_Log("ERREUR : chargement img > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeAndTerminate();
+    }
+    textureImg = SDL_CreateTextureFromSurface(renderer, surfaceImg);
+    SDL_FreeSurface(surfaceImg);
+    if (textureImg == NULL) {
+        SDL_Log("ERREUR : chargement texture > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }
+
+    SDL_Rect hitBox;
+    if (SDL_QueryTexture(textureImg, NULL, NULL, &hitBox.w, &hitBox.h)) {
+        SDL_Log("ERREUR : image : query texture > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }
+    hitBox.x = posX;
+    hitBox.y = posY;
+/*    if (SDL_RenderCopy(renderer, textureImg, NULL, &rectangle) != 0) {
+        SDL_Log("ERREUR: image : RenderCopy > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }*/
+    freeTexture(textureImg);
+    *w=hitBox.w;
+    *h=hitBox.h;
+    
+}
+
 
 void lastKeyPressed(SDL_Event *event) {
     /** @brief affiche dans le terminal le caractère associé à la dernière touche appuyée

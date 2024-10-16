@@ -40,6 +40,10 @@ void drawLinePoints(Point point1, Point point2);
 
 void sprite(int posX, int posY, char *imgSrc);
 
+void sprite2(int posX, int posY, char *imgSrc, int *w,int *h);
+
+void sprite3(int posX, int posY, char *imgSrc, int *w,int *h);
+
 void lastKeyPressed(SDL_Event *event);
 
 #endif //SDL_CESI_FUNCTION_H

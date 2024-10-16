@@ -24,18 +24,19 @@ lm pour la librairie "math"
 int launch=0;
 //position de la balle dessiné dans drawGame()
 float x = 500;
-float y = 800;
-float vx=2;
-float vy=-2;
+float y = 700;
+float vx=cos(60*(3.14/180))*5;
+float vy=-(60*(3.14/180))*5;
+  
 //position de la tortue
-int xRect=10;
+int xRect=400;
 int yRect=920;
 //couleur de la balle de base
 int r=247;
 int g=146;
 int b=1;
 //variable de la vitesse
-int speedVar=1;
+int speedVar=5;
 //angle du rebond en degrés. Initialisation à 60°
 float angle=60;
 //Nombre de vies
@@ -49,11 +50,6 @@ int deplacementDroite=0;
 
 int presenceObjet[3][100];   //table pour stocker les coordonnées et présence d'ennemis sur la case
 
-void couleurAleatoire(){
-      r=rand()%256;
-      g=rand()%256;
-      b=rand()%256;
-}
 //crée le tableau qui enregistre la position des briques et pilote leur présence
 void init_game(){
   int index=0; //n° de cellule
@@ -82,9 +78,42 @@ void init_game(){
   }
 }
 
-//imprimer les briques. Pb première cellule ne s'affiche pas. Dans le tableau présence, la première cellule indique bien une brique
-void jellyfish(int a, int b){
-    sprite(a,b,"jellyfish.bmp");
+//autre façon de récupérer les valeurs de la hauteur et largeur de l'image
+/* int rectW(){
+    SDL_Rect rectangle;
+    sprite2(100,100,"turtle.bmp",&rectangle.w,&rectangle.h);
+    printf("rectangle.w %d",rectangle.w);
+    return rectangle.w;
+}
+
+int rectH(){
+    SDL_Rect rectangle;
+    sprite2(100,100,"turtle.bmp",&rectangle.w,&rectangle.h);
+    printf("rectangle.h %d",rectangle.h);
+    return rectangle.h;
+} */
+
+//Structure qui vient chercher les dimensions de l'image. Donc valable sur chaque image (imgName comprend ".bmp" ou pas ?)
+/*SDL_Rect hitBoxSize(char imgName){
+    SDL_Rect hitBox;
+    sprite3(0,0,imgName,&hitBox.w, &hitBox.h);
+    return hitBox;
+} */
+
+SDL_Rect hitBoxSizeJellyfish(){
+    SDL_Rect hitBox;
+    sprite3(0,0,"jellyfish.bmp",&hitBox.w, &hitBox.h);
+    return hitBox;
+}
+SDL_Rect hitBoxSizeTurtle(){
+    SDL_Rect hitBox;
+    sprite3(0,0,"turtle.bmp",&hitBox.w, &hitBox.h);
+    return hitBox;
+}
+
+//imprime les briques
+void jellyfish(int a, int b){   
+    sprite(a,b,"jellyfish.bmp");   
 }
 
 void jellyfishPrint(){
@@ -96,45 +125,64 @@ void jellyfishPrint(){
 }
 
 //fait rebondir contre la brique et la supprime
-//hitbox de la balle : rect de 20 de large (coordonnées x et y + ou -10)
+//hitbox du sprite de la balle : rect de 20 de large (coordonnées (x,y) en haut gauche)
+//briques 50x50
 
 void interaction(){
+   SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); //va récupérer les dimensions de l'image
+   SDL_Rect hitBoxTurtle = hitBoxSizeTurtle();
+   printf("Jellyfish w : %d, h : %d, Turtle w : %d, h : %d\n", hitBoxJellyfish.w, hitBoxJellyfish.h, hitBoxTurtle.w, hitBoxTurtle.h);
+   
    
     for (int j=0;j<100;j++){
-      int xtest=presenceObjet[0][j];  //coordonnées du coin haut gauche de la brique
-      int ytest=presenceObjet[1][j];  //passage par des variables pour éviter un bug dans le if. Scanne bien tout le tableau. Border X ET Y pour la condition de rebond
-      //contact par le bas
-        if ((vy<1) && ((y-10)<=(ytest+50)) && (((x-10)>=(xtest)) && ((x-10)<=(xtest+50)))){                         
-          if ((presenceObjet[2][j])==1){          
-            vy=vy*-1;
-            presenceObjet[2][j]=0;
-            y=(ytest+61); 
+//coordonnées du coin haut gauche de la brique
+      int xtest=presenceObjet[0][j]; 
+      int ytest=presenceObjet[1][j];
+//position précédente de la balle
+      int a=x-vx;
+      int b=y-vy;
+//chemin entre les 2 positions de la balle
+      float R = sqrt(pow((x-a),2)+(pow((y-b),2)));
+      for (int i=0;i<=(int)R;i++){
+          a=a+i;
+          b=b+i;
+        //contact par le bas
+          if ((vy<0) && ((b-10)<=(ytest+50)) && (((a-10)>=(xtest)) && ((a-10)<=(xtest+50)))){                         
+              if ((presenceObjet[2][j])==1){          
+                vy=vy*-1;
+                presenceObjet[2][j]=0;
+                y=(ytest+61);
+                x=a;
+              }
           }
-        }
-      //contact par le haut
-        if ((vy>1) && ((y-10)<=(ytest)) && (((x-10)>=(xtest-10)) && ((x-10)<=(xtest+50)))){
-          if ((presenceObjet[2][j])==1){          
-            vy=vy*-1;
-            presenceObjet[2][j]=0;
-            y=(ytest-11); 
+        //contact par le haut
+          if ((vy>0) && ((y-10)<=(ytest)) && (((a-10)>=(xtest-10)) && ((a-10)<=(xtest+50)))){
+              if ((presenceObjet[2][j])==1){          
+                vy=vy*-1;
+                presenceObjet[2][j]=0;
+                y=(ytest-11);
+                x=a;
+              }
           }
-        }
-      //contact par la gauche
-        if ((vx>1) && ((x+10)>=(xtest)) && ((x+10)<=(xtest+50)) && (((y-10)>=(ytest)) && ((y-10)<=(ytest+50)))){
-          if ((presenceObjet[2][j])==1){          
-            vx=vx*-1;
-            presenceObjet[2][j]=0;
-            x=(xtest-11);
-          }                                  
-        }
-      //contact par la droite
-        if ((vx<1) && ((x+10)>=(xtest)) && ((x-10)<=(xtest+50)) && (((y-10)>=(ytest)) && ((y-10)<=(ytest+50)))){
-          if ((presenceObjet[2][j])==1){          
-            vx=vx*-1;
-            presenceObjet[2][j]=0;
-            x=(xtest+61);
-          }                
-        } 
+        //contact par la gauche
+          if ((vx>0) && ((a+10)>=(xtest)) && ((a+10)<=(xtest+50)) && (((b-10)>=(ytest)) && ((b-10)<=(ytest+50)))){
+              if ((presenceObjet[2][j])==1){          
+                vx=vx*-1;
+                presenceObjet[2][j]=0;
+                x=(xtest-11);
+                y=b;
+              }                                  
+          }
+        //contact par la droite
+          if ((vx<0) && ((a+10)>=(xtest)) && ((a-10)<=(xtest+50)) && (((b-10)>=(ytest)) && ((b-10)<=(ytest+50)))){
+              if ((presenceObjet[2][j])==1){          
+                vx=vx*-1;
+                presenceObjet[2][j]=0;
+                x=(xtest+61);
+                y=b;
+              }                
+          } 
+      }
     }
 }
 
@@ -171,7 +219,7 @@ void vie(){
         usleep(100000000 / FPS);
         vx=4;
         vy=-4;
-        speedVar=1;
+        speedVar=5;
       }  
       else{
         sprite (0,0,"lost.bmp");
@@ -188,7 +236,6 @@ void printVie(){
 }
 
 //vecteur de déplacement. Angle en degré converti en radians
-
 void vecteurSpeed(){
     float rad = angle*(3.14/180);  
     vx=cos(rad)*speedVar;
@@ -215,13 +262,16 @@ void rebondTortue(){
         }
         else {}
       y=yRect-10;
+            printf("vy gauche  %f\n",vy);
     }
     
     //centre, pas de modification de la direction
     else if(y>(yRect-8) && y<(yRect+10) && x>(xRect+80) && x<(xRect+120)){
       angle=60;
+            printf("vy centre  %f speedVar %d\n",vy, speedVar);
       vecteurSpeed();
       vy=vy*-1;
+            printf("vy centre  %f speedVar %d\n",vy, speedVar);
       y=yRect-10;
     }
     //droite, renvoyer vers la droite
@@ -236,6 +286,7 @@ void rebondTortue(){
         }
         else {}
       y=yRect-10;
+            printf("vy droite  %f\n",vy);
     }
 }
 
@@ -324,8 +375,8 @@ void KeyPressed(SDL_Keycode touche){
                     
         case SDLK_p:
             speedVar=speedVar+1;
-            if (speedVar>=15){
-              speedVar=14;
+            if (speedVar>=21){
+              speedVar=20;
             }
               if(vx<0){
                 vecteurSpeed();
@@ -338,8 +389,8 @@ void KeyPressed(SDL_Keycode touche){
             break;
         case SDLK_m:
             speedVar=speedVar-1;
-            if (speedVar<=0){
-              speedVar=1;
+            if (speedVar<=5){
+              speedVar=5;
             }
               if(vx<0){
                 vecteurSpeed();
