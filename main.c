@@ -78,21 +78,6 @@ void init_game(){
   }
 }
 
-//autre façon de récupérer les valeurs de la hauteur et largeur de l'image
-/* int rectW(){
-    SDL_Rect rectangle;
-    sprite2(100,100,"turtle.bmp",&rectangle.w,&rectangle.h);
-    printf("rectangle.w %d",rectangle.w);
-    return rectangle.w;
-}
-
-int rectH(){
-    SDL_Rect rectangle;
-    sprite2(100,100,"turtle.bmp",&rectangle.w,&rectangle.h);
-    printf("rectangle.h %d",rectangle.h);
-    return rectangle.h;
-} */
-
 //Structure qui vient chercher les dimensions de l'image. Donc valable sur chaque image (imgName comprend ".bmp" ou pas ?)
 /*SDL_Rect hitBoxSize(char imgName){
     SDL_Rect hitBox;
@@ -100,6 +85,7 @@ int rectH(){
     return hitBox;
 } */
 
+//Structure pour récupérer les dimensions de l'image
 SDL_Rect hitBoxSizeJellyfish(){
     SDL_Rect hitBox;
     sprite3(0,0,"jellyfish.bmp",&hitBox.w, &hitBox.h);
@@ -119,21 +105,17 @@ void jellyfish(int a, int b){
 void jellyfishPrint(){
     for (int j=0;j<100;j++){
       if (presenceObjet[2][j]==1){
-        jellyfish(presenceObjet[0][j],presenceObjet[1][j]);
+        jellyfish(presenceObjet[0][j],presenceObjet[1][j]);        
       }
     }
 }
 
 //fait rebondir contre la brique et la supprime
-//hitbox du sprite de la balle : rect de 20 de large (coordonnées (x,y) en haut gauche)
-//briques 50x50
 
 void interaction(){
-   SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); //va récupérer les dimensions de l'image
+   SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); //va récupérer les dimensions de l'image pour les hitBox
    SDL_Rect hitBoxTurtle = hitBoxSizeTurtle();
-   printf("Jellyfish w : %d, h : %d, Turtle w : %d, h : %d\n", hitBoxJellyfish.w, hitBoxJellyfish.h, hitBoxTurtle.w, hitBoxTurtle.h);
-   
-   
+
     for (int j=0;j<100;j++){
 //coordonnées du coin haut gauche de la brique
       int xtest=presenceObjet[0][j]; 
@@ -143,45 +125,55 @@ void interaction(){
       int b=y-vy;
 //chemin entre les 2 positions de la balle
       float R = sqrt(pow((x-a),2)+(pow((y-b),2)));
+//tester toutes les positions intermédiaires
       for (int i=0;i<=(int)R;i++){
           a=a+i;
           b=b+i;
         //contact par le bas
-          if ((vy<0) && ((b-10)<=(ytest+50)) && (((a-10)>=(xtest)) && ((a-10)<=(xtest+50)))){                         
-              if ((presenceObjet[2][j])==1){          
+          if ((vy<0) && ((b<=(ytest+hitBoxJellyfish.h)) && ((((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))))){   
+              if ((presenceObjet[2][j])==1){
+               printf("Bas atteint\n");
+               printf("Bas a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
                 vy=vy*-1;
                 presenceObjet[2][j]=0;
-                y=(ytest+61);
+                y=(ytest+hitBoxJellyfish.h+1);
                 x=a;
               }
           }
         //contact par le haut
-          if ((vy>0) && ((y-10)<=(ytest)) && (((a-10)>=(xtest-10)) && ((a-10)<=(xtest+50)))){
-              if ((presenceObjet[2][j])==1){          
+          else if ((vy>0) && ((b+20)<=(ytest)) && (((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))){
+              if ((presenceObjet[2][j])==1){  
+          printf("Haut atteint\n");
+           printf("Haut a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
                 vy=vy*-1;
                 presenceObjet[2][j]=0;
-                y=(ytest-11);
+                y=(ytest-21);
                 x=a;
               }
           }
         //contact par la gauche
-          if ((vx>0) && ((a+10)>=(xtest)) && ((a+10)<=(xtest+50)) && (((b-10)>=(ytest)) && ((b-10)<=(ytest+50)))){
-              if ((presenceObjet[2][j])==1){          
+          else if ((vx>0) && (((a+20)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
+              if ((presenceObjet[2][j])==1){  
+                        printf("Gauche atteint\n");
+               printf("Gauche a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
                 vx=vx*-1;
                 presenceObjet[2][j]=0;
-                x=(xtest-11);
+                x=(xtest-21);
                 y=b;
               }                                  
           }
         //contact par la droite
-          if ((vx<0) && ((a+10)>=(xtest)) && ((a-10)<=(xtest+50)) && (((b-10)>=(ytest)) && ((b-10)<=(ytest+50)))){
-              if ((presenceObjet[2][j])==1){          
+          else if ((vx<0) && ((a>=(xtest)) && (a<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
+              if ((presenceObjet[2][j])==1){  
+                        printf("Droite atteint\n");
+               printf("Droite a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
                 vx=vx*-1;
                 presenceObjet[2][j]=0;
-                x=(xtest+61);
+                x=(xtest+hitBoxJellyfish.w+1);
                 y=b;
               }                
-          } 
+          }
+          else{}
       }
     }
 }
@@ -262,16 +254,13 @@ void rebondTortue(){
         }
         else {}
       y=yRect-10;
-            printf("vy gauche  %f\n",vy);
     }
     
     //centre, pas de modification de la direction
-    else if(y>(yRect-8) && y<(yRect+10) && x>(xRect+80) && x<(xRect+120)){
+    else if((y>(yRect-8)) && y<(yRect+10) && x>(xRect+80) && x<(xRect+120)){
       angle=60;
-            printf("vy centre  %f speedVar %d\n",vy, speedVar);
       vecteurSpeed();
       vy=vy*-1;
-            printf("vy centre  %f speedVar %d\n",vy, speedVar);
       y=yRect-10;
     }
     //droite, renvoyer vers la droite
@@ -286,7 +275,6 @@ void rebondTortue(){
         }
         else {}
       y=yRect-10;
-            printf("vy droite  %f\n",vy);
     }
 }
 
