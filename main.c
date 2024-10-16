@@ -188,12 +188,16 @@ void printVie(){
 }
 
 //vecteur de déplacement. Angle en degré converti en radians
-void speed(){
+
+void vecteurSpeed(){
     float rad = angle*(3.14/180);  
-    vx=cos(rad);
-    vy=sin(rad);
-    x=x+vx*speedVar;
-    y=y+vy*speedVar;
+    vx=cos(rad)*speedVar;
+    vy=sin(rad)*speedVar;
+}
+
+void speed(){
+    x=x+vx;
+    y=y+vy;
 }
 //interactions avec les bords et la tortue.
   //faire évoluer la fonction speed en fonction des rebonds     
@@ -203,8 +207,9 @@ void rebondTortue(){
     if(y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+80)){
       float posRebond;
       posRebond = (x-xRect) / 100;
-      angle=posRebond*angle;
-      vy=vy*-1*posRebond*100;
+      angle=30+posRebond*30;   //fait évoluer l'angle entre 30 et 60 suivant la position sur la barre
+      vecteurSpeed();
+      vy=vy*-1;
         if (vx>0){
           vx=vx*-1;
         }
@@ -212,16 +217,19 @@ void rebondTortue(){
       y=yRect-10;
     }
     
-    
     //centre, pas de modification de la direction
     else if(y>(yRect-8) && y<(yRect+10) && x>(xRect+80) && x<(xRect+120)){
       angle=60;
+      vecteurSpeed();
       vy=vy*-1;
       y=yRect-10;
     }
     //droite, renvoyer vers la droite
     else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+120) && x<(xRect+200)){
-
+      float posRebond;
+      posRebond = (x-(xRect+120)) / 80;
+      angle=30+posRebond*30;   //fait évoluer l'angle entre 30 et 60 suivant la position sur la barre
+      vecteurSpeed();
       vy=vy*-1;
         if (vx<0){
           vx=vx*-1;
@@ -298,7 +306,6 @@ void drawGame(){
     jellyfishPrint();
     interaction();
     rebondBords();
-//    changeColor(r,g,b);
     waterDrop();
     turtle();
     actualize();
@@ -313,18 +320,35 @@ void KeyPressed(SDL_Keycode touche){
             break;
         case SDLK_d:
             deplacementDroite=1;
-            break;
+            break;         
+                    
         case SDLK_p:
             speedVar=speedVar+1;
             if (speedVar>=15){
               speedVar=14;
             }
+              if(vx<0){
+                vecteurSpeed();
+                vx=vx*-1;
+              }
+              if(vy<0){
+                vecteurSpeed();
+                vy=vy*-1;
+              }
             break;
         case SDLK_m:
             speedVar=speedVar-1;
             if (speedVar<=0){
               speedVar=1;
             }
+              if(vx<0){
+                vecteurSpeed();
+                vx=vx*-1;
+              }
+              if(vy<0){
+                vecteurSpeed();
+                vy=vy*-1;
+              }
             break;
         case SDLK_SPACE:
             launch=1;
