@@ -1,6 +1,8 @@
 #include <SDL2/SDL.h>
 #include <unistd.h>
 #include "function.h"
+#include "variables.h"
+#include "niveaux.h"
 #include <time.h>
 #include <math.h>
 
@@ -9,82 +11,22 @@
 #define FPS 60
 
 /*Compiler :
-gcc main.c function.c -o main.out -lSDL2main -lSDL2 -lm
+gcc main.c function.c variables.c niveaux.c -o main.out -lSDL2main -lSDL2 -lm
 lm pour la librairie "math"
 
-
-//accélerer et ralentir la raquette. Mettre de l'inertie ?
-//Faire des angles différents de rebond
 //faire une barre de score, incrémenter un score pour chaque brique cassée. Briques rouges points *10
 //créer différents niveaux
 // créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue 
 */
 
-//Lancement du jeu
-int launch=0;
-//position de la balle dessiné dans drawGame()
-float x = 500;
-float y = 700;
-float vx=cos(60*(3.14/180))*5;
-float vy=-(60*(3.14/180))*5;
-  
-//position de la tortue
-int xRect=400;
-int yRect=920;
-//couleur de la balle de base
-int r=247;
-int g=146;
-int b=1;
-//variable de la vitesse
-int speedVar=5;
-//angle du rebond en degrés. Initialisation à 60°
-float angle=60;
-//Nombre de vies
-int nbVie=3;
-int xheart=10;
-int yheart=10;
-
-//active ou non le déplacement de la tortue via keyPressed et keyUp
-int deplacementGauche=0;
-int deplacementDroite=0;
-
-int presenceObjet[3][100];   //table pour stocker les coordonnées et présence d'ennemis sur la case
-
-//crée le tableau qui enregistre la position des briques et pilote leur présence
-void init_game(){
-  int index=0; //n° de cellule
-  //coordonnées de la cellule
-  int xScan=50;
-  int yScan=100;
-  for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
-    yScan=yScan+50*i;
-    for (int j=0;j<18;j++){
-      xScan=xScan+50*j;
-      for (int i=0;i<3;i++){   //pour chaque cellule, enregistre les coordonnées et initialise présence d'une brique
-        if (i==0){
-          presenceObjet[i][index]=xScan;
-        }
-        else if(i==1){
-          presenceObjet[i][index]=yScan; 
-        }
-        else{
-          presenceObjet[i][index]=1;
-        }
-      }
-    index=index+1;
-    xScan=50;
-    }
-  yScan=100;
-  }
-}
-
-//Structure qui vient chercher les dimensions de l'image. Donc valable sur chaque image (imgName comprend ".bmp" ou pas ?)
+//Structure qui pourrait réccupérer les dimensions de l'image. pb sur la variable qui est un "char".
 /*SDL_Rect hitBoxSize(char imgName){
     SDL_Rect hitBox;
     sprite3(0,0,imgName,&hitBox.w, &hitBox.h);
     return hitBox;
 } */
 
+/*
 //Structure pour récupérer les dimensions de l'image
 SDL_Rect hitBoxSizeJellyfish(){
     SDL_Rect hitBox;
@@ -96,6 +38,7 @@ SDL_Rect hitBoxSizeTurtle(){
     sprite3(0,0,"turtle.bmp",&hitBox.w, &hitBox.h);
     return hitBox;
 }
+*/
 
 //imprime les briques
 void jellyfish(int a, int b){   

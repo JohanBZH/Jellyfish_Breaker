@@ -1,7 +1,8 @@
+
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-#ifndef SDL_CESI_FUNCTION_H
+#ifndef SDL_CESI_FUNCTION_H //équivalent à dire "Si ce n'est pas fait, faire ce qu'il y a jusqu'au end". Equivalent à écrire #pragma once
 #define SDL_CESI_FUNCTION_H
 
 typedef struct Point {
