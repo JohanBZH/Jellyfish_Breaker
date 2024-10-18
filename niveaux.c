@@ -9,8 +9,55 @@ int niveau2[3][100];
 //coordonnées de la cellule
 // xScan=50;
 // yScan=100;
+
+void level1 (){
+  int index=0;
+  for (int i=0;i<4;i++){
+    if (i%2==0){
+      xScan=0;
+      yScan=yScan+50*i;
+      for (int j=0;j<9;j++){
+        xScan=xScan+(2*50);
+        for (int i=0;i<3;i++){
+          if (i==0){
+            niveau1[i][index]=xScan;
+          }
+          else if(i==1){
+            niveau1[i][index]=yScan; 
+          }
+          else{
+            niveau1[i][index]=1;
+          }
+        }
+      index=index+1;
+      }
+    }
+    else{
+      xScan=-50;
+      yScan=yScan+50*i;
+      for (int j=0;j<9;j++){
+        xScan=xScan+(2*50);
+        for (int i=0;i<3;i++){
+          if (i==0){
+            niveau1[i][index]=xScan;
+          }
+          else if(i==1){
+            niveau1[i][index]=yScan; 
+          }
+          else{
+            niveau1[i][index]=1;
+          }
+        }
+      index=index+1;
+      //xScan=50;
+      }
+    }
+  yScan=100;
+  }
+}
+
 //table niveau hard
-void levelHard (){
+void level2 (){
   int index=0; //n° de cellule
   for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
     yScan=yScan+50*i;
@@ -18,13 +65,13 @@ void levelHard (){
       xScan=xScan+50*j;
       for (int i=0;i<3;i++){   //pour chaque cellule, enregistre les coordonnées et initialise présence d'une brique
         if (i==0){
-          niveau1[i][index]=xScan;
+          niveau2[i][index]=xScan;
         }
         else if(i==1){
-          niveau1[i][index]=yScan; 
+          niveau2[i][index]=yScan; 
         }
         else{
-          niveau1[i][index]=1;
+          niveau2[i][index]=1;
         }
       }
     index=index+1;
@@ -34,52 +81,9 @@ void levelHard (){
   }
 }
 
-void levelEasy (){
-  int index=0; //n° de cellule
-  for (int i=0;i<4;i++){
-    if (i%2==0){
-      yScan=yScan+50*i;
-      for (int j=0;j<9;j++){
-        xScan=xScan+2*50*j;
-        for (int i=0;i<3;i++){
-          if (i==0){
-            niveau2[i][index]=xScan;
-          }
-          else if(i==1){
-            niveau2[i][index]=yScan; 
-          }
-          else{
-            niveau2[i][index]=1;
-          }
-        }
-      index=index+1;
-      xScan=100;
-      }
-    }
-    else{
-      yScan=yScan+50*i;
-      for (int j=0;j<9;j++){
-        xScan=xScan+2*50*j;
-
-        for (int i=0;i<3;i++){
-          if (i==0){
-            niveau2[i][index]=xScan;
-          }
-          else if(i==1){
-            niveau2[i][index]=yScan; 
-          }
-          else{
-            niveau2[i][index]=1;
-          }
-        }
-      index=index+1;
-      xScan=50;
-      }
-    }
-  yScan=100;
-  }
-}
-
 void init_game(){
-  levelHard();
+  level1();
+    for(int index=0;index<=100;index++){
+    }
+  level2();
 }

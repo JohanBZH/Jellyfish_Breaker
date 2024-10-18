@@ -47,4 +47,30 @@ void sprite3(int posX, int posY, char *imgSrc, int *w,int *h);
 
 void lastKeyPressed(SDL_Event *event);
 
+void jellyfish(int a, int b);
+
+void jellyfishPrint();
+
+void interaction();
+
+void gameEnd();
+
+void background();
+
+void vie();
+
+void printVie();
+
+void vecteurSpeed();
+
+void speed();
+
+void rebondTortue();
+
+void rebondBords();
+
+void turtle();
+
+void waterDrop();
+
 #endif //SDL_CESI_FUNCTION_H
