@@ -19,27 +19,6 @@ lm pour la librairie "math"
 // créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue 
 */
 
-//Structure qui pourrait réccupérer les dimensions de l'image. pb sur la variable qui est un "char".
-/*SDL_Rect hitBoxSize(char imgName){
-    SDL_Rect hitBox;
-    sprite3(0,0,imgName,&hitBox.w, &hitBox.h);
-    return hitBox;
-} */
-
-/*
-//Structure pour récupérer les dimensions de l'image
-SDL_Rect hitBoxSizeJellyfish(){
-    SDL_Rect hitBox;
-    sprite3(0,0,"jellyfish.bmp",&hitBox.w, &hitBox.h);
-    return hitBox;
-}
-SDL_Rect hitBoxSizeTurtle(){
-    SDL_Rect hitBox;
-    sprite3(0,0,"turtle.bmp",&hitBox.w, &hitBox.h);
-    return hitBox;
-}
-*/
-
 //imprime les briques
 void jellyfish(int a, int b){   
     sprite(a,b,"jellyfish.bmp");   
@@ -47,8 +26,8 @@ void jellyfish(int a, int b){
 
 void jellyfishPrint(){
     for (int j=0;j<100;j++){
-      if (presenceObjet[2][j]==1){
-        jellyfish(presenceObjet[0][j],presenceObjet[1][j]);        
+      if (niveau1[2][j]==1){
+        jellyfish(niveau1[0][j],niveau1[1][j]);        
       }
     }
 }
@@ -61,8 +40,8 @@ void interaction(){
 
     for (int j=0;j<100;j++){
 //coordonnées du coin haut gauche de la brique
-      int xtest=presenceObjet[0][j]; 
-      int ytest=presenceObjet[1][j];
+      int xtest=niveau1[0][j]; 
+      int ytest=niveau1[1][j];
 //position précédente de la balle
       int a=x-vx;
       int b=y-vy;
@@ -74,44 +53,44 @@ void interaction(){
           b=b+i;
         //contact par le bas
           if ((vy<0) && ((b<=(ytest+hitBoxJellyfish.h)) && ((((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))))){   
-              if ((presenceObjet[2][j])==1){
+              if ((niveau1[2][j])==1){
                printf("Bas atteint\n");
                printf("Bas a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
                 vy=vy*-1;
-                presenceObjet[2][j]=0;
+                niveau1[2][j]=0;
                 y=(ytest+hitBoxJellyfish.h+1);
                 x=a;
               }
           }
         //contact par le haut
           else if ((vy>0) && ((b+20)<=(ytest)) && (((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))){
-              if ((presenceObjet[2][j])==1){  
+              if ((niveau1[2][j])==1){  
           printf("Haut atteint\n");
            printf("Haut a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
                 vy=vy*-1;
-                presenceObjet[2][j]=0;
+                niveau1[2][j]=0;
                 y=(ytest-21);
                 x=a;
               }
           }
         //contact par la gauche
           else if ((vx>0) && (((a+20)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
-              if ((presenceObjet[2][j])==1){  
+              if ((niveau1[2][j])==1){  
                         printf("Gauche atteint\n");
                printf("Gauche a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
                 vx=vx*-1;
-                presenceObjet[2][j]=0;
+                niveau1[2][j]=0;
                 x=(xtest-21);
                 y=b;
               }                                  
           }
         //contact par la droite
           else if ((vx<0) && ((a>=(xtest)) && (a<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
-              if ((presenceObjet[2][j])==1){  
+              if ((niveau1[2][j])==1){  
                         printf("Droite atteint\n");
                printf("Droite a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
                 vx=vx*-1;
-                presenceObjet[2][j]=0;
+                niveau1[2][j]=0;
                 x=(xtest+hitBoxJellyfish.w+1);
                 y=b;
               }                
@@ -124,7 +103,7 @@ void interaction(){
 void gameEnd(){
     int gameOn=0;
     for (int j=0;j<100;j++){
-      if (presenceObjet[2][j]==1){   //ici 
+      if (niveau1[2][j]==1){
         gameOn=1;
       }     
     }
