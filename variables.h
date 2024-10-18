@@ -16,6 +16,12 @@ extern int yScan;
 //position de la tortue
 extern int xRect;
 extern int yRect;
+//position bouton level easy
+extern int xeasy;
+extern int yeasy;
+//position bouton level hard
+extern int xhard;
+extern int yhard;
 //couleur de la balle de base
 extern int r;
 extern int g;

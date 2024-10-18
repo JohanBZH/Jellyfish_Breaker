@@ -314,10 +314,19 @@ void jellyfish(int a, int b){
 }
 
 void jellyfishPrint(){
-    for (int j=0;j<100;j++){
-      if (niveau1[2][j]==1){
-        jellyfish(niveau1[0][j],niveau1[1][j]);        
-      }
+    if (launch==1){
+        for (int j=0;j<100;j++){
+            if (niveau1[2][j]==1){
+                jellyfish(niveau1[0][j],niveau1[1][j]);        
+            }
+        }
+    }
+    else if (launch==2){
+        for (int j=0;j<100;j++){
+            if (niveau2[2][j]==1){
+                jellyfish(niveau2[0][j],niveau2[1][j]);        
+            }
+        }
     }
 }
 

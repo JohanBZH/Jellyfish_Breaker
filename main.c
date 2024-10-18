@@ -99,12 +99,29 @@ void KeyUp(SDL_Keycode touche){
     }
 }
 
+//selectionne le niveau en cliquant
+void mouse(int xMouse, int yMouse){
+   
+    if (xMouse>=xeasy && xMouse<=(xeasy+400) && yMouse>=yeasy && yMouse<=yeasy+100) {
+            launch=1;
+    }
+    else if (xMouse>=xhard && xMouse<=(xhard+400) && yMouse>=yhard && yMouse<=yhard+100){
+            launch=2;
+    }
+    else{
+            launch=0;
+    }
+}
+
 void gameLauncher (){
     if (launch==0) {
         sprite (0,0,"launch.bmp");
+        sprite (xeasy,yeasy,"easy.bmp");
+        sprite (xhard,yhard,"hard.bmp");
         actualize();
     }
-    else{drawGame();
+    else {
+        drawGame();
     }
 }
 
@@ -123,6 +140,9 @@ void gameLoop() {   //pour gérer de façon plus fluide le déplacement de la to
                     break;
                 case SDL_KEYUP:
                     KeyUp(event.key.keysym.sym);
+                    break;
+                case SDL_MOUSEBUTTONUP:
+                    mouse(event.motion.x, event.motion.y);
                     break;
                 default:
                     break;

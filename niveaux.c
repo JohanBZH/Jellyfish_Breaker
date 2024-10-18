@@ -83,7 +83,5 @@ void level2 (){
 
 void init_game(){
   level1();
-    for(int index=0;index<=100;index++){
-    }
   level2();
 }
