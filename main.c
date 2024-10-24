@@ -15,7 +15,7 @@ gcc main.c function.c variables.c niveaux.c -o main.out -lSDL2main -lSDL2 -lm
 lm pour la librairie "math"
 
 //faire une barre de score, incrémenter un score pour chaque brique cassée. Briques rouges points *10
-//créer différents niveaux
+//créer différents niveaux et gérer les interactions pour chaque niveau
 // créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue 
 */
 

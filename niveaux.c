@@ -1,10 +1,8 @@
 #include "niveaux.h"
 #include "variables.h"
 
-int niveau1[3][100];   //table pour stocker les coordonnées et présence d'ennemis sur la case
-int niveau2[3][100]; 
-
-//créer un tableau par niveau. Dans le main, créer un sprite et des évènements pour lancer les niveaux.
+int niveau1[3][72];   //table pour stocker les coordonnées et présence d'ennemis sur la case
+int niveau2[3][90]; 
 
 //coordonnées de la cellule
 // xScan=50;
@@ -60,6 +58,7 @@ void level1 (){
 void level2 (){
   int index=0; //n° de cellule
   for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
+    xScan=50;
     yScan=yScan+50*i;
     for (int j=0;j<18;j++){
       xScan=xScan+50*j;

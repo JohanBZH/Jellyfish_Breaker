@@ -331,15 +331,23 @@ void jellyfishPrint(){
 }
 
 //fait rebondir contre la brique et la supprime
-
+//créer une structure pour les tableaux pour gérer les interactions
 void interaction(){
    SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); //va récupérer les dimensions de l'image pour les hitBox
    SDL_Rect hitBoxTurtle = hitBoxSizeTurtle();
 
     for (int j=0;j<100;j++){
 //coordonnées du coin haut gauche de la brique
-      int xtest=niveau1[0][j]; 
-      int ytest=niveau1[1][j];
+    int xtest;
+    int ytest;
+    if(launch==1){  
+        xtest=niveau1[0][j]; 
+        ytest=niveau1[1][j];
+    }
+    else if(launch==2){
+        xtest=niveau2[0][j]; 
+        ytest=niveau2[1][j];
+    }
 //position précédente de la balle
       int a=x-vx;
       int b=y-vy;
@@ -350,7 +358,7 @@ void interaction(){
           a=a+i;
           b=b+i;
         //contact par le bas
-          if ((vy<0) && ((b<=(ytest+hitBoxJellyfish.h)) && ((((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))))){   
+          if ((vy<0) && ((b<=(ytest+hitBoxJellyfish.h)) && (b>=(ytest)) && ((((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))))){   
               if ((niveau1[2][j])==1){
                printf("Bas atteint\n");
                printf("Bas a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
@@ -361,7 +369,7 @@ void interaction(){
               }
           }
         //contact par le haut
-          else if ((vy>0) && ((b+20)<=(ytest)) && (((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))){
+          else if ((vy>0) && ((b+20)>=(ytest)) && ((b+20)<=(ytest+hitBoxJellyfish.h)) && (((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))){
               if ((niveau1[2][j])==1){  
           printf("Haut atteint\n");
            printf("Haut a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
