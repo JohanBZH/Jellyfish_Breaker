@@ -407,7 +407,7 @@ void gameEnd(){
           sprite (0,0,"win.bmp");
           actualize();
           usleep(200000000 / FPS);
-          freeAndTerminate(); 
+          launch=0; 
     }
 }
 
@@ -431,7 +431,7 @@ void vie(){
         sprite (0,0,"lost.bmp");
         actualize();
         usleep(200000000 / FPS);
-        freeAndTerminate();
+        launch=0;
       }
 }
 void printVie(){

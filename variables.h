@@ -22,10 +22,9 @@ extern int yeasy;
 //position bouton level hard
 extern int xhard;
 extern int yhard;
-//couleur de la balle de base
-extern int r;
-extern int g;
-extern int b;
+//position bouton quit
+extern int xquit;
+extern int yquit;
 //variable de la vitesse
 extern int speedVar;
 //angle du rebond en degrés. Initialisation à 60°

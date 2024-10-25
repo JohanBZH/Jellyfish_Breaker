@@ -23,10 +23,9 @@ int yeasy=600;
 //position bouton level hard
 int xhard=500;
 int yhard=600;
-//couleur de la balle de base
-int r=247;
-int g=146;
-int b=1;
+//position bouton quit
+int xquit=600;
+int yquit=800;
 //variable de la vitesse
 int speedVar=5;
 //angle du rebond en degrés. Initialisation à 60°
