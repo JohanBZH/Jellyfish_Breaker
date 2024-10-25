@@ -1,14 +1,10 @@
 #include "niveaux.h"
 #include "variables.h"
 
-int niveau1[3][72];   //table pour stocker les coordonnées et présence d'ennemis sur la case
-int niveau2[3][90]; 
+//Déclare le nombre de niveaux
+struct Level level[2];
 
-//coordonnées de la cellule
-// xScan=50;
-// yScan=100;
-
-void level1 (){
+void level0 (){
   int index=0;
   for (int i=0;i<4;i++){
     if (i%2==0){
@@ -18,13 +14,13 @@ void level1 (){
         xScan=xScan+(2*50);
         for (int i=0;i<3;i++){
           if (i==0){
-            niveau1[i][index]=xScan;
+            level[0].tableLevel[i][index]=xScan;
           }
           else if(i==1){
-            niveau1[i][index]=yScan; 
+            level[0].tableLevel[i][index]=yScan; 
           }
           else{
-            niveau1[i][index]=1;
+            level[0].tableLevel[i][index]=1;
           }
         }
       index=index+1;
@@ -37,13 +33,13 @@ void level1 (){
         xScan=xScan+(2*50);
         for (int i=0;i<3;i++){
           if (i==0){
-            niveau1[i][index]=xScan;
+            level[0].tableLevel[i][index]=xScan;
           }
           else if(i==1){
-            niveau1[i][index]=yScan; 
+            level[0].tableLevel[i][index]=yScan; 
           }
           else{
-            niveau1[i][index]=1;
+            level[0].tableLevel[i][index]=1;
           }
         }
       index=index+1;
@@ -52,10 +48,25 @@ void level1 (){
     }
   yScan=100;
   }
+  for (int i=72;i<100;i++){ //complète le reste de la table pour éviter des valeurs erronnées
+      for (int i=0;i<3;i++){   
+        if (i==0){
+          level[0].tableLevel[i][index]=0;
+        }
+        else if(i==1){
+          level[0].tableLevel[i][index]=0; 
+        }
+        else{
+          level[0].tableLevel[i][index]=0;
+        }
+      }
+  index=index+1;
+  }
 }
 
+
 //table niveau hard
-void level2 (){
+void level1 (){
   int index=0; //n° de cellule
   for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
     xScan=50;
@@ -64,13 +75,13 @@ void level2 (){
       xScan=xScan+50*j;
       for (int i=0;i<3;i++){   //pour chaque cellule, enregistre les coordonnées et initialise présence d'une brique
         if (i==0){
-          niveau2[i][index]=xScan;
+          level[1].tableLevel[i][index]=xScan;
         }
         else if(i==1){
-          niveau2[i][index]=yScan; 
+          level[1].tableLevel[i][index]=yScan; 
         }
         else{
-          niveau2[i][index]=1;
+          level[1].tableLevel[i][index]=1;
         }
       }
     index=index+1;
@@ -78,9 +89,23 @@ void level2 (){
     }
   yScan=100;
   }
+  for (int i=90;i<100;i++){ //complète le reste de la table pour éviter des valeurs erronnées
+      for (int i=0;i<3;i++){   
+        if (i==0){
+          level[1].tableLevel[i][index]=0;
+        }
+        else if(i==1){
+          level[1].tableLevel[i][index]=0; 
+        }
+        else{
+          level[1].tableLevel[i][index]=0;
+        }
+      }
+  index=index+1;
+  }
 }
 
 void init_game(){
+  level0();
   level1();
-  level2();
 }

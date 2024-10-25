@@ -35,6 +35,8 @@ float angle=60;
 int nbVie=3;
 int xheart=10;
 int yheart=10;
+//Level choisi
+int numLevel;
 
 //active ou non le déplacement de la tortue via keyPressed et keyUp
 int deplacementGauche=0;

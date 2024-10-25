@@ -314,18 +314,9 @@ void jellyfish(int a, int b){
 }
 
 void jellyfishPrint(){
-    if (launch==1){
-        for (int j=0;j<100;j++){
-            if (niveau1[2][j]==1){
-                jellyfish(niveau1[0][j],niveau1[1][j]);        
-            }
-        }
-    }
-    else if (launch==2){
-        for (int j=0;j<100;j++){
-            if (niveau2[2][j]==1){
-                jellyfish(niveau2[0][j],niveau2[1][j]);        
-            }
+    for (int j=0;j<100;j++){
+        if (level[numLevel].tableLevel[2][j]==1){
+            jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j]);        
         }
     }
 }
@@ -337,81 +328,76 @@ void interaction(){
    SDL_Rect hitBoxTurtle = hitBoxSizeTurtle();
 
     for (int j=0;j<100;j++){
-//coordonnées du coin haut gauche de la brique
-    int xtest;
-    int ytest;
-    if(launch==1){  
-        xtest=niveau1[0][j]; 
-        ytest=niveau1[1][j];
-    }
-    else if(launch==2){
-        xtest=niveau2[0][j]; 
-        ytest=niveau2[1][j];
-    }
+
 //position précédente de la balle
       int a=x-vx;
       int b=y-vy;
 //chemin entre les 2 positions de la balle
       float R = sqrt(pow((x-a),2)+(pow((y-b),2)));
+//coordonnées du coin haut gauche de la brique
+        int xtest;
+        int ytest;
+        xtest=level[numLevel].tableLevel[0][j]; 
+        ytest=level[numLevel].tableLevel[1][j];
 //tester toutes les positions intermédiaires
-      for (int i=0;i<=(int)R;i++){
-          a=a+i;
-          b=b+i;
-        //contact par le bas
-          if ((vy<0) && ((b<=(ytest+hitBoxJellyfish.h)) && (b>=(ytest)) && ((((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))))){   
-              if ((niveau1[2][j])==1){
-               printf("Bas atteint\n");
-               printf("Bas a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
-                vy=vy*-1;
-                niveau1[2][j]=0;
-                y=(ytest+hitBoxJellyfish.h+1);
-                x=a;
-              }
-          }
-        //contact par le haut
-          else if ((vy>0) && ((b+20)>=(ytest)) && ((b+20)<=(ytest+hitBoxJellyfish.h)) && (((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))){
-              if ((niveau1[2][j])==1){  
-          printf("Haut atteint\n");
-           printf("Haut a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
-                vy=vy*-1;
-                niveau1[2][j]=0;
-                y=(ytest-21);
-                x=a;
-              }
-          }
-        //contact par la gauche
-          else if ((vx>0) && (((a+20)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
-              if ((niveau1[2][j])==1){  
-                        printf("Gauche atteint\n");
-               printf("Gauche a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
-                vx=vx*-1;
-                niveau1[2][j]=0;
-                x=(xtest-21);
-                y=b;
-              }                                  
-          }
-        //contact par la droite
-          else if ((vx<0) && ((a>=(xtest)) && (a<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
-              if ((niveau1[2][j])==1){  
-                        printf("Droite atteint\n");
-               printf("Droite a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
-                vx=vx*-1;
-                niveau1[2][j]=0;
-                x=(xtest+hitBoxJellyfish.w+1);
-                y=b;
-              }                
-          }
-          else{}
-      }
+        for (int i=0;i<=(int)R;i++){
+            a=a+i;
+            b=b+i;
+            //contact par le bas
+            if ((vy<0) && ((b<=(ytest+hitBoxJellyfish.h)) && (b>=(ytest)) && ((((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))))){   
+                if ((level[numLevel].tableLevel[2][j])==1){
+                printf("Bas atteint\n");
+                printf("Bas a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
+                    vy=vy*-1;
+                    level[numLevel].tableLevel[2][j]=0;
+                    y=(ytest+hitBoxJellyfish.h+1);
+                    x=a;
+                }
+            }
+            //contact par le haut
+            else if ((vy>0) && ((b+20)>=(ytest)) && ((b+20)<=(ytest+hitBoxJellyfish.h)) && (((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))){
+                if ((level[numLevel].tableLevel[2][j])==1){  
+            printf("Haut atteint\n");
+            printf("Haut a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
+                    vy=vy*-1;
+                    level[numLevel].tableLevel[2][j]=0;
+                    y=(ytest-21);
+                    x=a;
+                }
+            }
+            //contact par la gauche
+            else if ((vx>0) && (((a+20)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
+                if ((level[numLevel].tableLevel[2][j])==1){  
+                            printf("Gauche atteint\n");
+                printf("Gauche a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
+                    vx=vx*-1;
+                    level[numLevel].tableLevel[2][j]=0;
+                    x=(xtest-21);
+                    y=b;
+                }                                  
+            }
+            //contact par la droite
+            else if ((vx<0) && ((a>=(xtest)) && (a<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
+                if ((level[numLevel].tableLevel[2][j])==1){  
+                            printf("Droite atteint\n");
+                printf("Droite a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
+                    vx=vx*-1;
+                    level[numLevel].tableLevel[2][j]=0;
+                    x=(xtest+hitBoxJellyfish.w+1);
+                    y=b;
+                }                
+            }
+            else{}
+        }
     }
 }
 
 void gameEnd(){
     int gameOn=0;
     for (int j=0;j<100;j++){
-      if (niveau1[2][j]==1){
-        gameOn=1;
-      }     
+        if (level[numLevel].tableLevel[2][j]==1){
+            gameOn=1;
+        }     
     }
     switch (gameOn){
       case 1:
@@ -422,7 +408,7 @@ void gameEnd(){
           actualize();
           usleep(200000000 / FPS);
           freeAndTerminate(); 
-      }
+    }
 }
 
 void background(){

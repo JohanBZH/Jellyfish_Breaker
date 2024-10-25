@@ -14,9 +14,10 @@
 gcc main.c function.c variables.c niveaux.c -o main.out -lSDL2main -lSDL2 -lm
 lm pour la librairie "math"
 
-//faire une barre de score, incrémenter un score pour chaque brique cassée. Briques rouges points *10
-//créer différents niveaux et gérer les interactions pour chaque niveau
+Revenir au menu de départ après un succès
+//créer différents niveaux et gérer les interactions pour chaque niveau. Gérer les différents niveaux mieux qu'avec des if pour les interactions et GameEnd
 // créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue 
+//faire une barre de score, incrémenter un score pour chaque brique cassée. Briques rouges points *10
 */
 
 
@@ -104,9 +105,11 @@ void mouse(int xMouse, int yMouse){
    
     if (xMouse>=xeasy && xMouse<=(xeasy+400) && yMouse>=yeasy && yMouse<=yeasy+100) {
             launch=1;
+            numLevel=0;
     }
     else if (xMouse>=xhard && xMouse<=(xhard+400) && yMouse>=yhard && yMouse<=yhard+100){
             launch=2;
+            numLevel=1;
     }
     else{
             launch=0;

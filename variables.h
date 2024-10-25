@@ -34,6 +34,8 @@ extern float angle;
 extern int nbVie;
 extern int xheart;
 extern int yheart;
+//Level choisi
+extern int numLevel;
 
 //active ou non le déplacement de la tortue via keyPressed et keyUp
 extern int deplacementGauche;
