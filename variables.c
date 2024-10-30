@@ -18,16 +18,19 @@ int yScan=100;
 int xRect=400;
 int yRect=920;
 //position bouton level easy
-int xeasy=100;
-int yeasy=600;
+int xeasy=300;
+int yeasy=750;
+//position bouton level medium
+int xmedium=475;
+int ymedium=750;
 //position bouton level hard
-int xhard=500;
-int yhard=600;
+int xhard=650;
+int yhard=750;
 //position bouton quit
 int xquit=500;
 int yquit=900;
 //variable de la vitesse
-int speedVar=5;
+int speedVar=9;
 //angle du rebond en degrés. Initialisation à 60°
 float angle=60;
 //Nombre de vies

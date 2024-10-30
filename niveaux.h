@@ -11,4 +11,4 @@ struct Level {
   int tableLevel[3][100];
 };
 
-extern struct Level level[2];
+extern struct Level level[3];

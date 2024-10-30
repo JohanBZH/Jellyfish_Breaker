@@ -72,10 +72,6 @@ void KeyPressed(SDL_Keycode touche){
                 vy=vy*-1;
               }
             break;
-        case SDLK_SPACE:
-            launch=1;
-            ;
-            break;
         case SDLK_ESCAPE:
             freeAndTerminate();
             break;
@@ -101,15 +97,19 @@ void KeyUp(SDL_Keycode touche){
 //selectionne le niveau en cliquant
 void mouse(int xMouse, int yMouse){
    
-    if (xMouse>=xeasy && xMouse<=(xeasy+400) && yMouse>=yeasy && yMouse<=yeasy+100) {
+    if (xMouse>=xeasy && xMouse<=(xeasy+50) && yMouse>=yeasy && yMouse<=yeasy+50) {
             launch=1;
             numLevel=0;
     }
-    else if (xMouse>=xhard && xMouse<=(xhard+400) && yMouse>=yhard && yMouse<=yhard+100){
-            launch=2;
+    else if (xMouse>=xmedium && xMouse<=(xmedium+50) && yMouse>=ymedium && yMouse<=ymedium+50){
+            launch=1;
             numLevel=1;
     }
-    else if (xMouse>=xquit && xMouse<=(xquit+400) && yMouse>=yquit && yMouse<=yquit+100){
+    else if (xMouse>=xhard && xMouse<=(xhard+50) && yMouse>=yhard && yMouse<=yhard+50){
+            launch=1;
+            numLevel=2;
+    }
+    else if (xMouse>=xquit && xMouse<=(xquit+50) && yMouse>=yquit && yMouse<=yquit+50){
             freeAndTerminate();
     }
     else{
@@ -120,8 +120,10 @@ void mouse(int xMouse, int yMouse){
 void gameLauncher (){
     if (launch==0) {
         sprite (0,0,"launch.bmp");
-        sprite (xeasy,yeasy,"easy.bmp");
-        sprite (xhard,yhard,"hard.bmp");
+        sprite (300,600,"choose.bmp");
+        sprite (xeasy,yeasy,"jellyfishGreen.bmp");
+        sprite (xmedium,ymedium,"jellyfish.bmp");       
+        sprite (xhard,yhard,"jellyfishRed.bmp");
         sprite (xquit,yquit,"quit.bmp");
         actualize();
     }

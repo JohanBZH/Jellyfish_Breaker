@@ -19,6 +19,9 @@ extern int yRect;
 //position bouton level easy
 extern int xeasy;
 extern int yeasy;
+//position bouton level medium
+extern int xmedium;
+extern int ymedium;
 //position bouton level hard
 extern int xhard;
 extern int yhard;

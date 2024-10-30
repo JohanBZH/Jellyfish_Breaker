@@ -325,28 +325,28 @@ void jellyfishPrint(){
 //contact ok, pb dans la redéfinition des coordonnées post contact - pb entre le float qui calcule le chemin entre 2 positions et les entiers des coordonnées ?
 
 void interaction(){
-//récupère les dimensions de l'image pour les hitBox (int)
-   SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); 
-   SDL_Rect hitBoxTurtle = hitBoxSizeTurtle();
-
+    //récupère les dimensions de l'image pour les hitBox (int)
+    SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); 
+    SDL_Rect hitBoxTurtle = hitBoxSizeTurtle();
     for (int j=0;j<100;j++){
-//coordonnées du coin haut gauche de la brique
-        int xtest;
-        int ytest;
-        xtest=level[numLevel].tableLevel[0][j]; 
-        ytest=level[numLevel].tableLevel[1][j];
+    //coordonnées du coin haut gauche de la brique
+            int xtest;
+            int ytest;
+            xtest=level[numLevel].tableLevel[0][j]; 
+            ytest=level[numLevel].tableLevel[1][j];
 
-//position précédente de la balle
+    //position précédente de la balle
         float a=x-vx;
         float b=y-vy;
-//distance entre les 2 positions de la balle
+    //distance entre les 2 positions de la balle
         float R = sqrt(((x-a)*(x-a))+((y-b)*(y-b)));
-//calcul du nombre d'itérations à faire
+    //calcul du nombre d'itérations à faire
         float iteration=1/R;
-//tester toutes les positions intermédiaires
+    //tester toutes les positions intermédiaires
         for (float i=0;i<=1;i+=iteration){
             int collision=0;
             if (collision==0){
+    //déplacement de la balle entre les 2 positions
                 a=a+(iteration*(x-a));
                 b=b+(iteration*(y-b));
 
@@ -358,13 +358,11 @@ void interaction(){
                     ((a+10)<=(xtest+hitBoxJellyfish.w))){  
 
                     if ((level[numLevel].tableLevel[2][j])==1){
-                    printf("Bas atteint\n");
                         vy=vy*-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest+hitBoxJellyfish.h+1);
                         x=a;
                         collision=1;
-                    printf("Bas a :%f b :%f xtest : %d ytest : %d x=%f, y=%f, numlevel=%d, level[numLevel].tableLevel[2][j]=%d, vy=%f\n", a,b,xtest,ytest,x,y,numLevel,level[numLevel].tableLevel[2][j],vy);
                     }
                 }
                 //contact par le haut
@@ -374,8 +372,6 @@ void interaction(){
                         ((a+10)>=(xtest)) && 
                         ((a+10)<=(xtest+hitBoxJellyfish.w))){
                     if ((level[numLevel].tableLevel[2][j])==1){  
-                printf("Haut atteint\n");
-                printf("haut a :%f b :%f xtest : %d ytest : %d x=%f, y=%f, numlevel=%d, level[numLevel].tableLevel[2][j]=%d,vy=%f\n", a,b,xtest,ytest,x,y,numLevel,level[numLevel].tableLevel[2][j],vy );
                         vy=vy*-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest-21);
@@ -390,8 +386,6 @@ void interaction(){
                         ((b+10)>=(ytest)) && 
                         ((b+10)<=(ytest+hitBoxJellyfish.h))){
                     if ((level[numLevel].tableLevel[2][j])==1){  
-                                printf("Gauche atteint\n");
-                    printf("Gauche a :%f b :%f xtest : %d ytest : %d x=%f, y=%f, numlevel=%d, level[numLevel].tableLevel[2][j]=%d,vx=%f\n", a,b,xtest,ytest,x,y,numLevel,level[numLevel].tableLevel[2][j],vx );
                         vx=vx*-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest-21);
@@ -406,8 +400,6 @@ void interaction(){
                         ((b+10)>=(ytest)) && 
                         ((b+10)<=(ytest+hitBoxJellyfish.h))){
                     if ((level[numLevel].tableLevel[2][j])==1){  
-                                printf("Droite atteint\n");
-                    printf("Droite a :%f b :%f xtest : %d ytest : %d x=%f, y=%f, numlevel=%d, level[numLevel].tableLevel[2][j]=%d vx=%f\n", a,b,xtest,ytest,x,y,numLevel,level[numLevel].tableLevel[2][j],vx );
                         vx=vx*-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest+hitBoxJellyfish.w+1);
@@ -451,7 +443,7 @@ void vie(){
         if (nbVie>=0){
         x=500;
         y=800;
-        sprite (0,0,"goAgain.bmp");  //image à créer
+        sprite (0,0,"goAgain.bmp");
         actualize();
         usleep(100000000 / FPS);
         vx=4;
