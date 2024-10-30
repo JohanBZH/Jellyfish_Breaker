@@ -24,8 +24,8 @@ int yeasy=600;
 int xhard=500;
 int yhard=600;
 //position bouton quit
-int xquit=600;
-int yquit=800;
+int xquit=500;
+int yquit=900;
 //variable de la vitesse
 int speedVar=5;
 //angle du rebond en degrés. Initialisation à 60°
@@ -51,17 +51,5 @@ SDL_Rect hitBoxSizeJellyfish(){
 SDL_Rect hitBoxSizeTurtle(){
     SDL_Rect hitBox;
     sprite3(0,0,"turtle.bmp",&hitBox.w, &hitBox.h);
-    return hitBox;
-}
-
-SDL_Rect hitBoxLevelEasy(){
-    SDL_Rect hitBox;
-    sprite3(0,0,"easy.bmp",&hitBox.w, &hitBox.h);
-    return hitBox;
-}
-
-SDL_Rect hitBoxLevelHard(){
-    SDL_Rect hitBox;
-    sprite3(0,0,"hard.bmp",&hitBox.w, &hitBox.h);
     return hitBox;
 }

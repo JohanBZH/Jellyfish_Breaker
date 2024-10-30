@@ -258,7 +258,7 @@ void sprite2(int posX, int posY, char *imgBMPSrc, int *w,int *h) {
     
 }
 
-//trouver et désactiver la partie qui affiche l'image
+//équivalent sprite avec la partie qui affiche l'image désactivée
 void sprite3(int posX, int posY, char *imgBMPSrc, int *w,int *h) {
     /* @brief affiche un image .bmp sur le renderer
      */
@@ -322,72 +322,101 @@ void jellyfishPrint(){
 }
 
 //fait rebondir contre la brique et la supprime
-//créer une structure pour les tableaux pour gérer les interactions
+//contact ok, pb dans la redéfinition des coordonnées post contact - pb entre le float qui calcule le chemin entre 2 positions et les entiers des coordonnées ?
+
 void interaction(){
-   SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); //va récupérer les dimensions de l'image pour les hitBox
+//récupère les dimensions de l'image pour les hitBox (int)
+   SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); 
    SDL_Rect hitBoxTurtle = hitBoxSizeTurtle();
 
     for (int j=0;j<100;j++){
-
-//position précédente de la balle
-      int a=x-vx;
-      int b=y-vy;
-//chemin entre les 2 positions de la balle
-      float R = sqrt(pow((x-a),2)+(pow((y-b),2)));
 //coordonnées du coin haut gauche de la brique
         int xtest;
         int ytest;
         xtest=level[numLevel].tableLevel[0][j]; 
         ytest=level[numLevel].tableLevel[1][j];
+
+//position précédente de la balle
+        float a=x-vx;
+        float b=y-vy;
+//distance entre les 2 positions de la balle
+        float R = sqrt(((x-a)*(x-a))+((y-b)*(y-b)));
+//calcul du nombre d'itérations à faire
+        float iteration=1/R;
 //tester toutes les positions intermédiaires
-        for (int i=0;i<=(int)R;i++){
-            a=a+i;
-            b=b+i;
-            //contact par le bas
-            if ((vy<0) && ((b<=(ytest+hitBoxJellyfish.h)) && (b>=(ytest)) && ((((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))))){   
-                if ((level[numLevel].tableLevel[2][j])==1){
-                printf("Bas atteint\n");
-                printf("Bas a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
-                    vy=vy*-1;
-                    level[numLevel].tableLevel[2][j]=0;
-                    y=(ytest+hitBoxJellyfish.h+1);
-                    x=a;
+        for (float i=0;i<=1;i+=iteration){
+            int collision=0;
+            if (collision==0){
+                a=a+(iteration*(x-a));
+                b=b+(iteration*(y-b));
+
+                //contact par le bas
+                if ((vy<0) && 
+                    (b<=(ytest+hitBoxJellyfish.h)) && 
+                    (b>=(ytest)) && 
+                    ((a+10)>=(xtest)) && 
+                    ((a+10)<=(xtest+hitBoxJellyfish.w))){  
+
+                    if ((level[numLevel].tableLevel[2][j])==1){
+                    printf("Bas atteint\n");
+                        vy=vy*-1;
+                        level[numLevel].tableLevel[2][j]=0;
+                        y=(ytest+hitBoxJellyfish.h+1);
+                        x=a;
+                        collision=1;
+                    printf("Bas a :%f b :%f xtest : %d ytest : %d x=%f, y=%f, numlevel=%d, level[numLevel].tableLevel[2][j]=%d, vy=%f\n", a,b,xtest,ytest,x,y,numLevel,level[numLevel].tableLevel[2][j],vy);
+                    }
                 }
-            }
-            //contact par le haut
-            else if ((vy>0) && ((b+20)>=(ytest)) && ((b+20)<=(ytest+hitBoxJellyfish.h)) && (((a+10)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w)))){
-                if ((level[numLevel].tableLevel[2][j])==1){  
-            printf("Haut atteint\n");
-            printf("Haut a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
-                    vy=vy*-1;
-                    level[numLevel].tableLevel[2][j]=0;
-                    y=(ytest-21);
-                    x=a;
+                //contact par le haut
+                else if ((vy>0) && 
+                        ((b+20)>=(ytest)) && 
+                        ((b+20)<=(ytest+hitBoxJellyfish.h)) && 
+                        ((a+10)>=(xtest)) && 
+                        ((a+10)<=(xtest+hitBoxJellyfish.w))){
+                    if ((level[numLevel].tableLevel[2][j])==1){  
+                printf("Haut atteint\n");
+                printf("haut a :%f b :%f xtest : %d ytest : %d x=%f, y=%f, numlevel=%d, level[numLevel].tableLevel[2][j]=%d,vy=%f\n", a,b,xtest,ytest,x,y,numLevel,level[numLevel].tableLevel[2][j],vy );
+                        vy=vy*-1;
+                        level[numLevel].tableLevel[2][j]=0;
+                        y=(ytest-21);
+                        x=a;
+                        collision=1;
+                    }
                 }
+                //contact par la gauche
+                else if ((vx>0) && 
+                        ((a+20)>=(xtest)) && 
+                        ((a+10)<=(xtest+hitBoxJellyfish.w)) && 
+                        ((b+10)>=(ytest)) && 
+                        ((b+10)<=(ytest+hitBoxJellyfish.h))){
+                    if ((level[numLevel].tableLevel[2][j])==1){  
+                                printf("Gauche atteint\n");
+                    printf("Gauche a :%f b :%f xtest : %d ytest : %d x=%f, y=%f, numlevel=%d, level[numLevel].tableLevel[2][j]=%d,vx=%f\n", a,b,xtest,ytest,x,y,numLevel,level[numLevel].tableLevel[2][j],vx );
+                        vx=vx*-1;
+                        level[numLevel].tableLevel[2][j]=0;
+                        x=(xtest-21);
+                        y=b;
+                        collision=1;
+                    }                                  
+                }
+                //contact par la droite
+                else if ((vx<0) && 
+                        (a>=(xtest)) && 
+                        (a<=(xtest+hitBoxJellyfish.w)) && 
+                        ((b+10)>=(ytest)) && 
+                        ((b+10)<=(ytest+hitBoxJellyfish.h))){
+                    if ((level[numLevel].tableLevel[2][j])==1){  
+                                printf("Droite atteint\n");
+                    printf("Droite a :%f b :%f xtest : %d ytest : %d x=%f, y=%f, numlevel=%d, level[numLevel].tableLevel[2][j]=%d vx=%f\n", a,b,xtest,ytest,x,y,numLevel,level[numLevel].tableLevel[2][j],vx );
+                        vx=vx*-1;
+                        level[numLevel].tableLevel[2][j]=0;
+                        x=(xtest+hitBoxJellyfish.w+1);
+                        y=b;
+                        collision=1;
+                    }                
+                }
+                else{}
             }
-            //contact par la gauche
-            else if ((vx>0) && (((a+20)>=(xtest)) && ((a+10)<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
-                if ((level[numLevel].tableLevel[2][j])==1){  
-                            printf("Gauche atteint\n");
-                printf("Gauche a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
-                    vx=vx*-1;
-                    level[numLevel].tableLevel[2][j]=0;
-                    x=(xtest-21);
-                    y=b;
-                }                                  
-            }
-            //contact par la droite
-            else if ((vx<0) && ((a>=(xtest)) && (a<=(xtest+hitBoxJellyfish.w))) && (((b+10)>=(ytest)) && ((b+10)<=(ytest+hitBoxJellyfish.h)))){
-                if ((level[numLevel].tableLevel[2][j])==1){  
-                            printf("Droite atteint\n");
-                printf("Droite a :%d b :%d xtest : %d ytest : %d \n", a,b,xtest,ytest );
-                    vx=vx*-1;
-                    level[numLevel].tableLevel[2][j]=0;
-                    x=(xtest+hitBoxJellyfish.w+1);
-                    y=b;
-                }                
-            }
-            else{}
         }
     }
 }
@@ -407,7 +436,9 @@ void gameEnd(){
           sprite (0,0,"win.bmp");
           actualize();
           usleep(200000000 / FPS);
+          nbVie=3;
           launch=0; 
+          init_game();
     }
 }
 
@@ -431,7 +462,9 @@ void vie(){
         sprite (0,0,"lost.bmp");
         actualize();
         usleep(200000000 / FPS);
+        nbVie=3;
         launch=0;
+        init_game();
       }
 }
 void printVie(){
@@ -493,7 +526,7 @@ void rebondTortue(){
 }
 
 void rebondBords(){
-    if (x>(979)){   //window_width-rayon de la balle-1 pour éviter le contact
+    if (x>(979)){   //window_width-hitbox-1 pour éviter le contact
       vx=vx*-1;         //renvoie dans l'autre sens
       x=979;
     }
@@ -518,14 +551,11 @@ void rebondBords(){
 
 //Déplacement de la raquette
 void turtle(){
-    int vMax=30;
-    int vMin=10;
-    int vTurtle=vMin;
     if (deplacementGauche==1){
-      xRect=xRect-2*vTurtle;
+      xRect=xRect-20;
     }
     else if (deplacementDroite==1){
-      xRect=xRect+2*vTurtle;    
+      xRect=xRect+20;    
     }
     if(xRect<0){
       xRect=0;
