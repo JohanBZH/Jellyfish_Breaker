@@ -14,9 +14,8 @@
 gcc main.c function.c variables.c niveaux.c -o main.out -lSDL2main -lSDL2 -lm
 lm pour la librairie "math"
 
-//Générer aléatoirement mais un nombre fixe de briques rouges (niveau à continuer de modifier)
 // créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
-//faire une barre de score, incrémenter un score pour chaque brique cassée. Briques rouges points *10
+//faire une barre de score, incrémenter un score pour chaque brique cassée.
 */
 
 

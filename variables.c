@@ -39,6 +39,8 @@ int xheart=10;
 int yheart=10;
 //Level choisi
 int numLevel;
+//index briques supprimées par les briques rouges
+int indexBoum;
 
 //active ou non le déplacement de la tortue via keyPressed et keyUp
 int deplacementGauche=0;

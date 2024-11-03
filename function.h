@@ -53,6 +53,10 @@ void jellyfishPrint();
 
 void interaction();
 
+int indexBriquesCollisionRed (int xBriqueExplose, int yBriqueExplose);
+
+void collisionRed();
+
 void gameEnd();
 
 void background();

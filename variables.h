@@ -38,6 +38,8 @@ extern int xheart;
 extern int yheart;
 //Level choisi
 extern int numLevel;
+//index briques supprimées par les briques rouges
+extern int indexBoum;
 
 //active ou non le déplacement de la tortue via keyPressed et keyUp
 extern int deplacementGauche;

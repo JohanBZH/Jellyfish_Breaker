@@ -363,13 +363,22 @@ void interaction(){
                     (b>=(ytest)) && 
                     ((a+10)>=(xtest)) && 
                     ((a+10)<=(xtest+hitBoxJellyfish.w))){  
-
-                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==2){
+                    //collision avec une brique normale
+                    if ((level[numLevel].tableLevel[2][j])==1){
                         vy=vy*-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest+hitBoxJellyfish.h+1);
                         x=a;
                         collision=1;
+                    }
+                    //collision avec une brique rouge
+                    if ((level[numLevel].tableLevel[2][j])==2){
+                        vy=vy*-1;
+                        level[numLevel].tableLevel[2][j]=0;
+                        y=(ytest+hitBoxJellyfish.h+1);
+                        x=a;
+                        collision=1;
+                        collisionRed(xtest,ytest);
                     }
                 }
                 //contact par le haut
@@ -385,6 +394,14 @@ void interaction(){
                         x=a;
                         collision=1;
                     }
+                    if ((level[numLevel].tableLevel[2][j])==2){  
+                        vy=vy*-1;
+                        level[numLevel].tableLevel[2][j]=0;
+                        y=(ytest-21);
+                        x=a;
+                        collision=1;
+                        collisionRed(xtest,ytest);
+                    }
                 }
                 //contact par la gauche
                 else if ((vx>0) && 
@@ -398,7 +415,15 @@ void interaction(){
                         x=(xtest-21);
                         y=b;
                         collision=1;
-                    }                                  
+                    }    
+                    if ((level[numLevel].tableLevel[2][j])==2){  
+                        vx=vx*-1;
+                        level[numLevel].tableLevel[2][j]=0;
+                        x=(xtest-21);
+                        y=b;
+                        collision=1;
+                        collisionRed(xtest,ytest);
+                    }                                 
                 }
                 //contact par la droite
                 else if ((vx<0) && 
@@ -412,11 +437,73 @@ void interaction(){
                         x=(xtest+hitBoxJellyfish.w+1);
                         y=b;
                         collision=1;
-                    }                
+                    }     
+                    if ((level[numLevel].tableLevel[2][j])==2){  
+                        vx=vx*-1;
+                        level[numLevel].tableLevel[2][j]=0;
+                        x=(xtest+hitBoxJellyfish.w+1);
+                        y=b;
+                        collision=1;
+                        collisionRed(xtest,ytest);
+                    }               
                 }
                 else{}
             }
         }
+    }
+}
+
+//remonte l'index à partir des coordonnées
+int indexBriquesCollisionRed (int xBriqueExplose, int yBriqueExplose){
+    for (int i=0;i<=100;i++){
+        if (level[numLevel].tableLevel[0][i]==xBriqueExplose && level[numLevel].tableLevel[1][i]==yBriqueExplose){
+            indexBoum=i;
+            return indexBoum;
+        }
+    }
+}
+//supprime toutes les briques sur une croix de -50px autour de la brique rouge. Prévoir si brique rouge impactée.
+void collisionRed(int xtest,int ytest){
+    int propagation;
+    //supprime la brique dessus
+    indexBriquesCollisionRed(xtest,ytest-50);
+    if (level[numLevel].tableLevel[2][indexBoum]==2){
+        propagation=1;
+    }
+    level[numLevel].tableLevel[2][indexBoum]=0;
+    //supprime la brique dessous
+    indexBriquesCollisionRed(xtest,ytest+50);
+    if (level[numLevel].tableLevel[2][indexBoum]==2){
+        propagation=2;
+    }
+    level[numLevel].tableLevel[2][indexBoum]=0;
+    //supprime la brique de gauche
+    indexBriquesCollisionRed(xtest-50,ytest);
+    if (level[numLevel].tableLevel[2][indexBoum]==2){
+        propagation=3;
+    }
+    level[numLevel].tableLevel[2][indexBoum]=0;
+    //supprime la brique de droite
+    indexBriquesCollisionRed(xtest+50,ytest);
+    if (level[numLevel].tableLevel[2][indexBoum]==2){
+        propagation=4;
+    }
+    level[numLevel].tableLevel[2][indexBoum]=0;
+    //propagation de l'effet
+    switch (propagation){
+        case 1 :
+            collisionRed(xtest,ytest-50);
+        break;
+        case 2 :
+            collisionRed(xtest,ytest+50);   
+        break;
+        case 3 :
+            collisionRed(xtest-50,ytest);
+        break;
+        case 4 :
+            collisionRed(xtest+50,ytest);
+        break;
+        default:
     }
 }
 
