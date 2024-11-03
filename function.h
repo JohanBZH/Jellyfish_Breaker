@@ -47,7 +47,7 @@ void sprite3(int posX, int posY, char *imgSrc, int *w,int *h);
 
 void lastKeyPressed(SDL_Event *event);
 
-void jellyfish(int a, int b);
+void jellyfish(int a, int b, int choixBrique);
 
 void jellyfishPrint();
 

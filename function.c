@@ -309,21 +309,28 @@ void lastKeyPressed(SDL_Event *event) {
 }
 
 //imprime les briques
-void jellyfish(int a, int b){   
-    sprite(a,b,"jellyfish.bmp");   
+void jellyfish(int a, int b, int choixBrique){ 
+    if(choixBrique==0){
+        sprite(a,b,"jellyfish.bmp"); 
+    }  
+    else if(choixBrique==1){
+        sprite(a,b,"jellyfishRed.bmp"); 
+    }  
+  
 }
 
 void jellyfishPrint(){
     for (int j=0;j<100;j++){
         if (level[numLevel].tableLevel[2][j]==1){
-            jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j]);        
+            jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j],0);        
+        }
+        else if(level[numLevel].tableLevel[2][j]==2){
+            jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j],1);        
         }
     }
 }
 
 //fait rebondir contre la brique et la supprime
-//contact ok, pb dans la redéfinition des coordonnées post contact - pb entre le float qui calcule le chemin entre 2 positions et les entiers des coordonnées ?
-
 void interaction(){
     //récupère les dimensions de l'image pour les hitBox (int)
     SDL_Rect hitBoxJellyfish = hitBoxSizeJellyfish(); 
@@ -357,7 +364,7 @@ void interaction(){
                     ((a+10)>=(xtest)) && 
                     ((a+10)<=(xtest+hitBoxJellyfish.w))){  
 
-                    if ((level[numLevel].tableLevel[2][j])==1){
+                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==2){
                         vy=vy*-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest+hitBoxJellyfish.h+1);

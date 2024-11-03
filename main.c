@@ -14,7 +14,8 @@
 gcc main.c function.c variables.c niveaux.c -o main.out -lSDL2main -lSDL2 -lm
 lm pour la librairie "math"
 
-// créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue 
+//Générer aléatoirement mais un nombre fixe de briques rouges (niveau à continuer de modifier)
+// créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
 //faire une barre de score, incrémenter un score pour chaque brique cassée. Briques rouges points *10
 */
 
@@ -109,7 +110,7 @@ void mouse(int xMouse, int yMouse){
             launch=1;
             numLevel=2;
     }
-    else if (xMouse>=xquit && xMouse<=(xquit+50) && yMouse>=yquit && yMouse<=yquit+50){
+    else if (xMouse>=xquit && xMouse<=(xquit+500) && yMouse>=yquit && yMouse<=yquit+100){
             freeAndTerminate();
     }
     else{
@@ -162,6 +163,7 @@ void gameLoop() {   //pour gérer de façon plus fluide le déplacement de la to
 
 
 int main(){
+    srand(time(NULL));
     init(WINDOW_WIDTH, WINDOW_HEIGHT);
     init_game();
     gameLoop();
