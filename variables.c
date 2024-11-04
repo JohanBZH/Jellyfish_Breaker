@@ -49,12 +49,12 @@ int deplacementDroite=0;
 //Structure pour récupérer les dimensions des images
 SDL_Rect hitBoxSizeJellyfish(){
     SDL_Rect hitBox;
-    sprite3(0,0,"jellyfish.bmp",&hitBox.w, &hitBox.h);
+    sprite3(0,0,"sdl_helper/sprites/jellyfish.bmp",&hitBox.w, &hitBox.h);
     return hitBox;
 }
 
 SDL_Rect hitBoxSizeTurtle(){
     SDL_Rect hitBox;
-    sprite3(0,0,"turtle.bmp",&hitBox.w, &hitBox.h);
+    sprite3(0,0,"sdl_helper/sprites/turtle.bmp",&hitBox.w, &hitBox.h);
     return hitBox;
 }

@@ -311,10 +311,10 @@ void lastKeyPressed(SDL_Event *event) {
 //imprime les briques
 void jellyfish(int a, int b, int choixBrique){ 
     if(choixBrique==0){
-        sprite(a,b,"jellyfish.bmp"); 
+        sprite(a,b,"sdl_helper/sprites/jellyfish.bmp"); 
     }  
     else if(choixBrique==1){
-        sprite(a,b,"jellyfishRed.bmp"); 
+        sprite(a,b,"sdl_helper/sprites/jellyfishRed.bmp"); 
     }  
   
 }
@@ -465,6 +465,7 @@ int indexBriquesCollisionRed (int xBriqueExplose, int yBriqueExplose){
 //supprime toutes les briques sur une croix de -50px autour de la brique rouge. Prévoir si brique rouge impactée.
 void collisionRed(int xtest,int ytest){
     int propagation;
+    int compteur=1;
     //supprime la brique dessus
     indexBriquesCollisionRed(xtest,ytest-50);
     if (level[numLevel].tableLevel[2][indexBoum]==2){
@@ -490,6 +491,10 @@ void collisionRed(int xtest,int ytest){
     }
     level[numLevel].tableLevel[2][indexBoum]=0;
     //propagation de l'effet
+    compteur++;
+    if (compteur>5){
+        propagation=5;
+    }
     switch (propagation){
         case 1 :
             collisionRed(xtest,ytest-50);
@@ -503,7 +508,7 @@ void collisionRed(int xtest,int ytest){
         case 4 :
             collisionRed(xtest+50,ytest);
         break;
-        default:
+        default: //do nothing
     }
 }
 
@@ -519,7 +524,7 @@ void gameEnd(){
       gameOn=0;
       break;
       case 0:
-          sprite (0,0,"win.bmp");
+          sprite (0,0,"sdl_helper/sprites/win.bmp");
           actualize();
           usleep(200000000 / FPS);
           nbVie=3;
@@ -529,7 +534,7 @@ void gameEnd(){
 }
 
 void background(){
-    sprite(0,0,"background.bmp");
+    sprite(0,0,"sdl_helper/sprites/background.bmp");
 }
 
 void vie(){
@@ -537,7 +542,7 @@ void vie(){
         if (nbVie>=0){
         x=500;
         y=800;
-        sprite (0,0,"goAgain.bmp");
+        sprite (0,0,"sdl_helper/sprites/goAgain.bmp");
         actualize();
         usleep(100000000 / FPS);
         vx=4;
@@ -545,7 +550,7 @@ void vie(){
         speedVar=5;
       }  
       else{
-        sprite (0,0,"lost.bmp");
+        sprite (0,0,"sdl_helper/sprites/lost.bmp");
         actualize();
         usleep(200000000 / FPS);
         nbVie=3;
@@ -556,7 +561,7 @@ void vie(){
 void printVie(){
     for (int i=0;i<=(nbVie);i++){
         xheart=10+50*i;
-        sprite(xheart,yheart,"heart.bmp");
+        sprite(xheart,yheart,"sdl_helper/sprites/heart.bmp");
     }
 }
 
@@ -649,20 +654,20 @@ void turtle(){
     else if(xRect>800){
       xRect=800;
     }
-    sprite(xRect,yRect,"turtle.bmp");
+    sprite(xRect,yRect,"sdl_helper/sprites/turtle.bmp");
 }
 
 void waterDrop(){
     if (vx<0 && vy<0){
-        sprite(x,y,"waterDrophg.bmp");
+        sprite(x,y,"sdl_helper/sprites/waterDrophg.bmp");
     }
     else if (vx<0 && vy>0){
-        sprite(x,y,"waterDropbg.bmp");
+        sprite(x,y,"sdl_helper/sprites/waterDropbg.bmp");
     }
     if (vx>0 && vy<0){
-        sprite(x,y,"waterDrophd.bmp");
+        sprite(x,y,"sdl_helper/sprites/waterDrophd.bmp");
     }
     else if (vx>0 && vy>0){
-        sprite(x,y,"waterDropbd.bmp");
+        sprite(x,y,"sdl_helper/sprites/waterDropbd.bmp");
     }
 }

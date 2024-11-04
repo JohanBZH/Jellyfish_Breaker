@@ -1,10 +1,10 @@
 #include <SDL2/SDL.h>
 #include <unistd.h>
+#include <time.h>
+#include <math.h>
 #include "function.h"
 #include "variables.h"
 #include "niveaux.h"
-#include <time.h>
-#include <math.h>
 
 #define WINDOW_WIDTH 1000
 #define WINDOW_HEIGHT 1000
@@ -119,12 +119,12 @@ void mouse(int xMouse, int yMouse){
 
 void gameLauncher (){
     if (launch==0) {
-        sprite (0,0,"launch.bmp");
-        sprite (300,600,"choose.bmp");
-        sprite (xeasy,yeasy,"jellyfishGreen.bmp");
-        sprite (xmedium,ymedium,"jellyfish.bmp");       
-        sprite (xhard,yhard,"jellyfishRed.bmp");
-        sprite (xquit,yquit,"quit.bmp");
+        sprite (0,0,"sdl_helper/sprites/launch.bmp");
+        sprite (300,600,"sdl_helper/sprites/choose.bmp");
+        sprite (xeasy,yeasy,"sdl_helper/sprites/jellyfishGreen.bmp");
+        sprite (xmedium,ymedium,"sdl_helper/sprites/jellyfish.bmp");       
+        sprite (xhard,yhard,"sdl_helper/sprites/jellyfishRed.bmp");
+        sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
         actualize();
     }
     else {
