@@ -1,6 +1,7 @@
 #include "variables.h"
+#include "sdl_helper/function.h"
 #include "niveaux.h"
-#include "function.h"
+#include "game.h"
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 

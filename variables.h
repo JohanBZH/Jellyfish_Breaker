@@ -1,7 +1,6 @@
+#pragma once  //lire une seule fois le fichier
 #include <stdlib.h>
 #include <SDL2/SDL.h>
-
-#pragma once  //lire une seule fois le fichier
 
 //Lancement du jeu
 extern int launch;

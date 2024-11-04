@@ -1,18 +1,25 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
+
 #include <unistd.h>
 #include <time.h>
 #include <math.h>
-#include "function.h"
+
+#include "game.h"
 #include "variables.h"
 #include "niveaux.h"
-
-#define WINDOW_WIDTH 1000
-#define WINDOW_HEIGHT 1000
-#define FPS 60
+#include "sdl_helper/function.h"
+#include "sdl_helper/text_functions.h"
+#include "sdl_helper/audio_functions.h"
+#include "sdl_helper/constants.h"
 
 /*Compiler :
-gcc main.c function.c variables.c niveaux.c -o main.out -lSDL2main -lSDL2 -lm
-lm pour la librairie "math"
+gcc main.c game.c variables.c niveaux.c sdl_helper/audio_functions.c sdl_helper/constants.c sdl_helper/function.c sdl_helper/text_functions.c -o main.out -lSDL2main -lSDL2 -lm -lSDL2_mixer -lSDL2_ttf
+
+lm > librairie "math"
+ lSDL2_mixer > librairie audio
+ lSDL2_ttf >librairie texte
 
 // créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
 //faire une barre de score, incrémenter un score pour chaque brique cassée.

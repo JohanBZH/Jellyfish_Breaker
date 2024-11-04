@@ -4,8 +4,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-#define WINDOW_WIDTH 700
-#define WINDOW_HEIGHT 920
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 1000
 #define FPS 60
 
 extern SDL_Window *window;

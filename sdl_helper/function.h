@@ -5,9 +5,6 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
-#ifndef SDL_CESI_FUNCTION_H
-#define SDL_CESI_FUNCTION_H
-
 typedef struct Point {
     int x;
     int y;
@@ -44,6 +41,8 @@ void drawLinePoints(Point point1, Point point2);
 
 void sprite(int posX, int posY, char *imgSrc);
 
-void lastKeyPressed(SDL_Event *event);
+void sprite2(int posX, int posY, char *imgSrc, int *w,int *h);
 
-#endif //SDL_CESI_FUNCTION_H
+void sprite3(int posX, int posY, char *imgSrc, int *w,int *h);
+
+void lastKeyPressed(SDL_Event *event);
