@@ -71,6 +71,7 @@ void interaction(){
                         y=(ytest+hitBoxJellyfish.h+1);
                         x=a;
                         collision=1;
+                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }
                     //collision avec une brique rouge
                     if ((level[numLevel].tableLevel[2][j])==2){
@@ -94,6 +95,7 @@ void interaction(){
                         y=(ytest-21);
                         x=a;
                         collision=1;
+                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }
                     if ((level[numLevel].tableLevel[2][j])==2){  
                         vy=vy*-1;
@@ -116,6 +118,7 @@ void interaction(){
                         x=(xtest-21);
                         y=b;
                         collision=1;
+                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }    
                     if ((level[numLevel].tableLevel[2][j])==2){  
                         vx=vx*-1;
@@ -138,6 +141,7 @@ void interaction(){
                         x=(xtest+hitBoxJellyfish.w+1);
                         y=b;
                         collision=1;
+                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }     
                     if ((level[numLevel].tableLevel[2][j])==2){  
                         vx=vx*-1;
@@ -167,6 +171,7 @@ int indexBriquesCollisionRed (int xBriqueExplose, int yBriqueExplose){
 void collisionRed(int xtest,int ytest){
     int propagation;
     int compteur=1;
+    audioLoadAndPlay("sdl_helper/sound/ping_redbrick.wav", -1);
     //supprime la brique dessus
     indexBriquesCollisionRed(xtest,ytest-50);
     if (level[numLevel].tableLevel[2][indexBoum]==2){
@@ -277,43 +282,45 @@ void speed(){
     x=x+vx;
     y=y+vy;
 }
-//interactions avec les bords et la tortue.
-  //faire évoluer la fonction speed en fonction des rebonds     
-    //créer un gradient de 0 à 100 pour modifier l'angle entre 30° et 60°, utiliser la fonction speed
+//interactions avec les bords et la tortue.  
+    //crée un gradient de 0 à 100 pour modifier l'angle entre 30° et 80°, utiliser la fonction speed
     
 void rebondTortue(){
     if(y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+80)){
-      float posRebond;
-      posRebond = (x-xRect) / 100;
-      angle=30+posRebond*30;   //fait évoluer l'angle entre 30 et 60 suivant la position sur la barre
-      vecteurSpeed();
-      vy=vy*-1;
-        if (vx>0){
-          vx=vx*-1;
-        }
-        else {}
-      y=yRect-10;
+        audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
+        float posRebond;
+        posRebond = (x-xRect) / 100;
+        angle=30+posRebond*30;   //fait évoluer l'angle entre 30 et 80 suivant la position sur la barre
+        vecteurSpeed();
+        vy=vy*-1;
+            if (vx>0){
+            vx=vx*-1;
+            }
+            else {}
+        y=yRect-10;
     }
     
     //centre, pas de modification de la direction
     else if((y>(yRect-8)) && y<(yRect+10) && x>(xRect+80) && x<(xRect+120)){
-      angle=60;
-      vecteurSpeed();
-      vy=vy*-1;
-      y=yRect-10;
+        audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
+        angle=80;
+        vecteurSpeed();
+        vy=vy*-1;
+        y=yRect-10;
     }
     //droite, renvoyer vers la droite
     else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+120) && x<(xRect+200)){
-      float posRebond;
-      posRebond = (x-(xRect+120)) / 80;
-      angle=30+posRebond*30;   //fait évoluer l'angle entre 30 et 60 suivant la position sur la barre
-      vecteurSpeed();
-      vy=vy*-1;
-        if (vx<0){
-          vx=vx*-1;
-        }
-        else {}
-      y=yRect-10;
+        audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
+        float posRebond;
+        posRebond = (x-(xRect+120)) / 80;
+        angle=30+posRebond*30;
+        vecteurSpeed();
+        vy=vy*-1;
+            if (vx<0){
+            vx=vx*-1;
+            }
+            else {}
+        y=yRect-10;
     }
 }
 
@@ -335,7 +342,8 @@ void rebondBords(){
       rebondTortue();
     }
     else if (y>1000){
-      vie();
+        audioLoadAndPlay("sdl_helper/sound/lost.wav", -1);
+        vie();
     }
     else {}
 }

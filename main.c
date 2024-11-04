@@ -54,30 +54,32 @@ void KeyPressed(SDL_Keycode touche){
         case SDLK_p:
             speedVar=speedVar+1;
             if (speedVar>=21){
-              speedVar=20;
+                speedVar=20;
             }
-              if(vx<0){
+            if(vx<0 && vy>0){
                 vecteurSpeed();
                 vx=vx*-1;
-              }
-              if(vy<0){
+            }
+            if(vx<0 && vy<0){
                 vecteurSpeed();
+                vx=vx*-1;
                 vy=vy*-1;
-              }
+            }
             break;
         case SDLK_m:
             speedVar=speedVar-1;
             if (speedVar<=5){
-              speedVar=5;
+                speedVar=5;
             }
-              if(vx<0){
+            if(vx<0 && vy>0){
                 vecteurSpeed();
                 vx=vx*-1;
-              }
-              if(vy<0){
+            }
+            if(vx<0 && vy<0){
                 vecteurSpeed();
+                vx=vx*-1;
                 vy=vy*-1;
-              }
+            }
             break;
         case SDLK_ESCAPE:
             freeAndTerminate();
