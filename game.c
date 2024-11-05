@@ -76,23 +76,21 @@ void interaction(){
                     (b>=(ytest)) && 
                     ((a+10)>=(xtest)) && 
                     ((a+10)<=(xtest+hitBoxJellyfish.w))){  
-                    //collision avec une brique normale
-                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){
+                    //teste la brique
+                    if ((level[numLevel].tableLevel[2][j])==1 || level[numLevel].tableLevel[2][j]==2 || (level[numLevel].tableLevel[2][j])==3){
                         vy*=-1;
-                        level[numLevel].tableLevel[2][j]=0;
+                        //collision avec une brique bleue ou verte
+                        if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){
+                            level[numLevel].tableLevel[2][j]=0;
+                        }
+                        //collision avec une brique rouge
+                        else if ((level[numLevel].tableLevel[2][j])==2){
+                            level[numLevel].tableLevel[2][j]=4;
+                        }
                         y=(ytest+hitBoxJellyfish.h+1);
                         x=a;
                         collision=1;
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
-                    }
-                    //collision avec une brique rouge
-                    else if ((level[numLevel].tableLevel[2][j])==2){
-                        vy*=-1;
-                        level[numLevel].tableLevel[2][j]=4;
-                        y=(ytest+hitBoxJellyfish.h+1);
-                        x=a;
-                        collision=1;
-                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);                       
                     }
                     //collision avec une brique orange
                     else if ((level[numLevel].tableLevel[2][j])==4){
@@ -110,21 +108,20 @@ void interaction(){
                         ((b+20)<=(ytest+hitBoxJellyfish.h)) && 
                         ((a+10)>=(xtest)) && 
                         ((a+10)<=(xtest+hitBoxJellyfish.w))){
-                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){  
+                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==2 || (level[numLevel].tableLevel[2][j])==3){  
                         vy*=-1;
-                        level[numLevel].tableLevel[2][j]=0;
+                        //collision avec une brique bleue ou verte
+                        if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){
+                            level[numLevel].tableLevel[2][j]=0;
+                        }
+                        //collision avec une brique rouge
+                        else if ((level[numLevel].tableLevel[2][j])==2){
+                            level[numLevel].tableLevel[2][j]=4;
+                        }
                         y=(ytest-21);
                         x=a;
                         collision=1;
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
-                    }
-                    else if ((level[numLevel].tableLevel[2][j])==2){  
-                        vy=vy*-1;
-                        level[numLevel].tableLevel[2][j]=4;
-                        y=(ytest-21);
-                        x=a;
-                        collision=1;
-                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);  
                     }
                     else if ((level[numLevel].tableLevel[2][j])==4){  
                         vy=vy*-1;
@@ -141,22 +138,21 @@ void interaction(){
                         ((a+10)<=(xtest+hitBoxJellyfish.w)) && 
                         ((b+10)>=(ytest)) && 
                         ((b+10)<=(ytest+hitBoxJellyfish.h))){
-                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){  
+                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==2 || (level[numLevel].tableLevel[2][j])==3){  
                         vx*=-1;
-                        level[numLevel].tableLevel[2][j]=0;
+                        //collision avec une brique bleue ou verte
+                        if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){
+                            level[numLevel].tableLevel[2][j]=0;
+                        }
+                        //collision avec une brique rouge
+                        else if ((level[numLevel].tableLevel[2][j])==2){
+                            level[numLevel].tableLevel[2][j]=4;
+                        }
                         x=(xtest-21);
                         y=b;
                         collision=1;
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
-                    }    
-                    else if ((level[numLevel].tableLevel[2][j])==2){  
-                        vx*=-1;
-                        level[numLevel].tableLevel[2][j]=4;
-                        x=(xtest-21);
-                        y=b;
-                        collision=1;
-                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
-                    }        
+                    }           
                     else if ((level[numLevel].tableLevel[2][j])==4){  
                         vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
@@ -172,17 +168,16 @@ void interaction(){
                         (a<=(xtest+hitBoxJellyfish.w)) && 
                         ((b+10)>=(ytest)) && 
                         ((b+10)<=(ytest+hitBoxJellyfish.h))){
-                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){  
+                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==2 || (level[numLevel].tableLevel[2][j])==3){  
                         vx*=-1;
-                        level[numLevel].tableLevel[2][j]=0;
-                        x=(xtest+hitBoxJellyfish.w+1);
-                        y=b;
-                        collision=1;
-                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
-                    }     
-                    else if ((level[numLevel].tableLevel[2][j])==2){  
-                        vx*=-1;
-                        level[numLevel].tableLevel[2][j]=4;
+                        //collision avec une brique bleue ou verte
+                        if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){
+                            level[numLevel].tableLevel[2][j]=0;
+                        }
+                        //collision avec une brique rouge
+                        else if ((level[numLevel].tableLevel[2][j])==2){
+                            level[numLevel].tableLevel[2][j]=4;
+                        }
                         x=(xtest+hitBoxJellyfish.w+1);
                         y=b;
                         collision=1;
@@ -218,14 +213,21 @@ void collisionOrange(int xtest,int ytest){
     int propagation;
     int compteur=1;
     audioLoadAndPlay("sdl_helper/sound/ping_redbrick.wav", -1);
+
     //supprime la brique dessus
     indexBriquesCollision(xtest,ytest-50);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
+        printf("Dessus brique orange\n");
         propagation=1;
         level[numLevel].tableLevel[2][indexBoum]=0;
     }    
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
+        printf("Dessus brique rouge\n");
         level[numLevel].tableLevel[2][indexBoum]==4;
+    }
+    else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
+        printf("Dessus brique bleue\n");
+        level[numLevel].tableLevel[2][indexBoum]==0;
     }
     //supprime la brique dessous
     indexBriquesCollision(xtest,ytest+50);
@@ -236,23 +238,42 @@ void collisionOrange(int xtest,int ytest){
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
         level[numLevel].tableLevel[2][indexBoum]==4;
     }
+    else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
+        level[numLevel].tableLevel[2][indexBoum]==0;
+    }
     //supprime la brique de gauche
     indexBriquesCollision(xtest-50,ytest);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
+        printf("gauche brique orange\n");
         propagation=3;
+        level[numLevel].tableLevel[2][indexBoum]=0;
     }
-    level[numLevel].tableLevel[2][indexBoum]=0;
+    else if (level[numLevel].tableLevel[2][indexBoum]==2){
+        printf("gauche brique rouge\n");
+        level[numLevel].tableLevel[2][indexBoum]==4;
+    }
+    else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
+        printf("gauche brique bleue\n");
+        level[numLevel].tableLevel[2][indexBoum]==0;
+    }
     //supprime la brique de droite
     indexBriquesCollision(xtest+50,ytest);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
+        printf("droite brique orange\n");
         propagation=4;
         level[numLevel].tableLevel[2][indexBoum]=0;
     }    
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
+        printf("droite brique rouge\n");
         level[numLevel].tableLevel[2][indexBoum]==4;
+    }
+    else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
+        printf("droite brique bleue\n");
+        level[numLevel].tableLevel[2][indexBoum]==0;
     }
     //propagation de l'effet
     compteur++;
+    printf("Compteur =%d\n",compteur);
     if (compteur>5){
         propagation=5;
     }

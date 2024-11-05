@@ -93,9 +93,6 @@ void level0 (){
   for (int i=0;i<(36*0.05);i++){
     level[0].tableLevel[2][indexgreenBricks[i]]=3;
   }
- for (int j=0;j<=100;j++){
-  printf("Présence brique level0 = %d\n",level[0].tableLevel[2][j]);
- }
 }
 
 
