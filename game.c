@@ -21,6 +21,9 @@ void jellyfish(int a, int b, int choixBrique){
     else if(choixBrique==2){
         sprite(a,b,"sdl_helper/sprites/jellyfishGreen.bmp"); 
     } 
+    else if(choixBrique==3){
+        sprite(a,b,"sdl_helper/sprites/jellyfishOrange.bmp"); 
+    } 
 }
 
 void jellyfishPrint(){
@@ -32,8 +35,10 @@ void jellyfishPrint(){
             jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j],1);        
         }
         else if(level[numLevel].tableLevel[2][j]==3){
-            jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j],2);  
-            printf("impression verte, index =%d\n",j);      
+            jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j],2);     
+        }
+        else if(level[numLevel].tableLevel[2][j]==4){
+            jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j],3);     
         }
     }
 }
@@ -72,7 +77,7 @@ void interaction(){
                     ((a+10)>=(xtest)) && 
                     ((a+10)<=(xtest+hitBoxJellyfish.w))){  
                     //collision avec une brique normale
-                    if ((level[numLevel].tableLevel[2][j])==1){
+                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){
                         vy*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest+hitBoxJellyfish.h+1);
@@ -81,13 +86,22 @@ void interaction(){
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }
                     //collision avec une brique rouge
-                    if ((level[numLevel].tableLevel[2][j])==2){
+                    else if ((level[numLevel].tableLevel[2][j])==2){
+                        vy*=-1;
+                        level[numLevel].tableLevel[2][j]=4;
+                        y=(ytest+hitBoxJellyfish.h+1);
+                        x=a;
+                        collision=1;
+                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);                       
+                    }
+                    //collision avec une brique orange
+                    else if ((level[numLevel].tableLevel[2][j])==4){
                         vy*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest+hitBoxJellyfish.h+1);
                         x=a;
                         collision=1;
-                        collisionRed(xtest,ytest);
+                        collisionOrange(xtest,ytest);
                     }
                 }
                 //contact par le haut
@@ -96,7 +110,7 @@ void interaction(){
                         ((b+20)<=(ytest+hitBoxJellyfish.h)) && 
                         ((a+10)>=(xtest)) && 
                         ((a+10)<=(xtest+hitBoxJellyfish.w))){
-                    if ((level[numLevel].tableLevel[2][j])==1){  
+                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){  
                         vy*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest-21);
@@ -104,14 +118,22 @@ void interaction(){
                         collision=1;
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }
-                    if ((level[numLevel].tableLevel[2][j])==2){  
+                    else if ((level[numLevel].tableLevel[2][j])==2){  
+                        vy=vy*-1;
+                        level[numLevel].tableLevel[2][j]=4;
+                        y=(ytest-21);
+                        x=a;
+                        collision=1;
+                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);  
+                    }
+                    else if ((level[numLevel].tableLevel[2][j])==4){  
                         vy=vy*-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest-21);
                         x=a;
-                        collision=1;
-                        collisionRed(xtest,ytest);
-                    }
+                        collision=1; 
+                        collisionOrange(xtest,ytest);
+                    }                   
                 }
                 //contact par la gauche
                 else if ((vx>0) && 
@@ -119,7 +141,7 @@ void interaction(){
                         ((a+10)<=(xtest+hitBoxJellyfish.w)) && 
                         ((b+10)>=(ytest)) && 
                         ((b+10)<=(ytest+hitBoxJellyfish.h))){
-                    if ((level[numLevel].tableLevel[2][j])==1){  
+                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){  
                         vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest-21);
@@ -127,14 +149,22 @@ void interaction(){
                         collision=1;
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }    
-                    if ((level[numLevel].tableLevel[2][j])==2){  
+                    else if ((level[numLevel].tableLevel[2][j])==2){  
+                        vx*=-1;
+                        level[numLevel].tableLevel[2][j]=4;
+                        x=(xtest-21);
+                        y=b;
+                        collision=1;
+                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
+                    }        
+                    else if ((level[numLevel].tableLevel[2][j])==4){  
                         vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest-21);
                         y=b;
                         collision=1;
-                        collisionRed(xtest,ytest);
-                    }                                 
+                        collisionOrange(xtest,ytest);
+                    }                             
                 }
                 //contact par la droite
                 else if ((vx<0) && 
@@ -142,7 +172,7 @@ void interaction(){
                         (a<=(xtest+hitBoxJellyfish.w)) && 
                         ((b+10)>=(ytest)) && 
                         ((b+10)<=(ytest+hitBoxJellyfish.h))){
-                    if ((level[numLevel].tableLevel[2][j])==1){  
+                    if ((level[numLevel].tableLevel[2][j])==1 || (level[numLevel].tableLevel[2][j])==3){  
                         vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest+hitBoxJellyfish.w+1);
@@ -150,14 +180,22 @@ void interaction(){
                         collision=1;
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }     
-                    if ((level[numLevel].tableLevel[2][j])==2){  
+                    else if ((level[numLevel].tableLevel[2][j])==2){  
+                        vx*=-1;
+                        level[numLevel].tableLevel[2][j]=4;
+                        x=(xtest+hitBoxJellyfish.w+1);
+                        y=b;
+                        collision=1;
+                        audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
+                    }     
+                    else if ((level[numLevel].tableLevel[2][j])==4){  
                         vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest+hitBoxJellyfish.w+1);
                         y=b;
                         collision=1;
-                        collisionRed(xtest,ytest);
-                    }               
+                        collisionOrange(xtest,ytest);
+                    }             
                 }
                 else{}
             }
@@ -166,46 +204,53 @@ void interaction(){
 }
 
 //remonte l'index à partir des coordonnées
-int indexBriquesCollisionRed (int xBriqueExplose, int yBriqueExplose){
+int indexBriquesCollision (int xBriqueCollision, int yBriqueCollision){
     for (int i=0;i<=100;i++){
-        if (level[numLevel].tableLevel[0][i]==xBriqueExplose && level[numLevel].tableLevel[1][i]==yBriqueExplose){
+        if (level[numLevel].tableLevel[0][i]==xBriqueCollision && level[numLevel].tableLevel[1][i]==yBriqueCollision){
             indexBoum=i;
             return indexBoum;
         }
     }
 }
 
-
-
-//supprime toutes les briques sur une croix de -50px autour de la brique rouge. Prévoir si brique rouge impactée.
-void collisionRed(int xtest,int ytest){
+//supprime toutes les briques sur une croix de -50px autour de la brique orange avec effet de propagation.
+void collisionOrange(int xtest,int ytest){
     int propagation;
     int compteur=1;
     audioLoadAndPlay("sdl_helper/sound/ping_redbrick.wav", -1);
     //supprime la brique dessus
-    indexBriquesCollisionRed(xtest,ytest-50);
-    if (level[numLevel].tableLevel[2][indexBoum]==2){
+    indexBriquesCollision(xtest,ytest-50);
+    if (level[numLevel].tableLevel[2][indexBoum]==4){
         propagation=1;
+        level[numLevel].tableLevel[2][indexBoum]=0;
+    }    
+    else if (level[numLevel].tableLevel[2][indexBoum]==2){
+        level[numLevel].tableLevel[2][indexBoum]==4;
     }
-    level[numLevel].tableLevel[2][indexBoum]=0;
     //supprime la brique dessous
-    indexBriquesCollisionRed(xtest,ytest+50);
-    if (level[numLevel].tableLevel[2][indexBoum]==2){
+    indexBriquesCollision(xtest,ytest+50);
+    if (level[numLevel].tableLevel[2][indexBoum]==4){
         propagation=2;
+        level[numLevel].tableLevel[2][indexBoum]=0;
+    }    
+    else if (level[numLevel].tableLevel[2][indexBoum]==2){
+        level[numLevel].tableLevel[2][indexBoum]==4;
     }
-    level[numLevel].tableLevel[2][indexBoum]=0;
     //supprime la brique de gauche
-    indexBriquesCollisionRed(xtest-50,ytest);
-    if (level[numLevel].tableLevel[2][indexBoum]==2){
+    indexBriquesCollision(xtest-50,ytest);
+    if (level[numLevel].tableLevel[2][indexBoum]==4){
         propagation=3;
     }
     level[numLevel].tableLevel[2][indexBoum]=0;
     //supprime la brique de droite
-    indexBriquesCollisionRed(xtest+50,ytest);
-    if (level[numLevel].tableLevel[2][indexBoum]==2){
+    indexBriquesCollision(xtest+50,ytest);
+    if (level[numLevel].tableLevel[2][indexBoum]==4){
         propagation=4;
+        level[numLevel].tableLevel[2][indexBoum]=0;
+    }    
+    else if (level[numLevel].tableLevel[2][indexBoum]==2){
+        level[numLevel].tableLevel[2][indexBoum]==4;
     }
-    level[numLevel].tableLevel[2][indexBoum]=0;
     //propagation de l'effet
     compteur++;
     if (compteur>5){
@@ -213,16 +258,16 @@ void collisionRed(int xtest,int ytest){
     }
     switch (propagation){
         case 1 :
-            collisionRed(xtest,ytest-50);
+            collisionOrange(xtest,ytest-50);
         break;
         case 2 :
-            collisionRed(xtest,ytest+50);   
+            collisionOrange(xtest,ytest+50);   
         break;
         case 3 :
-            collisionRed(xtest-50,ytest);
+            collisionOrange(xtest-50,ytest);
         break;
         case 4 :
-            collisionRed(xtest+50,ytest);
+            collisionOrange(xtest+50,ytest);
         break;
         default: //do nothing
     }

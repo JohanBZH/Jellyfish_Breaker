@@ -10,7 +10,7 @@ void interaction();
 
 int indexBriquesCollisionRed (int xBriqueExplose, int yBriqueExplose);
 
-void collisionRed();
+void collisionOrange();
 
 void gameEnd();
 
