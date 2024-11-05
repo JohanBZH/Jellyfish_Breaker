@@ -22,10 +22,9 @@ lm > librairie "math"
  lSDL2_ttf >librairie texte
 
 // créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
-//faire une barre de score, incrémenter un score pour chaque brique cassée.
+//faire varier les briques rouges vers orange pour les casser en 2 coups
+//adapter l'explosion de la rouge suivant le niveau
 */
-
-
 
 void drawGame(){
     clear();
@@ -58,12 +57,12 @@ void KeyPressed(SDL_Keycode touche){
             }
             if(vx<0 && vy>0){
                 vecteurSpeed();
-                vx=vx*-1;
+                vx*=-1;
             }
             if(vx<0 && vy<0){
                 vecteurSpeed();
-                vx=vx*-1;
-                vy=vy*-1;
+                vx*=-1;
+                vy*=-1;
             }
             break;
         case SDLK_m:
@@ -73,12 +72,12 @@ void KeyPressed(SDL_Keycode touche){
             }
             if(vx<0 && vy>0){
                 vecteurSpeed();
-                vx=vx*-1;
+                vx*=-1;
             }
             if(vx<0 && vy<0){
                 vecteurSpeed();
-                vx=vx*-1;
-                vy=vy*-1;
+                vx*=-1;
+                vy*=-1;
             }
             break;
         case SDLK_ESCAPE:

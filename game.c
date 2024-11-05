@@ -18,6 +18,9 @@ void jellyfish(int a, int b, int choixBrique){
     else if(choixBrique==1){
         sprite(a,b,"sdl_helper/sprites/jellyfishRed.bmp"); 
     } 
+    else if(choixBrique==2){
+        sprite(a,b,"sdl_helper/sprites/jellyfishGreen.bmp"); 
+    } 
 }
 
 void jellyfishPrint(){
@@ -27,6 +30,10 @@ void jellyfishPrint(){
         }
         else if(level[numLevel].tableLevel[2][j]==2){
             jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j],1);        
+        }
+        else if(level[numLevel].tableLevel[2][j]==3){
+            jellyfish(level[numLevel].tableLevel[0][j],level[numLevel].tableLevel[1][j],2);  
+            printf("impression verte, index =%d\n",j);      
         }
     }
 }
@@ -66,7 +73,7 @@ void interaction(){
                     ((a+10)<=(xtest+hitBoxJellyfish.w))){  
                     //collision avec une brique normale
                     if ((level[numLevel].tableLevel[2][j])==1){
-                        vy=vy*-1;
+                        vy*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest+hitBoxJellyfish.h+1);
                         x=a;
@@ -75,7 +82,7 @@ void interaction(){
                     }
                     //collision avec une brique rouge
                     if ((level[numLevel].tableLevel[2][j])==2){
-                        vy=vy*-1;
+                        vy*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest+hitBoxJellyfish.h+1);
                         x=a;
@@ -90,7 +97,7 @@ void interaction(){
                         ((a+10)>=(xtest)) && 
                         ((a+10)<=(xtest+hitBoxJellyfish.w))){
                     if ((level[numLevel].tableLevel[2][j])==1){  
-                        vy=vy*-1;
+                        vy*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         y=(ytest-21);
                         x=a;
@@ -113,7 +120,7 @@ void interaction(){
                         ((b+10)>=(ytest)) && 
                         ((b+10)<=(ytest+hitBoxJellyfish.h))){
                     if ((level[numLevel].tableLevel[2][j])==1){  
-                        vx=vx*-1;
+                        vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest-21);
                         y=b;
@@ -121,7 +128,7 @@ void interaction(){
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }    
                     if ((level[numLevel].tableLevel[2][j])==2){  
-                        vx=vx*-1;
+                        vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest-21);
                         y=b;
@@ -136,7 +143,7 @@ void interaction(){
                         ((b+10)>=(ytest)) && 
                         ((b+10)<=(ytest+hitBoxJellyfish.h))){
                     if ((level[numLevel].tableLevel[2][j])==1){  
-                        vx=vx*-1;
+                        vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest+hitBoxJellyfish.w+1);
                         y=b;
@@ -144,7 +151,7 @@ void interaction(){
                         audioLoadAndPlay("sdl_helper/sound/ping_brick.wav", -1);
                     }     
                     if ((level[numLevel].tableLevel[2][j])==2){  
-                        vx=vx*-1;
+                        vx*=-1;
                         level[numLevel].tableLevel[2][j]=0;
                         x=(xtest+hitBoxJellyfish.w+1);
                         y=b;
@@ -167,6 +174,9 @@ int indexBriquesCollisionRed (int xBriqueExplose, int yBriqueExplose){
         }
     }
 }
+
+
+
 //supprime toutes les briques sur une croix de -50px autour de la brique rouge. Prévoir si brique rouge impactée.
 void collisionRed(int xtest,int ytest){
     int propagation;
@@ -244,7 +254,7 @@ void background(){
 }
 
 void vie(){
-    nbVie=nbVie-1;
+    nbVie--;
         if (nbVie>=0){
         x=500;
         y=800;
@@ -283,8 +293,7 @@ void speed(){
     y=y+vy;
 }
 //interactions avec les bords et la tortue.  
-    //crée un gradient de 0 à 100 pour modifier l'angle entre 30° et 80°, utiliser la fonction speed
-    
+//crée un gradient de 0 à 100 pour modifier l'angle entre 30° et 80°, utiliser la fonction speed 
 void rebondTortue(){
     if(y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+80)){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
@@ -292,9 +301,9 @@ void rebondTortue(){
         posRebond = (x-xRect) / 100;
         angle=30+posRebond*30;   //fait évoluer l'angle entre 30 et 80 suivant la position sur la barre
         vecteurSpeed();
-        vy=vy*-1;
+        vy*=-1;
             if (vx>0){
-            vx=vx*-1;
+            vx*=-1;
             }
             else {}
         y=yRect-10;
@@ -305,7 +314,7 @@ void rebondTortue(){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
         angle=80;
         vecteurSpeed();
-        vy=vy*-1;
+        vy*=-1;
         y=yRect-10;
     }
     //droite, renvoyer vers la droite
@@ -315,9 +324,9 @@ void rebondTortue(){
         posRebond = (x-(xRect+120)) / 80;
         angle=30+posRebond*30;
         vecteurSpeed();
-        vy=vy*-1;
+        vy*=-1;
             if (vx<0){
-            vx=vx*-1;
+            vx*=-1;
             }
             else {}
         y=yRect-10;
@@ -326,15 +335,15 @@ void rebondTortue(){
 
 void rebondBords(){
     if (x>(979)){   //window_width-hitbox-1 pour éviter le contact
-      vx=vx*-1;         //renvoie dans l'autre sens
+      vx*=-1;        //renvoie dans l'autre sens
       x=979;
     }
     else if(x<1){
-      vx=vx*-1;
+      vx*=-1;
       x=1;
     }
     else if(y<11){
-      vy=vy*-1;
+      vy*=-1;
       y=11;
     }
 
@@ -352,10 +361,10 @@ void rebondBords(){
 //Déplacement de la raquette
 void turtle(){
     if (deplacementGauche==1){
-      xRect=xRect-20;
+      xRect-=20;
     }
     else if (deplacementDroite==1){
-      xRect=xRect+20;    
+      xRect+=20;    
     }
     if(xRect<0){
       xRect=0;

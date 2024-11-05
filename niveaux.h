@@ -10,6 +10,8 @@ void level2();
 
 void redBricks();
 
+void greenBricks();
+
 //crée la structure des tableaux qui enregistrent la position des briques et pilote leur présence
 struct Level {
   int tableLevel[3][100];
