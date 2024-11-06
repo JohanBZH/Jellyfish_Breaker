@@ -282,6 +282,23 @@ void collisionOrange(int xtest,int ytest){
         break;
         default: //do nothing
     }
+    if (numLevel==0 || numLevel==1){
+            switch (propagation){
+                case 1 :
+                    collisionOrange(xtest,ytest-100);
+                break;
+                case 2 :
+                    collisionOrange(xtest,ytest+100);   
+                break;
+                case 3 :
+                    collisionOrange(xtest-100,ytest);
+                break;
+                case 4 :
+                    collisionOrange(xtest+100,ytest);
+                break;
+                default: //do nothing
+            }
+    }
 }
 
 void gameEnd(){
@@ -290,8 +307,7 @@ void gameEnd(){
         if (level[numLevel].tableLevel[2][j]==1 ||
         level[numLevel].tableLevel[2][j]==2 ||
         level[numLevel].tableLevel[2][j]==3 ||
-        level[numLevel].tableLevel[2][j]==4 ||
-        ){
+        level[numLevel].tableLevel[2][j]==4){
             gameOn=1;
         }     
     }
