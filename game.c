@@ -217,17 +217,14 @@ void collisionOrange(int xtest,int ytest){
     //supprime la brique dessus
     indexBriquesCollision(xtest,ytest-50);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
-        printf("Dessus brique orange\n");
         propagation=1;
         level[numLevel].tableLevel[2][indexBoum]=0;
     }    
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
-        printf("Dessus brique rouge\n");
-        level[numLevel].tableLevel[2][indexBoum]==4;
+        level[numLevel].tableLevel[2][indexBoum]=4;
     }
     else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
-        printf("Dessus brique bleue\n");
-        level[numLevel].tableLevel[2][indexBoum]==0;
+        level[numLevel].tableLevel[2][indexBoum]=0;
     }
     //supprime la brique dessous
     indexBriquesCollision(xtest,ytest+50);
@@ -236,44 +233,37 @@ void collisionOrange(int xtest,int ytest){
         level[numLevel].tableLevel[2][indexBoum]=0;
     }    
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
-        level[numLevel].tableLevel[2][indexBoum]==4;
+        level[numLevel].tableLevel[2][indexBoum]=4;
     }
     else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
-        level[numLevel].tableLevel[2][indexBoum]==0;
+        level[numLevel].tableLevel[2][indexBoum]=0;
     }
     //supprime la brique de gauche
     indexBriquesCollision(xtest-50,ytest);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
-        printf("gauche brique orange\n");
         propagation=3;
         level[numLevel].tableLevel[2][indexBoum]=0;
     }
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
-        printf("gauche brique rouge\n");
-        level[numLevel].tableLevel[2][indexBoum]==4;
+        level[numLevel].tableLevel[2][indexBoum]=4;
     }
     else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
-        printf("gauche brique bleue\n");
-        level[numLevel].tableLevel[2][indexBoum]==0;
+        level[numLevel].tableLevel[2][indexBoum]=0;
     }
     //supprime la brique de droite
     indexBriquesCollision(xtest+50,ytest);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
-        printf("droite brique orange\n");
         propagation=4;
         level[numLevel].tableLevel[2][indexBoum]=0;
     }    
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
-        printf("droite brique rouge\n");
-        level[numLevel].tableLevel[2][indexBoum]==4;
+        level[numLevel].tableLevel[2][indexBoum]=4;
     }
     else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
-        printf("droite brique bleue\n");
-        level[numLevel].tableLevel[2][indexBoum]==0;
+        level[numLevel].tableLevel[2][indexBoum]=0;
     }
     //propagation de l'effet
     compteur++;
-    printf("Compteur =%d\n",compteur);
     if (compteur>5){
         propagation=5;
     }
@@ -297,7 +287,11 @@ void collisionOrange(int xtest,int ytest){
 void gameEnd(){
     int gameOn=0;
     for (int j=0;j<100;j++){
-        if (level[numLevel].tableLevel[2][j]==1){
+        if (level[numLevel].tableLevel[2][j]==1 ||
+        level[numLevel].tableLevel[2][j]==2 ||
+        level[numLevel].tableLevel[2][j]==3 ||
+        level[numLevel].tableLevel[2][j]==4 ||
+        ){
             gameOn=1;
         }     
     }
