@@ -44,7 +44,7 @@ void level0 (){
   int index=0;
   for (int i=0;i<4;i++){
     if (i%2==0){
-      xScan=0;
+      xScan=200;
       yScan=yScan+50*i;
       for (int j=0;j<9;j++){
         xScan=xScan+(2*50);
@@ -63,7 +63,7 @@ void level0 (){
       }
     }
     else{
-      xScan=-50;
+      xScan=150;
       yScan=yScan+50*i;
       for (int j=0;j<9;j++){
         xScan=xScan+(2*50);
@@ -100,7 +100,7 @@ void level0 (){
 void level1 (){
   int index=0; //n° de cellule
   for (int i=0;i<3;i++){  //deux boucles de for pour scanner la grille
-    xScan=50;
+    xScan=250;
     yScan=yScan+100*i;
     for (int j=0;j<18;j++){
       xScan=xScan+50*j;
@@ -116,7 +116,7 @@ void level1 (){
         }
       }
     index=index+1;
-    xScan=50;
+    xScan=250;
     }
   yScan=100;
   }
@@ -136,7 +136,7 @@ void level1 (){
 void level2 (){
   int index=0; //n° de cellule
   for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
-    xScan=50;
+    xScan=250;
     yScan=yScan+50*i;
     for (int j=0;j<18;j++){
       xScan=xScan+50*j;
@@ -157,7 +157,7 @@ void level2 (){
         }
       }
     index=index+1;
-    xScan=50;
+    xScan=250;
     }
   yScan=100;
   }
@@ -177,8 +177,10 @@ void init_game(){
   level0();
   level1();
   level2();
-  x = 500;
+  x = 700;
   y = 700;
   vx=cos(60*(3.14/180))*5;
   vy=-(60*(3.14/180))*5;
+  compteurGreen=0;
+  nbComet=0;
 }

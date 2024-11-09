@@ -4,7 +4,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
 
-#define WINDOW_WIDTH 1000
+#define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
 #define FPS 60
 
@@ -26,4 +26,5 @@ extern TTF_Font* comfortaaFont_24;
 extern TTF_Font* comfortaaFont_28;
 extern TTF_Font* comfortaaFont_36;
 extern TTF_Font* comfortaaFont_52;
+extern TTF_Font* fireFont_48;
 void constantsLoadFont();

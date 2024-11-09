@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
+//Dimensions de l'écran
+extern int largeurEcran;
+extern int hauteurEcran;
 //Lancement du jeu
 extern int launch;
 //position de la balle dessiné dans drawGame()
@@ -39,6 +42,17 @@ extern int yheart;
 extern int numLevel;
 //index briques supprimées par les briques rouges
 extern int indexBoum;
+//compteur nombre de comètes
+extern int nbComet;
+//position compteur comètes
+extern int xComet;
+extern int yComet;
+//activation pouvoir brique verte
+extern int compteurGreen;
+//compteur de boucle
+extern int loop;
+//variable d'activation de la fonction pause
+extern int pauseSwitch;
 
 //active ou non le déplacement de la tortue via keyPressed et keyUp
 extern int deplacementGauche;

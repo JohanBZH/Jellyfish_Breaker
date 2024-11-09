@@ -6,7 +6,11 @@ void jellyfish(int a, int b, int choixBrique);
 
 void jellyfishPrint();
 
+void choixInteraction();
+
 void interaction();
+
+void collisionGreen ();
 
 int indexBriquesCollisionRed (int xBriqueExplose, int yBriqueExplose);
 
@@ -20,6 +24,8 @@ void vie();
 
 void printVie();
 
+void printNbComet();
+
 void vecteurSpeed();
 
 void speed();
@@ -31,3 +37,5 @@ void rebondBords();
 void turtle();
 
 void waterDrop();
+
+void gamePause();
