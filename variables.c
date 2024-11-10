@@ -31,7 +31,7 @@ int ymedium=750;
 int xhard=850;
 int yhard=750;
 //position bouton quit
-int xquit=700;
+int xquit=1200;
 int yquit=900;
 //variable de la vitesse
 int speedVar=9;

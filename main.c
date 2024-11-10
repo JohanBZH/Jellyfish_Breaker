@@ -21,15 +21,16 @@ lm > librairie "math"
  lSDL2_mixer > librairie audio
  lSDL2_ttf >librairie texte
 
-// créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
-//agrandir l'écran et repositionner tout pour mettre les vies et comètes sur les bords
-//créer un menu et une page pour les commandes avec la tortue qui bouge, la balle qui se rebondi à l'horizontale entre 2 barres et qui se tranforme en comète
-//adapter l'explosion de la rouge suivant le niveau (+100px)
+Features à dev
+Créer un menu et une page pour les commandes avec la tortue qui bouge, la balle qui se rebondi à l'horizontale entre 2 barres et qui se tranforme en comète
+Adapter l'explosion de la rouge suivant le niveau (+100px)
+créer menu pause
 
 Bugs à corriger :
     à la seconde activation de la comète, elle s'active immédiatement après avoir touché une brique verte. Et rebonds s'activent.
     rebondi sur orange
-    Centrer les textes
+
+    balle orange explose avec une rouge au dessus et à droite. Rouge dessus disparait et rouge droite passe bien orange.
 
 */
 

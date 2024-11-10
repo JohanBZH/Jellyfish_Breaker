@@ -523,6 +523,7 @@ void gameEnd(){
       break;
       case 0:
         centeredText("WIN",comfortaaFont_52);
+        actualize();
         usleep(200000000 / FPS);
         nbVie=3;
         launch=0; 
@@ -541,6 +542,7 @@ void vie(){
         x=700;
         y=800;
         centeredText("TRY AGAIN",comfortaaFont_52);
+        actualize();
         usleep(100000000 / FPS);
         vx=4;
         vy=-4;
@@ -549,6 +551,7 @@ void vie(){
       }  
       else{
         centeredText("GAME OVER",comfortaaFont_52);
+        actualize();
         usleep(200000000 / FPS);
         nbVie=3;
         launch=0;
@@ -639,11 +642,12 @@ void rebondTortue(){
 void rebondBords(){
     if (x>(1179)){   //window_width-hitbox-1 pour éviter le contact
       vx*=-1;        //renvoie dans l'autre sens
-      x=979;
+      x=1179;
+      printf("x=%f, vx=%f\n",x,vx);
     }
     else if(x<201){
       vx*=-1;
-      x=1;
+      x=201;
     }
     else if(y<11){
       vy*=-1;
