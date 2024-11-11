@@ -34,12 +34,13 @@ int yhard=750;
 int xquit=1200;
 int yquit=900;
 //variable de la vitesse
-int speedVar=9;
+int speedVar=10;
 //angle du rebond en degrés. Initialisation à 60°
 float angle=60;
 //Nombre de vies
 int nbVie=3;
-int xheart=5;
+int xheartInit=5;
+int xheart;
 int yheart=10;
 //Level choisi
 int numLevel;
@@ -48,12 +49,11 @@ int indexBoum;
 //compteur nombre de comètes
 int nbComet;
 //position compteur comètes
-int xComet=1355;
+int xCometInit=1355;
+int xComet;
 int yComet=10;
 //activation pouvoir brique verte
 int compteurGreen=0;
-//compteur de boucle
-int loop=0;
 //variable d'activation de la fonction pause
 int pauseSwitch=1;
 

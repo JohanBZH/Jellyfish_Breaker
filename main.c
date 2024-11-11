@@ -27,10 +27,14 @@ Adapter l'explosion de la rouge suivant le niveau (+100px)
 créer menu pause
 
 Bugs à corriger :
+    niveau 1 (medium) la comète est activée dès que la brique verte est touchée
+
     à la seconde activation de la comète, elle s'active immédiatement après avoir touché une brique verte. Et rebonds s'activent.
     rebondi sur orange
 
-    balle orange explose avec une rouge au dessus et à droite. Rouge dessus disparait et rouge droite passe bien orange.
+    balle orange explose avec une rouge au dessus et à droite. Rouge dessus disparait et rouge droite passe bien orange
+
+    vitesse initale bien set à 10 mais ne donne pas l'impression d'être la vraie vitesse tant que pas un premier rebond sur la tortue.
 
 */
 
@@ -45,9 +49,10 @@ void drawGame(){
     waterDrop();
     turtle();
     printNbComet();
+    sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
     actualize();
+    printf("speedvar=%d\n",speedVar);
     usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
-    loop++;
     gameEnd();
 }
 void KeyPressed(SDL_Keycode touche){
@@ -62,7 +67,7 @@ void KeyPressed(SDL_Keycode touche){
         //activation du pouvoir de la comète
         case SDLK_s:
             if (nbComet>0){
-                compteurGreen = (vy<0) ? 1 : 2;
+                compteurGreen = vy<0 ? 1 : 2;
             }
             nbComet = (nbComet == 0) ? nbComet : nbComet-1;
             break; 
@@ -84,8 +89,8 @@ void KeyPressed(SDL_Keycode touche){
             break;
         case SDLK_m:
             speedVar=speedVar-1;
-            if (speedVar<=5){
-                speedVar=5;
+            if (speedVar<=10){
+                speedVar=10;
             }
             if(vx<0 && vy>0){
                 vecteurSpeed();

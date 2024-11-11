@@ -36,6 +36,7 @@ extern int speedVar;
 extern float angle;
 //Nombre de vies
 extern int nbVie;
+extern int xheartInit;
 extern int xheart;
 extern int yheart;
 //Level choisi
@@ -45,6 +46,7 @@ extern int indexBoum;
 //compteur nombre de comètes
 extern int nbComet;
 //position compteur comètes
+extern int xCometInit;
 extern int xComet;
 extern int yComet;
 //activation pouvoir brique verte

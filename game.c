@@ -95,8 +95,7 @@ void interaction(){
                         }
                         //collision avec une brique verte
                         if ((level[numLevel].tableLevel[2][j])==3){
-                            level[numLevel].tableLevel[2][j]=0;
-                            compteurGreen=2;
+                            level[numLevel].tableLevel[2][j]=0;                            
                             nbComet++;
                         }
                         //collision avec une brique rouge
@@ -132,8 +131,7 @@ void interaction(){
                         }
                         //collision avec une brique verte
                         if ((level[numLevel].tableLevel[2][j])==3){
-                            level[numLevel].tableLevel[2][j]=0;
-                            compteurGreen=2;
+                            level[numLevel].tableLevel[2][j]=0;                            
                             nbComet++;
                         }
                         //collision avec une brique rouge
@@ -168,8 +166,7 @@ void interaction(){
                         }
                         //collision avec une brique verte
                         if ((level[numLevel].tableLevel[2][j])==3){
-                            level[numLevel].tableLevel[2][j]=0;
-                            compteurGreen=2;
+                            level[numLevel].tableLevel[2][j]=0;                            
                             nbComet++;
                         }
                         //collision avec une brique rouge
@@ -204,8 +201,7 @@ void interaction(){
                         }
                         //collision avec une brique verte
                         if ((level[numLevel].tableLevel[2][j])==3){
-                            level[numLevel].tableLevel[2][j]=0;
-                            compteurGreen=2;
+                            level[numLevel].tableLevel[2][j]=0;                            
                             nbComet++;
                         }
                         //collision avec une brique rouge
@@ -394,8 +390,7 @@ void collisionGreen (){
                         }
                         //collision avec une brique verte
                         if ((level[numLevel].tableLevel[2][j])==3){
-                            level[numLevel].tableLevel[2][j]=0;
-                            compteurGreen=2;
+                            level[numLevel].tableLevel[2][j]=0;                           
                             nbComet++;
                         }
                         //collision avec une brique rouge
@@ -429,8 +424,7 @@ void collisionGreen (){
                         }
                         //collision avec une brique verte
                         if ((level[numLevel].tableLevel[2][j])==3){
-                            level[numLevel].tableLevel[2][j]=0;
-                            compteurGreen=2;
+                            level[numLevel].tableLevel[2][j]=0;                            
                             nbComet++;
                         }
                         //collision avec une brique rouge
@@ -463,8 +457,7 @@ void collisionGreen (){
                         }
                         //collision avec une brique verte
                         if ((level[numLevel].tableLevel[2][j])==3){
-                            level[numLevel].tableLevel[2][j]=0;
-                            compteurGreen=2;
+                            level[numLevel].tableLevel[2][j]=0;                            
                             nbComet++;
                         }
                         //collision avec une brique rouge
@@ -497,8 +490,7 @@ void collisionGreen (){
                         }
                         //collision avec une brique verte
                         if ((level[numLevel].tableLevel[2][j])==3){
-                            level[numLevel].tableLevel[2][j]=0;
-                            compteurGreen=2;
+                            level[numLevel].tableLevel[2][j]=0;                            
                             nbComet++;
                         }
                         //collision avec une brique rouge
@@ -582,7 +574,7 @@ void vie(){
 }
 void printVie(){
     for (int i=0;i<=(nbVie);i++){
-        xheart=10+50*i;
+        xheart=xheartInit+(50*i);
         sprite(xheart,yheart,"sdl_helper/sprites/heart.bmp");
     }
 }
@@ -590,11 +582,9 @@ void printVie(){
 void printNbComet(){
     if(nbComet>0){
         for (int i=0;i<(nbComet);i++){
-        xComet-=50;
+        xComet=xCometInit-(50*i);
         sprite(xComet,yComet,"sdl_helper/sprites/comet.bmp");
         }
-        xComet=1350;
-        yComet=10;
     }
 }
 
@@ -656,8 +646,11 @@ void rebondTortue(){
             else {}
         y=yRect-10;
     }
-    if (compteurGreen==1 || compteurGreen==2){
+    if (compteurGreen==1){
         compteurGreen--;
+    }
+    else if (compteurGreen==2){
+        compteurGreen=1;
     }
 }
 
@@ -717,7 +710,7 @@ void waterDrop(){
         else if (vx>0 && vy>0){
             sprite(x,y,"sdl_helper/sprites/cometbd.bmp");
         }
-        audioLoadAndPlay("sdl_helper/sound/comet.wav", -1);
+        //audioLoadAndPlay("sdl_helper/sound/comet.wav", -1);
     }
     else {
         if (vx<0 && vy<0){
