@@ -300,37 +300,56 @@ void collisionOrange(int xtest,int ytest){
     if (compteur>5){
         propagation=5;
     }
-    switch (propagation){
-        case 1 :
-            collisionOrange(xtest,ytest-50);
-        break;
-        case 2 :
-            collisionOrange(xtest,ytest+50);   
-        break;
-        case 3 :
-            collisionOrange(xtest-50,ytest);
-        break;
-        case 4 :
-            collisionOrange(xtest+50,ytest);
-        break;
-        default: //do nothing
+    if (numLevel==0){
+        switch (propagation){
+            case 1 :
+                collisionOrange(xtest,ytest-100);
+            break;
+            case 2 :
+                collisionOrange(xtest,ytest+100);   
+            break;
+            case 3 :
+                collisionOrange(xtest-100,ytest);
+            break;
+            case 4 :
+                collisionOrange(xtest+100,ytest);
+            break;
+            default: //do nothing
+        }
     }
-    if (numLevel==0 || numLevel==1){
-            switch (propagation){
-                case 1 :
-                    collisionOrange(xtest,ytest-100);
-                break;
-                case 2 :
-                    collisionOrange(xtest,ytest+100);   
-                break;
-                case 3 :
-                    collisionOrange(xtest-100,ytest);
-                break;
-                case 4 :
-                    collisionOrange(xtest+100,ytest);
-                break;
-                default: //do nothing
-            }
+    else if (numLevel==1){
+        switch (propagation){
+            case 1 :
+                collisionOrange(xtest,ytest-100);
+            break;
+            case 2 :
+                collisionOrange(xtest,ytest+100);   
+            break;
+            case 3 :
+                collisionOrange(xtest-50,ytest);
+            break;
+            case 4 :
+                collisionOrange(xtest+50,ytest);
+            break;
+            default: //do nothing
+        }
+    }
+    else if (numLevel==2){
+        switch (propagation){
+            case 1 :
+                collisionOrange(xtest,ytest-50);
+            break;
+            case 2 :
+                collisionOrange(xtest,ytest+50);   
+            break;
+            case 3 :
+                collisionOrange(xtest-50,ytest);
+            break;
+            case 4 :
+                collisionOrange(xtest+50,ytest);
+            break;
+            default: //do nothing
+        }
     }
 }
 
@@ -533,6 +552,9 @@ void gameEnd(){
 
 void background(){
     sprite(0,0,"sdl_helper/sprites/background.bmp");
+    changeColor( 88, 174, 245 );
+    drawLine(200,0,200,1000);
+    drawLine(1200,0,1200,1000);
 }
 
 //Défaite
@@ -643,7 +665,6 @@ void rebondBords(){
     if (x>(1179)){   //window_width-hitbox-1 pour éviter le contact
       vx*=-1;        //renvoie dans l'autre sens
       x=1179;
-      printf("x=%f, vx=%f\n",x,vx);
     }
     else if(x<201){
       vx*=-1;

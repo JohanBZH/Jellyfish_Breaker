@@ -152,7 +152,6 @@ void mouse(int xMouse, int yMouse){
 void gameLauncher (){
     if (launch==0) {
         sprite (0,0,"sdl_helper/sprites/background.bmp");
-
         centeredText("CHOOSE YOUR LEVEL",comfortaaFont_52);
         sprite (xeasy,yeasy,"sdl_helper/sprites/jellyfishGreen.bmp");
         sprite (xmedium,ymedium,"sdl_helper/sprites/jellyfish.bmp");       

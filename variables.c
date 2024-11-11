@@ -39,7 +39,7 @@ int speedVar=9;
 float angle=60;
 //Nombre de vies
 int nbVie=3;
-int xheart=10;
+int xheart=5;
 int yheart=10;
 //Level choisi
 int numLevel;
@@ -48,7 +48,7 @@ int indexBoum;
 //compteur nombre de comètes
 int nbComet;
 //position compteur comètes
-int xComet=1350;
+int xComet=1355;
 int yComet=10;
 //activation pouvoir brique verte
 int compteurGreen=0;
