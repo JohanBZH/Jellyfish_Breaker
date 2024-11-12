@@ -22,6 +22,7 @@ TTF_Font* comfortaaFont_24;
 TTF_Font* comfortaaFont_28;
 TTF_Font* comfortaaFont_36;
 TTF_Font* comfortaaFont_52;
+TTF_Font* fireFont_48;
 void constantsLoadFont() {
     comfortaaFont_16 = TTF_OpenFont("sdl_helper/fonts/Comfortaa-Regular.ttf", 16);
     if (comfortaaFont_16 == NULL) {
@@ -32,4 +33,5 @@ void constantsLoadFont() {
     comfortaaFont_28 = TTF_OpenFont("sdl_helper/fonts/Comfortaa-Regular.ttf", 28);
     comfortaaFont_36 = TTF_OpenFont("sdl_helper/fonts/Comfortaa-Regular.ttf", 36);
     comfortaaFont_52 = TTF_OpenFont("sdl_helper/fonts/Comfortaa-Regular.ttf", 52);
+    fireFont_48 = TTF_OpenFont("sdl_helper/fonts/Comfortaa-Regular.ttf", 48);
 }

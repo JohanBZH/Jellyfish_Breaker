@@ -21,11 +21,22 @@ lm > librairie "math"
  lSDL2_mixer > librairie audio
  lSDL2_ttf >librairie texte
 
-// créer des balles avec des super pouvoir (genre traverser les briques et les supprimer jusqu'à retoucher la tortue
-//faire une barre de score, incrémenter un score pour chaque brique cassée.
+Features à dev
+Créer un menu et une page pour les commandes avec la tortue qui bouge, la balle qui se rebondi à l'horizontale entre 2 barres et qui se tranforme en comète
+Adapter l'explosion de la rouge suivant le niveau (+100px)
+créer menu pause
+
+Bugs à corriger :
+    niveau 1 (medium) la comète est activée dès que la brique verte est touchée
+
+    à la seconde activation de la comète, elle s'active immédiatement après avoir touché une brique verte. Et rebonds s'activent.
+    rebondi sur orange
+
+    balle orange explose avec une rouge au dessus et à droite. Rouge dessus disparait et rouge droite passe bien orange
+
+    vitesse initale bien set à 10 mais ne donne pas l'impression d'être la vraie vitesse tant que pas un premier rebond sur la tortue.
+
 */
-
-
 
 void drawGame(){
     clear();
@@ -33,11 +44,14 @@ void drawGame(){
     printVie();
     speed();
     jellyfishPrint();
-    interaction();
+    choixInteraction();
     rebondBords();
     waterDrop();
     turtle();
+    printNbComet();
+    sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
     actualize();
+    printf("speedvar=%d\n",speedVar);
     usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
     gameEnd();
 }
@@ -49,37 +63,52 @@ void KeyPressed(SDL_Keycode touche){
             break;
         case SDLK_d:
             deplacementDroite=1;
-            break;         
-                    
+            break;  
+        //activation du pouvoir de la comète
+        case SDLK_s:
+            if (nbComet>0){
+                compteurGreen = vy<0 ? 1 : 2;
+            }
+            nbComet = (nbComet == 0) ? nbComet : nbComet-1;
+            break; 
+        //gestion de la vitesse            
         case SDLK_p:
             speedVar=speedVar+1;
             if (speedVar>=21){
-              speedVar=20;
+                speedVar=20;
             }
-              if(vx<0){
+            if(vx<0 && vy>0){
                 vecteurSpeed();
-                vx=vx*-1;
-              }
-              if(vy<0){
+                vx*=-1;
+            }
+            if(vx<0 && vy<0){
                 vecteurSpeed();
-                vy=vy*-1;
-              }
+                vx*=-1;
+                vy*=-1;
+            }
             break;
         case SDLK_m:
             speedVar=speedVar-1;
-            if (speedVar<=5){
-              speedVar=5;
+            if (speedVar<=10){
+                speedVar=10;
             }
-              if(vx<0){
+            if(vx<0 && vy>0){
                 vecteurSpeed();
-                vx=vx*-1;
-              }
-              if(vy<0){
+                vx*=-1;
+            }
+            if(vx<0 && vy<0){
                 vecteurSpeed();
-                vy=vy*-1;
-              }
+                vx*=-1;
+                vy*=-1;
+            }
             break;
+        //A reprendre pour créer la pause
+        /*case SDLK_SPACE:
+            pauseSwitch*=-1;
+            gamePause();
+            break;*/
         case SDLK_ESCAPE:
+        audioCleanup();
             freeAndTerminate();
             break;
         default:
@@ -117,6 +146,7 @@ void mouse(int xMouse, int yMouse){
             numLevel=2;
     }
     else if (xMouse>=xquit && xMouse<=(xquit+500) && yMouse>=yquit && yMouse<=yquit+100){
+            audioCleanup();
             freeAndTerminate();
     }
     else{
@@ -126,8 +156,8 @@ void mouse(int xMouse, int yMouse){
 
 void gameLauncher (){
     if (launch==0) {
-        sprite (0,0,"sdl_helper/sprites/launch.bmp");
-        sprite (300,600,"sdl_helper/sprites/choose.bmp");
+        sprite (0,0,"sdl_helper/sprites/background.bmp");
+        centeredText("CHOOSE YOUR LEVEL",comfortaaFont_52);
         sprite (xeasy,yeasy,"sdl_helper/sprites/jellyfishGreen.bmp");
         sprite (xmedium,ymedium,"sdl_helper/sprites/jellyfish.bmp");       
         sprite (xhard,yhard,"sdl_helper/sprites/jellyfishRed.bmp");
@@ -139,7 +169,7 @@ void gameLauncher (){
     }
 }
 
-void gameLoop() {   //pour gérer de façon plus fluide le déplacement de la tortue et éviter le buffer de keydown, modifier une variable à keydown ET keyup.
+void gameLoop() {   //pour gérer de façon fluide le déplacement de la tortue et éviter le buffer de keydown, modifier une variable à keydown ET keyup.
     int programLaunched = 1;
     while (programLaunched == 1) {
         SDL_Event event;

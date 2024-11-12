@@ -5,6 +5,8 @@
 struct Level level[3];
 //Table des index des briques rouges (10% des briques totales, max 100 briques)
   int indexredBricks[10];
+//Table des index des briques vertes
+  int indexgreenBricks[10];
 
 //Génère aléatoirement un index compris dans le nombre de briques
 void redBricks(int nbBrickMax){
@@ -19,11 +21,30 @@ void redBricks(int nbBrickMax){
   }
 }
 
+//Génère aléatoirement un index compris dans le nombre de briques
+void greenBricks(int nbBrickMax){
+  //reset la table
+  for (int i=0;i<10;i++){
+    indexgreenBricks[i]=-1;
+  }
+  int intnbBrickMax=nbBrickMax*0.05; 
+
+  for (int i=0;i<=(intnbBrickMax);i++){
+    indexgreenBricks[i]= rand()%nbBrickMax; 
+
+      for (int j=0;j<i;j++){
+        if (indexgreenBricks[j]==indexgreenBricks[i] || indexgreenBricks[i] == indexredBricks[j]){
+          indexgreenBricks[i]=rand()%nbBrickMax;
+        }
+      }
+  }
+}
+
 void level0 (){
   int index=0;
   for (int i=0;i<4;i++){
     if (i%2==0){
-      xScan=0;
+      xScan=200;
       yScan=yScan+50*i;
       for (int j=0;j<9;j++){
         xScan=xScan+(2*50);
@@ -42,7 +63,7 @@ void level0 (){
       }
     }
     else{
-      xScan=-50;
+      xScan=150;
       yScan=yScan+50*i;
       for (int j=0;j<9;j++){
         xScan=xScan+(2*50);
@@ -67,6 +88,11 @@ void level0 (){
   for (int i=0;i<(36*0.1);i++){
     level[0].tableLevel[2][indexredBricks[i]]=2;
   }
+  //intégration des briques greens
+  greenBricks(36);
+  for (int i=0;i<(36*0.05);i++){
+    level[0].tableLevel[2][indexgreenBricks[i]]=3;
+  }
 }
 
 
@@ -74,7 +100,7 @@ void level0 (){
 void level1 (){
   int index=0; //n° de cellule
   for (int i=0;i<3;i++){  //deux boucles de for pour scanner la grille
-    xScan=50;
+    xScan=250;
     yScan=yScan+100*i;
     for (int j=0;j<18;j++){
       xScan=xScan+50*j;
@@ -90,7 +116,7 @@ void level1 (){
         }
       }
     index=index+1;
-    xScan=50;
+    xScan=250;
     }
   yScan=100;
   }
@@ -99,13 +125,18 @@ void level1 (){
   for (int i=0;i<(54*0.1);i++){
     level[1].tableLevel[2][indexredBricks[i]]=2;
   }
+ //intégration des briques greens
+  greenBricks(54);
+  for (int i=0;i<(54*0.05);i++){
+    level[1].tableLevel[2][indexgreenBricks[i]]=3;
+  }
 }
 
 //table niveau hard
 void level2 (){
   int index=0; //n° de cellule
   for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
-    xScan=50;
+    xScan=250;
     yScan=yScan+50*i;
     for (int j=0;j<18;j++){
       xScan=xScan+50*j;
@@ -126,24 +157,30 @@ void level2 (){
         }
       }
     index=index+1;
-    xScan=50;
+    xScan=250;
     }
   yScan=100;
   }
   //intégration des briques rouges
   redBricks(90);
-  int ix=1;
   for (int i=0;i<(90*0.1);i++){
     level[2].tableLevel[2][indexredBricks[i]]=2;
   }
+  //intégration des briques greens
+  greenBricks(90);
+  for (int i=0;i<(90*0.05);i++){
+    level[2].tableLevel[2][indexgreenBricks[i]]=3;
+  } 
 }
 
 void init_game(){
   level0();
   level1();
   level2();
-  x = 500;
+  x = 700;
   y = 700;
   vx=cos(60*(3.14/180))*5;
   vy=-(60*(3.14/180))*5;
+  compteurGreen=0;
+  nbComet=0;
 }
