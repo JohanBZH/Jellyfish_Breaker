@@ -60,10 +60,10 @@ void interaction(){
     SDL_Rect hitBoxTurtle = hitBoxSizeTurtle();
     for (int j=0;j<100;j++){
     //coordonnées du coin haut gauche de la brique
-            int xtest;
-            int ytest;
-            xtest=level[numLevel].tableLevel[0][j]; 
-            ytest=level[numLevel].tableLevel[1][j];
+        int xtest;
+        int ytest;
+        xtest=level[numLevel].tableLevel[0][j]; 
+        ytest=level[numLevel].tableLevel[1][j];
 
     //position précédente de la balle
         float a=x-vx;
@@ -72,7 +72,7 @@ void interaction(){
         float R = sqrt(((x-a)*(x-a))+((y-b)*(y-b)));
     //calcul du nombre d'itérations à faire
         float iteration=1/R;
-    //tester toutes les positions intermédiaires
+    //teste toutes les positions intermédiaires
         for (float i=0;i<=1;i+=iteration){
             int collision=0;
             if (collision==0){
@@ -293,27 +293,32 @@ void collisionOrange(int xtest,int ytest){
     }
     //propagation de l'effet
     compteur++;
-    if (compteur>5){
+    if (compteur>10){
         propagation=5;
     }
     if (numLevel==0){
         switch (propagation){
             case 1 :
                 collisionOrange(xtest,ytest-100);
+                printf("Propagation level0 dessus\n");
             break;
             case 2 :
-                collisionOrange(xtest,ytest+100);   
+                collisionOrange(xtest,ytest+100); 
+                printf("Propagation level0 dessous\n");  
             break;
             case 3 :
                 collisionOrange(xtest-100,ytest);
+                printf("Propagation level0 gauche\n");
             break;
             case 4 :
                 collisionOrange(xtest+100,ytest);
+                printf("Propagation level0 droite\n");
             break;
             default: //do nothing
         }
     }
     else if (numLevel==1){
+        printf("Propagation level1\n");
         switch (propagation){
             case 1 :
                 collisionOrange(xtest,ytest-100);
@@ -596,8 +601,13 @@ void vecteurSpeed(){
 }
 
 void speed(){
-    x=x+vx;
-    y=y+vy;
+    if (pauseSwitch==1){
+        x=x+vx;
+        y=y+vy;
+    }
+    else if (pauseSwitch==-1){
+        centeredText("PAUSED",comfortaaFont_52);
+    }
 }
 //interactions avec les bords et la tortue.  
 void rebondTortue(){

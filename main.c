@@ -24,7 +24,8 @@ lm > librairie "math"
 Features à dev
 Créer un menu et une page pour les commandes avec la tortue qui bouge, la balle qui se rebondi à l'horizontale entre 2 barres et qui se tranforme en comète
 Adapter l'explosion de la rouge suivant le niveau (+100px)
-créer menu pause
+créer menu pause - activer / désactiver la speed, créer une variable activée par "space" entre -1 et 1, modif fonction speed
+Mettre la speed sur le côté
 
 Bugs à corriger :
     niveau 1 (medium) la comète est activée dès que la brique verte est touchée
@@ -51,7 +52,6 @@ void drawGame(){
     printNbComet();
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
     actualize();
-    printf("speedvar=%d\n",speedVar);
     usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
     gameEnd();
 }
@@ -102,11 +102,10 @@ void KeyPressed(SDL_Keycode touche){
                 vy*=-1;
             }
             break;
-        //A reprendre pour créer la pause
-        /*case SDLK_SPACE:
+        //Met en pause ou reprend
+        case SDLK_SPACE:
             pauseSwitch*=-1;
-            gamePause();
-            break;*/
+            break;
         case SDLK_ESCAPE:
         audioCleanup();
             freeAndTerminate();
