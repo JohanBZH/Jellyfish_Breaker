@@ -37,5 +37,3 @@ void rebondBords();
 void turtle();
 
 void waterDrop();
-
-void gamePause();

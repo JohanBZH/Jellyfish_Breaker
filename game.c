@@ -600,15 +600,21 @@ void vecteurSpeed(){
     vy=sin(rad)*speedVar;
 }
 
+//position de la balle
 void speed(){
     if (pauseSwitch==1){
-        x=x+vx;
-        y=y+vy;
+            x=x+vx;
+            y=y+vy;           
     }
     else if (pauseSwitch==-1){
         centeredText("PAUSED",comfortaaFont_52);
     }
+    sprite (10,100, "sdl_helper/sprites/speed.bmp");
+    char speedChar[50];
+    sprintf(speedChar,"%d",speedVar);
+    textDrawText(speedChar, 80,108,comfortaaFont_28);
 }
+
 //interactions avec les bords et la tortue.  
 void rebondTortue(){
     if(y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+70)){
@@ -736,16 +742,5 @@ void waterDrop(){
             sprite(x,y,"sdl_helper/sprites/waterDropbd.bmp");
         }
         //Mix_HaltChannel(8);
-    }
-}
-
-//mise en pause du jeu - A modifier, sleep() bloque la capacité à avoir un event
-void gamePause(){
-    while (pauseSwitch==-1){
-        textChangeColor( 248, 89, 19 , 255);
-        textDrawText("PAUSED", 350, 500, fireFont_48);
-        textDrawText("Press 'SPACE' to resume",330,550,fireFont_48);
-        sprite (180,460,"sdl_helper/sprites/warning.bmp");
-        sleep(10000);
     }
 }

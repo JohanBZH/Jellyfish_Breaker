@@ -1,5 +1,6 @@
 #include "niveaux.h"
 #include "variables.h"
+#include "game.h"
 
 //Déclare le nombre de niveaux
 struct Level level[3];
@@ -179,8 +180,8 @@ void init_game(){
   level2();
   x = 700;
   y = 700;
-  vx=cos(60*(3.14/180))*5;
-  vy=-(60*(3.14/180))*5;
+  vx=cos(60*(3.14/180))*10;
+  vy=-(60*(3.14/180))*10;
   compteurGreen=0;
   nbComet=0;
 }

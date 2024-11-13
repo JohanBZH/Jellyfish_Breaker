@@ -54,6 +54,8 @@ int xComet;
 int yComet=10;
 //activation pouvoir brique verte
 int compteurGreen=0;
+//compteur de boucle
+int loop=1;
 //variable d'activation de la fonction pause
 int pauseSwitch=1;
 

@@ -24,19 +24,11 @@ lm > librairie "math"
 Features à dev
 Créer un menu et une page pour les commandes avec la tortue qui bouge, la balle qui se rebondi à l'horizontale entre 2 barres et qui se tranforme en comète
 Adapter l'explosion de la rouge suivant le niveau (+100px)
-créer menu pause - activer / désactiver la speed, créer une variable activée par "space" entre -1 et 1, modif fonction speed
-Mettre la speed sur le côté
+
 
 Bugs à corriger :
-    niveau 1 (medium) la comète est activée dès que la brique verte est touchée
-
-    à la seconde activation de la comète, elle s'active immédiatement après avoir touché une brique verte. Et rebonds s'activent.
-    rebondi sur orange
-
+    Première orange qui explose, la première brique explose level 0 et 1, pas level 2
     balle orange explose avec une rouge au dessus et à droite. Rouge dessus disparait et rouge droite passe bien orange
-
-    vitesse initale bien set à 10 mais ne donne pas l'impression d'être la vraie vitesse tant que pas un premier rebond sur la tortue.
-
 */
 
 void drawGame(){
@@ -52,6 +44,7 @@ void drawGame(){
     printNbComet();
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
     actualize();
+    loop++;
     usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
     gameEnd();
 }
