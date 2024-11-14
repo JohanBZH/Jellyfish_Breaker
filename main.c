@@ -24,6 +24,8 @@ lm > librairie "math"
 Features à dev
 Créer un menu et une page pour les commandes avec la tortue qui bouge, la balle qui se rebondi à l'horizontale entre 2 barres et qui se tranforme en comète
 Adapter l'explosion de la rouge suivant le niveau (+100px)
+créer un écho de la balle
+faire bouger les briques du level[2] ? 
 
 
 Bugs à corriger :
@@ -44,6 +46,7 @@ void drawGame(){
     printNbComet();
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
     actualize();
+    levelMoove();
     loop++;
     usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
     gameEnd();

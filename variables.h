@@ -53,6 +53,9 @@ extern int yComet;
 extern int compteurGreen;
 //compteur de boucle
 extern int loop;
+extern int loopMoove;
+//Décalage des briques dans le niveau 2
+extern int decalage;
 //variable d'activation de la fonction pause
 extern int pauseSwitch;
 

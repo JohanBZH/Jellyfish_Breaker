@@ -744,3 +744,20 @@ void waterDrop(){
         //Mix_HaltChannel(8);
     }
 }
+
+// fait bouger les briques dans le level 2
+void levelMoove(){
+    if (loop%30==0){
+        loopMoove++;
+            for (int i=0;i<13;i++){
+                level[2].tableLevel[0][i]+=decalage;
+                level[2].tableLevel[0][i+26]+=decalage;
+
+                level[2].tableLevel[0][i+13]-=decalage;
+                level[2].tableLevel[0][i+39]-=decalage;
+            }            
+        if(loopMoove%5==0){
+            decalage*=-1;
+        } 
+    }
+}

@@ -133,13 +133,13 @@ void level1 (){
   }
 }
 
-//table niveau hard
+//table niveau mobile
 void level2 (){
   int index=0; //n° de cellule
-  for (int i=0;i<5;i++){  //deux boucles de for pour scanner la grille
-    xScan=250;
-    yScan=yScan+50*i;
-    for (int j=0;j<18;j++){
+  for (int i=0;i<4;i++){  //deux boucles de for pour scanner la grille
+    xScan = (i%2==0) ? 250 : 500;
+    yScan=yScan+80*i;
+    for (int j=0;j<13;j++){
       xScan=xScan+50*j;
       for (int i=0;i<3;i++){   //pour chaque cellule, enregistre les coordonnées et initialise présence d'une brique
         if (i==0){
@@ -149,29 +149,24 @@ void level2 (){
           level[2].tableLevel[i][index]=yScan; 
         }
         else{
-          if(rand()%50==1 || rand()%50==0){
-            level[2].tableLevel[i][index]=2;
-          }
-          else{
-            level[2].tableLevel[i][index]=1;
-          }
+          level[2].tableLevel[i][index]=1;
         }
       }
     index=index+1;
-    xScan=250;
+    xScan = (i%2==0) ? 250 : 500;
     }
   yScan=100;
   }
   //intégration des briques rouges
-  redBricks(90);
-  for (int i=0;i<(90*0.1);i++){
+  redBricks(52);
+  for (int i=0;i<(52*0.1);i++){
     level[2].tableLevel[2][indexredBricks[i]]=2;
   }
-  //intégration des briques greens
-  greenBricks(90);
-  for (int i=0;i<(90*0.05);i++){
+ //intégration des briques greens
+  greenBricks(52);
+  for (int i=0;i<(52*0.05);i++){
     level[2].tableLevel[2][indexgreenBricks[i]]=3;
-  } 
+  }
 }
 
 void init_game(){
@@ -184,4 +179,6 @@ void init_game(){
   vy=-(60*(3.14/180))*10;
   compteurGreen=0;
   nbComet=0;
+  loop=1;
+  loopMoove=0;
 }

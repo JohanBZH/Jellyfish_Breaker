@@ -55,7 +55,10 @@ int yComet=10;
 //activation pouvoir brique verte
 int compteurGreen=0;
 //compteur de boucle
-int loop=1;
+int loop;
+int loopMoove;
+//Décalage des briques dans le niveau 2
+int decalage=50;
 //variable d'activation de la fonction pause
 int pauseSwitch=1;
 
