@@ -9,12 +9,17 @@
 int largeurEcran = 1400;
 int hauteurEcran = 1000;
 //Lancement du jeu
-int launch=0;
+int launch;
 //position de la balle dessiné dans drawGame()
 float x = 700;
 float y = 700;
-float vx=cos(60*(3.14/180))*5;
-float vy=-(60*(3.14/180))*5;
+float vx=cos(60*(3.14/180))*10;
+float vy=-(60*(3.14/180))*10;
+//position de la balle dessiné dans tutoBall()
+int xTuto = 400;
+int yTuto = 400;
+int vxTuto=1;
+int vyTuto=0;
 //Position initiale des briques
 int xScan=250;
 int yScan=100;
@@ -33,6 +38,12 @@ int yhard=750;
 //position bouton quit
 int xquit=1200;
 int yquit=900;
+//position bouton Settings
+int xSettings=50;
+int ySettings=920;
+//position bouton retour
+int xReturn=250;
+int yReturn=50;
 //variable de la vitesse
 int speedVar=10;
 //angle du rebond en degrés. Initialisation à 60°

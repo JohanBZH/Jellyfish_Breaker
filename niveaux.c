@@ -177,6 +177,7 @@ void init_game(){
   y = 700;
   vx=cos(60*(3.14/180))*10;
   vy=-(60*(3.14/180))*10;
+  launch=0;
   compteurGreen=0;
   nbComet=0;
   loop=1;

@@ -9,13 +9,14 @@
 #include "game.h"
 #include "variables.h"
 #include "niveaux.h"
+#include "menu.h"
 #include "sdl_helper/function.h"
 #include "sdl_helper/text_functions.h"
 #include "sdl_helper/audio_functions.h"
 #include "sdl_helper/constants.h"
 
 /*Compiler :
-gcc main.c game.c variables.c niveaux.c sdl_helper/audio_functions.c sdl_helper/constants.c sdl_helper/function.c sdl_helper/text_functions.c -o main.out -lSDL2main -lSDL2 -lm -lSDL2_mixer -lSDL2_ttf
+gcc main.c game.c variables.c niveaux.c menu.c sdl_helper/audio_functions.c sdl_helper/constants.c sdl_helper/function.c sdl_helper/text_functions.c -o main.out -lSDL2main -lSDL2 -lm -lSDL2_mixer -lSDL2_ttf
 
 lm > librairie "math"
  lSDL2_mixer > librairie audio
@@ -24,13 +25,13 @@ lm > librairie "math"
 Features à dev
 Créer un menu et une page pour les commandes avec la tortue qui bouge, la balle qui se rebondi à l'horizontale entre 2 barres et qui se tranforme en comète
 Adapter l'explosion de la rouge suivant le niveau (+100px)
-créer un écho de la balle
-faire bouger les briques du level[2] ? 
 
 
 Bugs à corriger :
     Première orange qui explose, la première brique explose level 0 et 1, pas level 2
     balle orange explose avec une rouge au dessus et à droite. Rouge dessus disparait et rouge droite passe bien orange
+
+    collision orange sur niveaux 0 et 1 la première interaction ne propage jamais puisque rien à +50. Mettre le if nblevel plus haut.
 */
 
 void drawGame(){
@@ -51,6 +52,7 @@ void drawGame(){
     usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
     gameEnd();
 }
+
 void KeyPressed(SDL_Keycode touche){
    
     switch (touche) {
@@ -140,24 +142,34 @@ void mouse(int xMouse, int yMouse){
             launch=1;
             numLevel=2;
     }
+    else if (xMouse>=xSettings && xMouse<=(xSettings+400) && yMouse>=ySettings && yMouse<=ySettings+100){
+            launch=2;
+    }
     else if (xMouse>=xquit && xMouse<=(xquit+500) && yMouse>=yquit && yMouse<=yquit+100){
             audioCleanup();
             freeAndTerminate();
     }
-    else{
+    else if (xMouse>=xReturn && xMouse<=(xReturn+400) && yMouse>=yReturn && yMouse<=yReturn+100){
             launch=0;
+            nbComet=0;
+            compteurGreen=0;
     }
+    else{}
 }
 
 void gameLauncher (){
     if (launch==0) {
         sprite (0,0,"sdl_helper/sprites/background.bmp");
         centeredText("CHOOSE YOUR LEVEL",comfortaaFont_52);
+        textDrawText("SETTINGS",xSettings,ySettings,comfortaaFont_36);
         sprite (xeasy,yeasy,"sdl_helper/sprites/jellyfishGreen.bmp");
         sprite (xmedium,ymedium,"sdl_helper/sprites/jellyfish.bmp");       
         sprite (xhard,yhard,"sdl_helper/sprites/jellyfishRed.bmp");
         sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
         actualize();
+    }
+    else if (launch==2){
+        settings();
     }
     else {
         drawGame();

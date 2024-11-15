@@ -12,6 +12,11 @@ extern float x;
 extern float y;
 extern float vx;
 extern float vy;
+//position de la balle dessiné dans tutoBall()
+extern int xTuto;
+extern int yTuto;
+extern int vxTuto;
+extern int vyTuto;
 //Position initiale des briques
 extern int xScan;
 extern int yScan;
@@ -30,6 +35,12 @@ extern int yhard;
 //position bouton quit
 extern int xquit;
 extern int yquit;
+//position bouton Settings
+extern int xSettings;
+extern int ySettings;
+//position bouton retour
+extern int xReturn;
+extern int yReturn;
 //variable de la vitesse
 extern int speedVar;
 //angle du rebond en degrés. Initialisation à 60°
