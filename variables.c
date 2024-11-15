@@ -42,7 +42,7 @@ int yquit=900;
 int xSettings=50;
 int ySettings=920;
 //position bouton retour
-int xReturn=250;
+int xReturn=5;
 int yReturn=50;
 //variable de la vitesse
 int speedVar=10;

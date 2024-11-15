@@ -23,15 +23,16 @@ lm > librairie "math"
  lSDL2_ttf >librairie texte
 
 Features à dev
-Créer un menu et une page pour les commandes avec la tortue qui bouge, la balle qui se rebondi à l'horizontale entre 2 barres et qui se tranforme en comète
+
 Adapter l'explosion de la rouge suivant le niveau (+100px)
+
+ajouter un bouton retour menu
+
+diminuer par 2 les déplacements du level 2 et doubler le rafraichissement
 
 
 Bugs à corriger :
-    Première orange qui explose, la première brique explose level 0 et 1, pas level 2
-    balle orange explose avec une rouge au dessus et à droite. Rouge dessus disparait et rouge droite passe bien orange
-
-    collision orange sur niveaux 0 et 1 la première interaction ne propage jamais puisque rien à +50. Mettre le if nblevel plus haut.
+comete rebondi sur une rouge
 */
 
 void drawGame(){
@@ -46,6 +47,7 @@ void drawGame(){
     turtle();
     printNbComet();
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
+    textDrawText("Return Menu",1205,850,comfortaaFont_28);
     actualize();
     levelMoove();
     loop++;
@@ -149,10 +151,13 @@ void mouse(int xMouse, int yMouse){
             audioCleanup();
             freeAndTerminate();
     }
+    //retour au menu depuis les settings
     else if (xMouse>=xReturn && xMouse<=(xReturn+400) && yMouse>=yReturn && yMouse<=yReturn+100){
-            launch=0;
-            nbComet=0;
-            compteurGreen=0;
+            init_game();
+    }
+    //retour au menu depuis le jeu
+    else if (xMouse>=1200 && xMouse<=(1400) && yMouse>=800 && yMouse<=900){
+            init_game();
     }
     else{}
 }

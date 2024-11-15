@@ -36,7 +36,7 @@ void spriteTuto(){
     sprite (400,200,"sdl_helper/sprites/speedTuto.bmp");
     sprite (650,600,"sdl_helper/sprites/sKey.bmp");
     sprite (780,625,"sdl_helper/sprites/comet.bmp"); 
-    textDrawText("Return to MENU",xReturn,yReturn,comfortaaFont_36);
+    textDrawText("Return MENU",xReturn,yReturn,comfortaaFont_28);
     textDrawText("'SPACE' to pause the game",480,525,comfortaaFont_36);
     drawLine(400, 400, 400,430);
     drawLine(1000, 400, 1000,430);

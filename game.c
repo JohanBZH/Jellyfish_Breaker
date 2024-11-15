@@ -243,8 +243,29 @@ void collisionOrange(int xtest,int ytest){
     int propagation;
     int compteur=1;
     audioLoadAndPlay("sdl_helper/sound/ping_redbrick.wav", -1);
+    //Défini le range de l'explosion en fonction du niveau
+    int xExplosionG, xExplosionD, yExplosionH, yExplosionB;
+    if (numLevel==0){
+        xExplosionG=xtest-100;
+        xExplosionD=xtest+100;
+        yExplosionH=ytest-100;
+        yExplosionB=ytest+100;
+    }
+    else if (numLevel==1){
+        xExplosionG=xtest-50;
+        xExplosionD=xtest+50;
+        yExplosionH=ytest-100;
+        yExplosionB=ytest+100;
+    }
+    else if (numLevel==2){
+        xExplosionG=xtest-50;
+        xExplosionD=xtest+50;
+        yExplosionH=ytest-80;
+        yExplosionB=ytest+80;
+    }
+
     //supprime la brique dessus
-    indexBriquesCollision(xtest,ytest-50);
+    indexBriquesCollision(xtest,yExplosionH);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
         propagation=1;
         level[numLevel].tableLevel[2][indexBoum]=0;
@@ -256,7 +277,7 @@ void collisionOrange(int xtest,int ytest){
         level[numLevel].tableLevel[2][indexBoum]=0;
     }
     //supprime la brique dessous
-    indexBriquesCollision(xtest,ytest+50);
+    indexBriquesCollision(xtest,yExplosionB);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
         propagation=2;
         level[numLevel].tableLevel[2][indexBoum]=0;
@@ -268,7 +289,7 @@ void collisionOrange(int xtest,int ytest){
         level[numLevel].tableLevel[2][indexBoum]=0;
     }
     //supprime la brique de gauche
-    indexBriquesCollision(xtest-50,ytest);
+    indexBriquesCollision(xExplosionG,ytest);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
         propagation=3;
         level[numLevel].tableLevel[2][indexBoum]=0;
@@ -280,7 +301,7 @@ void collisionOrange(int xtest,int ytest){
         level[numLevel].tableLevel[2][indexBoum]=0;
     }
     //supprime la brique de droite
-    indexBriquesCollision(xtest+50,ytest);
+    indexBriquesCollision(xExplosionD,ytest);
     if (level[numLevel].tableLevel[2][indexBoum]==4){
         propagation=4;
         level[numLevel].tableLevel[2][indexBoum]=0;
@@ -296,28 +317,28 @@ void collisionOrange(int xtest,int ytest){
     if (compteur>10){
         propagation=5;
     }
-    if (numLevel==0){
+    //if (numLevel==0){
         switch (propagation){
             case 1 :
-                collisionOrange(xtest,ytest-100);
+                collisionOrange(xtest,yExplosionH);
                 printf("Propagation level0 dessus\n");
             break;
             case 2 :
-                collisionOrange(xtest,ytest+100); 
+                collisionOrange(xtest,yExplosionB); 
                 printf("Propagation level0 dessous\n");  
             break;
             case 3 :
-                collisionOrange(xtest-100,ytest);
+                collisionOrange(xExplosionG,ytest);
                 printf("Propagation level0 gauche\n");
             break;
             case 4 :
-                collisionOrange(xtest+100,ytest);
+                collisionOrange(xExplosionD,ytest);
                 printf("Propagation level0 droite\n");
             break;
             default: //do nothing
         }
-    }
-    else if (numLevel==1){
+    //}
+    /*else if (numLevel==1){
         printf("Propagation level1\n");
         switch (propagation){
             case 1 :
@@ -351,7 +372,7 @@ void collisionOrange(int xtest,int ytest){
             break;
             default: //do nothing
         }
-    }
+    }*/
 }
 
 //traverse les briques et les supprime
