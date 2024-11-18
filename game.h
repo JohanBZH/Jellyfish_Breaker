@@ -39,3 +39,5 @@ void turtle();
 void waterDrop();
 
 void levelMoove();
+
+void sonComet();

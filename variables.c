@@ -65,6 +65,8 @@ int xComet;
 int yComet=10;
 //activation pouvoir brique verte
 int compteurGreen=0;
+int boucleSonComet=1;
+int sonCometJoue=1;
 //compteur de boucle
 int loop;
 int loopMoove;

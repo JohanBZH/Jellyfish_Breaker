@@ -27,6 +27,7 @@ Features à dev
 Créer un écho de la comète
 
 Bugs à corriger :
+rebond sur une balle rouge si comète
 */
 
 void drawGame(){
@@ -38,6 +39,7 @@ void drawGame(){
     choixInteraction();
     rebondBords();
     waterDrop();
+    sonComet();
     turtle();
     printNbComet();
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
@@ -65,6 +67,12 @@ void KeyPressed(SDL_Keycode touche){
             }
             nbComet = (nbComet == 0) ? nbComet : nbComet-1;
             break; 
+
+        //touche debug forcer la comète
+            case SDLK_g:
+            compteurGreen=1;
+            break;  
+
         //gestion de la vitesse            
         case SDLK_p:
             speedVar=speedVar+1;

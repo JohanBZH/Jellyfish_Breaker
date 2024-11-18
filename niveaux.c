@@ -182,4 +182,5 @@ void init_game(){
   nbComet=0;
   loop=1;
   loopMoove=0;
+  speedVar=10;
 }

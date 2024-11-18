@@ -273,8 +273,12 @@ void collisionOrange(int xtest,int ytest){
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
         level[numLevel].tableLevel[2][indexBoum]=4;
     }
-    else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
+    else if (level[numLevel].tableLevel[2][indexBoum]==1){
         level[numLevel].tableLevel[2][indexBoum]=0;
+    }
+    else if (level[numLevel].tableLevel[2][indexBoum]==3){
+        level[numLevel].tableLevel[2][indexBoum]=0;
+        nbComet++;
     }
     //supprime la brique dessous
     indexBriquesCollision(xtest,yExplosionB);
@@ -285,8 +289,12 @@ void collisionOrange(int xtest,int ytest){
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
         level[numLevel].tableLevel[2][indexBoum]=4;
     }
-    else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
+    else if (level[numLevel].tableLevel[2][indexBoum]==1){
         level[numLevel].tableLevel[2][indexBoum]=0;
+    }
+    else if (level[numLevel].tableLevel[2][indexBoum]==3){
+        level[numLevel].tableLevel[2][indexBoum]=0;
+        nbComet++;
     }
     //supprime la brique de gauche
     indexBriquesCollision(xExplosionG,ytest);
@@ -297,8 +305,12 @@ void collisionOrange(int xtest,int ytest){
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
         level[numLevel].tableLevel[2][indexBoum]=4;
     }
-    else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
+    else if (level[numLevel].tableLevel[2][indexBoum]==1){
         level[numLevel].tableLevel[2][indexBoum]=0;
+    }
+    else if (level[numLevel].tableLevel[2][indexBoum]==3){
+        level[numLevel].tableLevel[2][indexBoum]=0;
+        nbComet++;
     }
     //supprime la brique de droite
     indexBriquesCollision(xExplosionD,ytest);
@@ -309,8 +321,12 @@ void collisionOrange(int xtest,int ytest){
     else if (level[numLevel].tableLevel[2][indexBoum]==2){
         level[numLevel].tableLevel[2][indexBoum]=4;
     }
-    else if (level[numLevel].tableLevel[2][indexBoum]==1 || level[numLevel].tableLevel[2][indexBoum]==3){
+    else if (level[numLevel].tableLevel[2][indexBoum]==1){
         level[numLevel].tableLevel[2][indexBoum]=0;
+    }
+    else if (level[numLevel].tableLevel[2][indexBoum]==3){
+        level[numLevel].tableLevel[2][indexBoum]=0;
+        nbComet++;
     }
     //propagation de l'effet
     compteur++;
@@ -321,58 +337,18 @@ void collisionOrange(int xtest,int ytest){
         switch (propagation){
             case 1 :
                 collisionOrange(xtest,yExplosionH);
-                printf("Propagation level0 dessus\n");
             break;
             case 2 :
                 collisionOrange(xtest,yExplosionB); 
-                printf("Propagation level0 dessous\n");  
             break;
             case 3 :
                 collisionOrange(xExplosionG,ytest);
-                printf("Propagation level0 gauche\n");
             break;
             case 4 :
                 collisionOrange(xExplosionD,ytest);
-                printf("Propagation level0 droite\n");
             break;
             default: //do nothing
         }
-    //}
-    /*else if (numLevel==1){
-        printf("Propagation level1\n");
-        switch (propagation){
-            case 1 :
-                collisionOrange(xtest,ytest-100);
-            break;
-            case 2 :
-                collisionOrange(xtest,ytest+100);   
-            break;
-            case 3 :
-                collisionOrange(xtest-50,ytest);
-            break;
-            case 4 :
-                collisionOrange(xtest+50,ytest);
-            break;
-            default: //do nothing
-        }
-    }
-    else if (numLevel==2){
-        switch (propagation){
-            case 1 :
-                collisionOrange(xtest,ytest-50);
-            break;
-            case 2 :
-                collisionOrange(xtest,ytest+50);   
-            break;
-            case 3 :
-                collisionOrange(xtest-50,ytest);
-            break;
-            case 4 :
-                collisionOrange(xtest+50,ytest);
-            break;
-            default: //do nothing
-        }
-    }*/
 }
 
 //traverse les briques et les supprime
@@ -586,7 +562,7 @@ void vie(){
         usleep(100000000 / FPS);
         vx=4;
         vy=-4;
-        speedVar=5;
+        speedVar=10;
         compteurGreen=0;
       }  
       else{
@@ -630,6 +606,7 @@ void speed(){
     else if (pauseSwitch==-1){
         fullCenteredText("PAUSED",comfortaaFont_52);
     }
+    //affiche la vitesse de la balle
     sprite (10,100, "sdl_helper/sprites/speed.bmp");
     char speedChar[50];
     sprintf(speedChar,"%d",speedVar);
@@ -747,7 +724,6 @@ void waterDrop(){
         else if (vx>0 && vy>0){
             sprite(x,y,"sdl_helper/sprites/cometbd.bmp");
         }
-        //audioLoadAndPlay("sdl_helper/sound/comet.wav", -1);
     }
     else {
         if (vx<0 && vy<0){
@@ -762,7 +738,6 @@ void waterDrop(){
         else if (vx>0 && vy>0){
             sprite(x,y,"sdl_helper/sprites/waterDropbd.bmp");
         }
-        //Mix_HaltChannel(8);
     }
 }
 
@@ -780,5 +755,19 @@ void levelMoove(){
         if(loopMoove%10==0){
             decalage*=-1;
         } 
+    }
+}
+
+//activation son de la comète. Durée son comet = 7s.
+void sonComet(){
+    if (compteurGreen!=1){
+        audioLoadAndPlay("sdl_helper/sound/silence.wav",7);
+        boucleSonComet=1;
+    }
+    else if (compteurGreen==1){
+        if (boucleSonComet%7==1 ){
+            audioLoadAndPlay("sdl_helper/sound/comet.wav", 7);
+            boucleSonComet++;
+        }
     }
 }

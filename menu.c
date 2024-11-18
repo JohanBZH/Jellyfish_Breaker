@@ -34,10 +34,10 @@ void spriteTuto(){
     sprite (600,800,"sdl_helper/sprites/qKey.bmp");
     sprite (700,800,"sdl_helper/sprites/dKey.bmp");
     sprite (400,200,"sdl_helper/sprites/speedTuto.bmp");
-    sprite (650,600,"sdl_helper/sprites/sKey.bmp");
-    sprite (780,625,"sdl_helper/sprites/comet.bmp"); 
+    sprite (620,625,"sdl_helper/sprites/sKey.bmp");
+    sprite (720,650,"sdl_helper/sprites/comet.bmp"); 
     textDrawText("Return MENU",xReturn,yReturn,comfortaaFont_28);
-    textDrawText("'SPACE' to pause the game",480,525,comfortaaFont_36);
+    centeredText("'SPACE' to pause the game",500,comfortaaFont_36);
     drawLine(400, 400, 400,430);
     drawLine(1000, 400, 1000,430);
 }

@@ -62,6 +62,8 @@ extern int xComet;
 extern int yComet;
 //activation pouvoir brique verte
 extern int compteurGreen;
+extern int boucleSonComet;
+extern int sonCometJoue;
 //compteur de boucle
 extern int loop;
 extern int loopMoove;
