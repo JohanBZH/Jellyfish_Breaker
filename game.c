@@ -559,7 +559,7 @@ void gameEnd(){
       gameOn=0;
       break;
       case 0:
-        centeredText("WIN",comfortaaFont_52);
+        fullCenteredText("WIN",comfortaaFont_52);
         actualize();
         usleep(200000000 / FPS);
         nbVie=3;
@@ -581,7 +581,7 @@ void vie(){
         if (nbVie>=0){
         x=700;
         y=800;
-        centeredText("TRY AGAIN",comfortaaFont_52);
+        fullCenteredText("TRY AGAIN",comfortaaFont_52);
         actualize();
         usleep(100000000 / FPS);
         vx=4;
@@ -590,7 +590,7 @@ void vie(){
         compteurGreen=0;
       }  
       else{
-        centeredText("GAME OVER",comfortaaFont_52);
+        fullCenteredText("GAME OVER",comfortaaFont_52);
         actualize();
         usleep(200000000 / FPS);
         nbVie=3;
@@ -628,7 +628,7 @@ void speed(){
             y=y+vy;           
     }
     else if (pauseSwitch==-1){
-        centeredText("PAUSED",comfortaaFont_52);
+        fullCenteredText("PAUSED",comfortaaFont_52);
     }
     sprite (10,100, "sdl_helper/sprites/speed.bmp");
     char speedChar[50];
@@ -768,7 +768,7 @@ void waterDrop(){
 
 // fait bouger les briques dans le level 2
 void levelMoove(){
-    if (loop%30==0){
+    if (loop%15==0){
         loopMoove++;
             for (int i=0;i<13;i++){
                 level[2].tableLevel[0][i]+=decalage;
@@ -777,7 +777,7 @@ void levelMoove(){
                 level[2].tableLevel[0][i+13]-=decalage;
                 level[2].tableLevel[0][i+39]-=decalage;
             }            
-        if(loopMoove%5==0){
+        if(loopMoove%10==0){
             decalage*=-1;
         } 
     }

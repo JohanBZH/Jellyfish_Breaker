@@ -69,7 +69,7 @@ int compteurGreen=0;
 int loop;
 int loopMoove;
 //Décalage des briques dans le niveau 2
-int decalage=50;
+int decalage=25;
 //variable d'activation de la fonction pause
 int pauseSwitch=1;
 

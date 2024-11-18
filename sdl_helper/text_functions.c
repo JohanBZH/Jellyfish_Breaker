@@ -67,7 +67,7 @@ void textDrawText(char* textToDraw, int destinationX, int destinationY, TTF_Font
     SDL_DestroyTexture(textTexture);
 }
 
-void centeredText (char* textToDraw, TTF_Font* font){
+void fullCenteredText (char* textToDraw, TTF_Font* font){
 
     int textWidth,textHeight,centerTextWidth,centerTextHeight ;
 
@@ -78,4 +78,15 @@ void centeredText (char* textToDraw, TTF_Font* font){
 
     textChangeColor( 255,255,255,255);
     textDrawText(textToDraw, centerTextWidth, centerTextHeight, font);
+}
+
+void centeredText (char* textToDraw, int posy, TTF_Font* font){
+    int textWidth,textHeight,centerTextWidth,centerTextHeight ;
+
+    TTF_SizeText(font, textToDraw, &textWidth, &textHeight);
+
+    centerTextWidth=(largeurEcran/2)-(textWidth/2);
+
+    textChangeColor( 255,255,255,255);
+    textDrawText(textToDraw, centerTextWidth, posy, font);
 }

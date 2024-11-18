@@ -72,7 +72,7 @@ void speedTuto(){
 		xTuto+=vxTuto*speedVar;        
     }
     else if (pauseSwitch==-1){
-        centeredText("PAUSED",comfortaaFont_52);
+        fullCenteredText("PAUSED",comfortaaFont_52);
     }
     sprite (800,250, "sdl_helper/sprites/speed.bmp");
     char speedChar[50];

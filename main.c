@@ -24,15 +24,9 @@ lm > librairie "math"
 
 Features à dev
 
-Adapter l'explosion de la rouge suivant le niveau (+100px)
-
-ajouter un bouton retour menu
-
-diminuer par 2 les déplacements du level 2 et doubler le rafraichissement
-
+Créer un écho de la comète
 
 Bugs à corriger :
-comete rebondi sur une rouge
 */
 
 void drawGame(){
@@ -165,7 +159,10 @@ void mouse(int xMouse, int yMouse){
 void gameLauncher (){
     if (launch==0) {
         sprite (0,0,"sdl_helper/sprites/background.bmp");
-        centeredText("CHOOSE YOUR LEVEL",comfortaaFont_52);
+        centeredText("WELCOME",300,comfortaaFont_52);    
+        centeredText("TO",370,comfortaaFont_52);  
+        centeredText("JELLYFISHY BREAKER",440,comfortaaFont_52);     
+        centeredText("CHOOSE YOUR LEVEL",650,comfortaaFont_36);
         textDrawText("SETTINGS",xSettings,ySettings,comfortaaFont_36);
         sprite (xeasy,yeasy,"sdl_helper/sprites/jellyfishGreen.bmp");
         sprite (xmedium,ymedium,"sdl_helper/sprites/jellyfish.bmp");       

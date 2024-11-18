@@ -12,4 +12,6 @@ void textChangeColor(int colorR, int colorG, int colorB, int colorAlpha);
 
 void textDrawText(char* textToDraw, int destinationX, int destinationY, TTF_Font* font);
 
-void centeredText (char* textToDraw, TTF_Font* font);
+void fullCenteredText (char* textToDraw, TTF_Font* font);
+
+void centeredText (char* textToDraw, int posy, TTF_Font* font);
