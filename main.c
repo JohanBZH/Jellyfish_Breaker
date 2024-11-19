@@ -26,8 +26,6 @@ Features à dev
 
 Créer un écho de la comète
 
-Bugs à corriger :
-rebond sur une balle rouge si comète
 */
 
 void drawGame(){
@@ -35,6 +33,7 @@ void drawGame(){
     convertAngle();
     background();
     printVie();
+    echo();
     speed();
     jellyfishPrint();
     choixInteraction();
@@ -165,6 +164,7 @@ void mouse(int xMouse, int yMouse){
     //retour au menu depuis le jeu
     else if (xMouse>=1200 && xMouse<=(1400) && yMouse>=800 && yMouse<=900){
             init_game();
+            nbVie=3;
     }
     else{}
 }

@@ -169,6 +169,15 @@ void level2 (){
   }
 }
 
+//initialise la table des positions de la balle
+void initPositionEcho(){
+  for(int i=0;i<1000;i++){
+    positionEcho[0][i]=x;
+    positionEcho[1][i]=y;
+  }
+}
+
+//initialise la position de début de jeu
 void initVar(){
     x = 700;
     y = 700;
@@ -177,6 +186,7 @@ void initVar(){
     compteurGreen=0;
     speedVar=10;
     angle=60;
+    initPositionEcho();
 }
 
 void init_game(){

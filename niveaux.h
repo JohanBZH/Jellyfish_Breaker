@@ -1,9 +1,5 @@
 #pragma once
 
-void initVar();
-
-void init_game();
-
 void level0();
 
 void level1();
@@ -20,3 +16,11 @@ struct Level {
 };
 
 extern struct Level level[3];
+
+//initialise la table des positions de la balle
+void initPositionEcho();
+
+//initialise la position de début de jeu
+void initVar();
+
+void init_game();

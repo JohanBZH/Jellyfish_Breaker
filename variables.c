@@ -10,6 +10,7 @@ int largeurEcran = 1400;
 int hauteurEcran = 1000;
 //Lancement du jeu
 int launch;
+
 //position de la balle dessiné dans drawGame()
 float x = 700;
 float y = 700;
@@ -44,6 +45,10 @@ int ySettings=920;
 //position bouton retour
 int xReturn=5;
 int yReturn=50;
+
+//table des positions de la balle
+int positionEcho[2][1000];
+
 //variable de la vitesse
 int speedVar=10;
 //angle du rebond en degrés. Initialisation à 60°
@@ -69,6 +74,7 @@ int yComet=10;
 int compteurGreen=0;
 int boucleSonComet=1;
 int sonCometJoue=1;
+
 //compteur de boucle
 int loop;
 int loopMoove;

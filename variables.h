@@ -7,6 +7,7 @@ extern int largeurEcran;
 extern int hauteurEcran;
 //Lancement du jeu
 extern int launch;
+
 //position de la balle dessiné dans drawGame()
 extern float x;
 extern float y;
@@ -41,6 +42,10 @@ extern int ySettings;
 //position bouton retour
 extern int xReturn;
 extern int yReturn;
+
+//table des positions de la balle
+extern int positionEcho[2][1000];
+
 //variable de la vitesse
 extern int speedVar;
 //angle du rebond en degrés. Initialisation à 60°
@@ -56,6 +61,7 @@ extern int yheart;
 extern int numLevel;
 //index briques supprimées par les briques rouges
 extern int indexBoum;
+
 //compteur nombre de comètes
 extern int nbComet;
 //position compteur comètes

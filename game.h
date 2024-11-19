@@ -38,6 +38,8 @@ void turtle();
 
 float convertAngle();
 
+void echo();
+
 void waterDrop();
 
 void levelMoove();

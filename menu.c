@@ -15,8 +15,6 @@
 #include "sdl_helper/audio_functions.h"
 #include "sdl_helper/constants.h"
 
-//ajouter sapce pour pause
-
 //menu à créer : retour à l'accueil / contrôle de la tortue / balle qui rebondi / pause
 void settings(){
     clear();

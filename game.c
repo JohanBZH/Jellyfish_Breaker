@@ -720,9 +720,20 @@ float convertAngle(){
         }
 }
 
+void echo(){
+    positionEcho[0][0]=x;
+    positionEcho[1][0]=y;
+    for (int i=1;i<=1000;i++){
+        positionEcho[0][i]=positionEcho[0][i-1] ;
+        positionEcho[1][i]=positionEcho[1][i-1] ;
+    }
+}
+
 void waterDrop(){
     if (compteurGreen==1){
         spriteRotate(x,y,"sdl_helper/sprites/cometRight.bmp",angleBall);
+        spriteRotate((positionEcho[0][500]+5),(positionEcho[1][500]+5),"sdl_helper/sprites/cometEcho1Right.bmp",angleBall);
+        spriteRotate((positionEcho[0][999]+7.5),(positionEcho[1][999]+7.5),"sdl_helper/sprites/cometEcho2Right.bmp",angleBall);
     }
     else {
         spriteRotate(x,y,"sdl_helper/sprites/waterDropRight.bmp",angleBall);
