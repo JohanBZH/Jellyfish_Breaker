@@ -293,6 +293,44 @@ void sprite3(int posX, int posY, char *imgBMPSrc, int *w,int *h) {
     
 }
 
+void spriteRotate(int posX, int posY, char *imgBMPSrc, float angleBall) {
+    /** @brief affiche un image .bmp sur le renderer
+     *  @param posX position sur l'axe horizontale du coin supérieur gauche de l'image
+     *  @param posY position sur l'axe verticale du coin supérieur gauche de l'image
+     *  @param imgBMPSrc le chemin vers l'image que l'on veut afficher
+     */
+    checkPos(posX, posY);
+    SDL_Texture *textureImg = NULL;
+    SDL_Surface *surfaceImg = NULL;
+    if (!(surfaceImg = SDL_LoadBMP(imgBMPSrc))) {
+        SDL_Log("ERREUR : chargement img > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeAndTerminate();
+    }
+    textureImg = SDL_CreateTextureFromSurface(renderer, surfaceImg);
+    SDL_FreeSurface(surfaceImg);
+    if (textureImg == NULL) {
+        SDL_Log("ERREUR : chargement texture > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }
+
+    SDL_Rect rectangle;
+    if (SDL_QueryTexture(textureImg, NULL, NULL, &rectangle.w, &rectangle.h)) {
+        SDL_Log("ERREUR : image : query texture > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }
+    rectangle.x = posX;
+    rectangle.y = posY;
+    if (SDL_RenderCopyEx(renderer, textureImg, NULL, &rectangle,angleBall,NULL,SDL_FLIP_NONE) != 0) {
+        SDL_Log("ERREUR: image : RenderCopy > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }
+    freeTexture(textureImg);
+}
+
+
 void lastKeyPressed(SDL_Event *event) {
     /** @brief affiche dans le terminal le caractère associé à la dernière touche appuyée
      *         ne fonctionne que si le type de l'event est SDL_KEYDOWN

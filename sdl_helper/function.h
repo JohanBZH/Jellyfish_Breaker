@@ -45,4 +45,6 @@ void sprite2(int posX, int posY, char *imgSrc, int *w,int *h);
 
 void sprite3(int posX, int posY, char *imgSrc, int *w,int *h);
 
+void spriteRotate(int posX, int posY, char *imgBMPSrc, float angleBall);
+
 void lastKeyPressed(SDL_Event *event);

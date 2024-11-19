@@ -47,7 +47,9 @@ int yReturn=50;
 //variable de la vitesse
 int speedVar=10;
 //angle du rebond en degrés. Initialisation à 60°
-float angle=60;
+double angle=60;
+//angle de la direction de la balle
+double angleBall;
 //Nombre de vies
 int nbVie=3;
 int xheartInit=5;

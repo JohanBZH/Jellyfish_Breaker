@@ -44,7 +44,9 @@ extern int yReturn;
 //variable de la vitesse
 extern int speedVar;
 //angle du rebond en degrés. Initialisation à 60°
-extern float angle;
+extern double angle;
+//angle de la direction de la balle
+extern double angleBall;
 //Nombre de vies
 extern int nbVie;
 extern int xheartInit;

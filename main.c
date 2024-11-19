@@ -32,6 +32,7 @@ rebond sur une balle rouge si comète
 
 void drawGame(){
     clear();
+    convertAngle();
     background();
     printVie();
     speed();
@@ -172,9 +173,9 @@ void gameLauncher (){
         centeredText("JELLYFISHY BREAKER",440,comfortaaFont_52);     
         centeredText("CHOOSE YOUR LEVEL",650,comfortaaFont_36);
         textDrawText("SETTINGS",xSettings,ySettings,comfortaaFont_36);
-        sprite (xeasy,yeasy,"sdl_helper/sprites/jellyfishGreen.bmp");
-        sprite (xmedium,ymedium,"sdl_helper/sprites/jellyfish.bmp");       
-        sprite (xhard,yhard,"sdl_helper/sprites/jellyfishRed.bmp");
+        sprite (xeasy,yeasy,"sdl_helper/sprites/jellyfishGreenBig.bmp");
+        sprite (xmedium,ymedium,"sdl_helper/sprites/jellyfishBig.bmp");       
+        sprite (xhard,yhard,"sdl_helper/sprites/jellyfishRedBig.bmp");
         sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
         actualize();
     }

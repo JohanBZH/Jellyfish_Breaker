@@ -36,6 +36,8 @@ void rebondBords();
 
 void turtle();
 
+float convertAngle();
+
 void waterDrop();
 
 void levelMoove();

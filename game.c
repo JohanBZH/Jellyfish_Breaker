@@ -710,34 +710,28 @@ void turtle(){
     sprite(xRect,yRect,"sdl_helper/sprites/turtle.bmp");
 }
 
+float convertAngle(){
+        if (vx<0 && vy<0){
+            angleBall=angle+180;
+        }
+        else if (vx<0 && vy>0){
+            angleBall=180-angle;
+        }
+        if (vx>0 && vy<0){
+            angleBall=-angle;
+        }
+        else if (vx>0 && vy>0){
+            angleBall=angle;
+        }
+        printf("angle==%f, angleBall=%f\n",angle,angleBall);
+}
+
 void waterDrop(){
     if (compteurGreen==1){
-        if (vx<0 && vy<0){
-            sprite(x,y,"sdl_helper/sprites/comethg.bmp");
-        }
-        else if (vx<0 && vy>0){
-            sprite(x,y,"sdl_helper/sprites/cometbg.bmp");
-        }
-        if (vx>0 && vy<0){
-            sprite(x,y,"sdl_helper/sprites/comethd.bmp");
-        }
-        else if (vx>0 && vy>0){
-            sprite(x,y,"sdl_helper/sprites/cometbd.bmp");
-        }
+        spriteRotate(x,y,"sdl_helper/sprites/cometRight.bmp",angleBall);
     }
     else {
-        if (vx<0 && vy<0){
-            sprite(x,y,"sdl_helper/sprites/waterDrophg.bmp");
-        }
-        else if (vx<0 && vy>0){
-            sprite(x,y,"sdl_helper/sprites/waterDropbg.bmp");
-        }
-        if (vx>0 && vy<0){
-            sprite(x,y,"sdl_helper/sprites/waterDrophd.bmp");
-        }
-        else if (vx>0 && vy>0){
-            sprite(x,y,"sdl_helper/sprites/waterDropbd.bmp");
-        }
+        spriteRotate(x,y,"sdl_helper/sprites/waterDropRight.bmp",angleBall);
     }
 }
 
