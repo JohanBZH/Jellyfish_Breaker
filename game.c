@@ -555,15 +555,10 @@ void background(){
 void vie(){
     nbVie--;
         if (nbVie>=0){
-        x=700;
-        y=800;
         fullCenteredText("TRY AGAIN",comfortaaFont_52);
         actualize();
         usleep(100000000 / FPS);
-        vx=4;
-        vy=-4;
-        speedVar=10;
-        compteurGreen=0;
+        initVar();
       }  
       else{
         fullCenteredText("GAME OVER",comfortaaFont_52);
@@ -723,7 +718,6 @@ float convertAngle(){
         else if (vx>0 && vy>0){
             angleBall=angle;
         }
-        printf("angle==%f, angleBall=%f\n",angle,angleBall);
 }
 
 void waterDrop(){
@@ -764,4 +758,14 @@ void sonComet(){
             boucleSonComet++;
         }
     }
+}
+
+//création d'un log
+void fileLog(int numLevel){
+    FILE *logLevelPlayed = fopen("logLevelPlayed.txt", "a+");
+        if (logLevelPlayed == NULL) {
+            perror("Erreur d'ouverture du fichier");
+        }
+    fprintf(logLevelPlayed,"Niveau numéro : %d\n",numLevel);
+    fclose(logLevelPlayed);
 }

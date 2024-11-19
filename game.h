@@ -43,3 +43,5 @@ void waterDrop();
 void levelMoove();
 
 void sonComet();
+
+void fileLog();

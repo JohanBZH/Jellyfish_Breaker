@@ -55,6 +55,7 @@ void drawGame(){
 void KeyPressed(SDL_Keycode touche){
    
     switch (touche) {
+        //pour gérer de façon fluide le déplacement de la tortue et éviter le buffer de keydown, Le déplacement de la tortue est activé à keyDown et neutralisé à keyUp
         case SDLK_q:
             deplacementGauche=1;
             break;
@@ -69,12 +70,12 @@ void KeyPressed(SDL_Keycode touche){
             nbComet = (nbComet == 0) ? nbComet : nbComet-1;
             break; 
 
-        //touche debug forcer la comète
+        //touche debug forçage comète
             case SDLK_g:
             compteurGreen=1;
             break;  
 
-        //gestion de la vitesse            
+        //gestion de la vitesse de la balle          
         case SDLK_p:
             speedVar=speedVar+1;
             if (speedVar>=21){
@@ -135,17 +136,20 @@ void KeyUp(SDL_Keycode touche){
 //selectionne le niveau en cliquant
 void mouse(int xMouse, int yMouse){
    
-    if (xMouse>=xeasy && xMouse<=(xeasy+50) && yMouse>=yeasy && yMouse<=yeasy+50) {
+    if (xMouse>=xeasy && xMouse<=(xeasy+75) && yMouse>=yeasy && yMouse<=yeasy+75) {
             launch=1;
             numLevel=0;
+            fileLog(numLevel);
     }
-    else if (xMouse>=xmedium && xMouse<=(xmedium+50) && yMouse>=ymedium && yMouse<=ymedium+50){
+    else if (xMouse>=xmedium && xMouse<=(xmedium+75) && yMouse>=ymedium && yMouse<=ymedium+75){
             launch=1;
             numLevel=1;
+            fileLog(numLevel);
     }
-    else if (xMouse>=xhard && xMouse<=(xhard+50) && yMouse>=yhard && yMouse<=yhard+50){
+    else if (xMouse>=xhard && xMouse<=(xhard+75) && yMouse>=yhard && yMouse<=yhard+75){
             launch=1;
             numLevel=2;
+            fileLog(numLevel);
     }
     else if (xMouse>=xSettings && xMouse<=(xSettings+400) && yMouse>=ySettings && yMouse<=ySettings+100){
             launch=2;
@@ -187,7 +191,7 @@ void gameLauncher (){
     }
 }
 
-void gameLoop() {   //pour gérer de façon fluide le déplacement de la tortue et éviter le buffer de keydown, modifier une variable à keydown ET keyup.
+void gameLoop() {   
     int programLaunched = 1;
     while (programLaunched == 1) {
         SDL_Event event;

@@ -1,5 +1,7 @@
 #pragma once
 
+void initVar();
+
 void init_game();
 
 void level0();

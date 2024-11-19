@@ -169,18 +169,23 @@ void level2 (){
   }
 }
 
+void initVar(){
+    x = 700;
+    y = 700;
+    vx=cos(60*(3.14/180))*10;
+    vy=-(60*(3.14/180))*10;
+    compteurGreen=0;
+    speedVar=10;
+    angle=60;
+}
+
 void init_game(){
   level0();
   level1();
   level2();
-  x = 700;
-  y = 700;
-  vx=cos(60*(3.14/180))*10;
-  vy=-(60*(3.14/180))*10;
+  initVar();
   launch=0;
-  compteurGreen=0;
   nbComet=0;
   loop=1;
   loopMoove=0;
-  speedVar=10;
 }
