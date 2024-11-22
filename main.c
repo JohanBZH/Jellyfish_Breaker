@@ -36,6 +36,7 @@ void drawGame(){
     echo();
     speed();
     jellyfishPrint();
+    gameEnd();
     choixInteraction();
     rebondBords();
     waterDrop();
@@ -48,7 +49,7 @@ void drawGame(){
     levelMoove();
     loop++;
     usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
-    gameEnd();
+
 }
 
 void KeyPressed(SDL_Keycode touche){

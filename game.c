@@ -536,8 +536,9 @@ void gameEnd(){
       break;
       case 0:
         fullCenteredText("WIN",comfortaaFont_52);
+        audioLoadAndPlay("sdl_helper/sound/win.wav",7);
         actualize();
-        usleep(200000000 / FPS);
+        usleep(6000000);
         nbVie=3;
         launch=0; 
         init_game();
@@ -691,10 +692,10 @@ void rebondBords(){
 //Déplacement de la raquette
 void turtle(){
     if (deplacementGauche==1){
-      xRect-=20;
+      xRect-=speedTortue;
     }
     else if (deplacementDroite==1){
-      xRect+=20;    
+      xRect+=speedTortue;    
     }
     if(xRect<200){
       xRect=200;

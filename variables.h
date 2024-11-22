@@ -46,7 +46,9 @@ extern int yReturn;
 //table des positions de la balle
 extern int positionEcho[2][1000];
 
-//variable de la vitesse
+//vitesse de la tortue
+extern int speedTortue;
+//vitesse de la balle
 extern int speedVar;
 //angle du rebond en degrés. Initialisation à 60°
 extern double angle;
