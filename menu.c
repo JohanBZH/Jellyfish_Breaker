@@ -29,15 +29,15 @@ void settings(){
 //tous les sprites et textes
 void spriteTuto(){
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
-    sprite (600,800,"sdl_helper/sprites/qKey.bmp");
-    sprite (700,800,"sdl_helper/sprites/dKey.bmp");
-    sprite (400,200,"sdl_helper/sprites/speedTuto.bmp");
-    sprite (620,625,"sdl_helper/sprites/sKey.bmp");
-    sprite (720,650,"sdl_helper/sprites/comet.bmp"); 
+    sprite ((screenCenter-100),800,"sdl_helper/sprites/qKey.bmp");
+    sprite (screenCenter,800,"sdl_helper/sprites/dKey.bmp");
+    sprite ((screenCenter-300),200,"sdl_helper/sprites/speedTuto.bmp");
+    sprite ((screenCenter-80),625,"sdl_helper/sprites/sKey.bmp");
+    sprite ((screenCenter+20),650,"sdl_helper/sprites/comet.bmp"); 
     textDrawText("Return MENU",xReturn,yReturn,comfortaaFont_28);
     centeredText("'SPACE' to pause the game",550,comfortaaFont_36);
-    drawLine(400, 400, 400,430);
-    drawLine(1000, 400, 1000,430);
+    drawLine((screenCenter-299), 400, (screenCenter-299),430);
+    drawLine((screenCenter+300), 400, (screenCenter+300),430);
 }
 
 //faire rebondir la balle / activer comète
@@ -72,20 +72,20 @@ void speedTuto(){
     else if (pauseSwitch==-1){
         fullCenteredText("PAUSED",comfortaaFont_52);
     }
-    sprite (800,250, "sdl_helper/sprites/speed.bmp");
+    sprite ((screenCenter+100),250, "sdl_helper/sprites/speed.bmp");
     char speedChar[50];
     sprintf(speedChar,"%d",speedVar);
-    textDrawText(speedChar, 870,258,comfortaaFont_28);
+    textDrawText(speedChar,(screenCenter+170),258,comfortaaFont_28);
 }
 
 //Rebonds balle
 void rebondBordsTuto(){
-    if (xTuto>(970)){
+    if (xTuto>(screenCenter+270)){
       vxTuto*=-1;
-      xTuto=969;
+      xTuto=(screenCenter+269);
     }
-    else if(xTuto<401){
+    else if(xTuto<(screenCenter-299)){
       vxTuto*=-1;
-      xTuto=401;
+      xTuto=(screenCenter-299);
     }
 }

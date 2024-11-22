@@ -5,46 +5,51 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-//Dimensions de l'écran
-int largeurEcran = 1400;
-int hauteurEcran = 1000;
+//Milieu de l'écran
+float screenCenter=0;
+
 //Lancement du jeu
 int launch;
 
+//Position du background
+float xBackground;
 //position de la balle dessiné dans drawGame()
-float x = 700;
+float x;
 float y = 700;
 float vx=cos(60*(3.14/180))*10;
 float vy=-(60*(3.14/180))*10;
 //position de la balle dessiné dans tutoBall()
-int xTuto = 400;
+int xTuto;
 int yTuto = 400;
 int vxTuto=1;
 int vyTuto=0;
 //Position initiale des briques
-int xScan=250;
+int xScan;
 int yScan=100;
 //position de la tortue
-int xRect=600;
+int xRect;
 int yRect=920;
 //position bouton level easy
-int xeasy=500;
+int xeasy;
 int yeasy=750;
 //position bouton level medium
-int xmedium=675;
+int xmedium;
 int ymedium=750;
 //position bouton level hard
-int xhard=850;
+int xhard;
 int yhard=750;
 //position bouton quit
-int xquit=1200;
+int xquit;
 int yquit=900;
 //position bouton Settings
-int xSettings=50;
+int xSettings;
 int ySettings=920;
-//position bouton retour
-int xReturn=5;
+//position bouton retour depuis settings
+int xReturn;
 int yReturn=50;
+//position bouton retour depuis jeu
+int xReturnGame;
+int yReturnGame=850;
 
 //table des positions de la balle
 int positionEcho[2][1000];
@@ -59,7 +64,7 @@ double angle=60;
 double angleBall;
 //Nombre de vies
 int nbVie=3;
-int xheartInit=5;
+int xheartInit;
 int xheart;
 int yheart=10;
 //Level choisi
@@ -69,7 +74,7 @@ int indexBoum;
 //compteur nombre de comètes
 int nbComet;
 //position compteur comètes
-int xCometInit=1355;
+int xCometInit;
 int xComet;
 int yComet=10;
 //activation pouvoir brique verte
@@ -100,4 +105,21 @@ SDL_Rect hitBoxSizeTurtle(){
     SDL_Rect hitBox;
     sprite3(0,0,"sdl_helper/sprites/turtle.bmp",&hitBox.w, &hitBox.h);
     return hitBox;
+}
+
+void initPositions(){
+    x = screenCenter;
+    xTuto = screenCenter-300;
+    xScan=screenCenter-450;
+    xRect=screenCenter-100;
+    xeasy=screenCenter-200;
+    xmedium=screenCenter-25;
+    xhard=screenCenter+150;
+    xquit=screenCenter+500;
+    xSettings=screenCenter-650;
+    xReturn=screenCenter-695;
+    xReturnGame=screenCenter+505;
+    xheartInit=screenCenter-695;
+    xCometInit=screenCenter+655;
+    xBackground=screenCenter-700;
 }

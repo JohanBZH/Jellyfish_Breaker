@@ -48,3 +48,6 @@ void sprite3(int posX, int posY, char *imgSrc, int *w,int *h);
 void spriteRotate(int posX, int posY, char *imgBMPSrc, float angleBall);
 
 void lastKeyPressed(SDL_Event *event);
+
+//structure dimensions de l'écran
+extern SDL_Rect screenRect;

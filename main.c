@@ -24,7 +24,7 @@ lm > librairie "math"
 
 Features à dev
 
-Créer un écho de la comète
+Full screen
 
 */
 
@@ -44,7 +44,7 @@ void drawGame(){
     turtle();
     printNbComet();
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
-    textDrawText("Return Menu",1205,850,comfortaaFont_28);
+    textDrawText("Return Menu",(screenCenter+505),850,comfortaaFont_28);
     actualize();
     levelMoove();
     loop++;
@@ -163,7 +163,7 @@ void mouse(int xMouse, int yMouse){
             init_game();
     }
     //retour au menu depuis le jeu
-    else if (xMouse>=1200 && xMouse<=(1400) && yMouse>=800 && yMouse<=900){
+    else if (xMouse>=xReturnGame && xMouse<=(xReturnGame+200) && yMouse>=yReturnGame && yMouse<=(yReturnGame+100)){
             init_game();
             nbVie=3;
     }
@@ -172,7 +172,7 @@ void mouse(int xMouse, int yMouse){
 
 void gameLauncher (){
     if (launch==0) {
-        sprite (0,0,"sdl_helper/sprites/background.bmp");
+        sprite (xBackground,0,"sdl_helper/sprites/background.bmp");
         centeredText("WELCOME",300,comfortaaFont_52);    
         centeredText("TO",370,comfortaaFont_52);  
         centeredText("JELLYFISHY BREAKER",440,comfortaaFont_52);     
@@ -224,6 +224,8 @@ void gameLoop() {
 int main(){
     srand(time(NULL));
     init(WINDOW_WIDTH, WINDOW_HEIGHT);
+    screenCenter=(screenRect.w/2);
+    initPositions();
     init_game();
     gameLoop();
     printf("Fin du programme\n");

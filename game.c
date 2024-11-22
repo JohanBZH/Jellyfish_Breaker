@@ -546,10 +546,10 @@ void gameEnd(){
 }
 
 void background(){
-    sprite(0,0,"sdl_helper/sprites/background.bmp");
+    sprite(xBackground,0,"sdl_helper/sprites/background.bmp");
     changeColor( 88, 174, 245 );
-    drawLine(200,0,200,1000);
-    drawLine(1200,0,1200,1000);
+    drawLine((screenCenter-500),0,(screenCenter-500),1000);
+    drawLine((screenCenter+500),0,(screenCenter+500),1000);
 }
 
 //Défaite
@@ -603,10 +603,10 @@ void speed(){
         fullCenteredText("PAUSED",comfortaaFont_52);
     }
     //affiche la vitesse de la balle
-    sprite (10,100, "sdl_helper/sprites/speed.bmp");
+    sprite ((screenCenter-690),100, "sdl_helper/sprites/speed.bmp");
     char speedChar[50];
     sprintf(speedChar,"%d",speedVar);
-    textDrawText(speedChar, 80,108,comfortaaFont_28);
+    textDrawText(speedChar,screenCenter-620,108,comfortaaFont_28);
 }
 
 //interactions avec les bords et la tortue.  
@@ -665,13 +665,13 @@ void rebondTortue(){
 }
 
 void rebondBords(){
-    if (x>(1179)){   //window_width-hitbox-1 pour éviter le contact
+    if (x>(screenCenter+479)){   //window_width-hitbox-1 pour éviter le contact
       vx*=-1;        //renvoie dans l'autre sens
-      x=1179;
+      x=(screenCenter+479);
     }
-    else if(x<201){
+    else if(x<(screenCenter-499)){
       vx*=-1;
-      x=201;
+      x=(screenCenter-499);
     }
     else if(y<11){
       vy*=-1;
@@ -697,11 +697,11 @@ void turtle(){
     else if (deplacementDroite==1){
       xRect+=speedTortue;    
     }
-    if(xRect<200){
-      xRect=200;
+    if(xRect<(screenCenter-500)){
+      xRect=(screenCenter-500);
     }
-    else if(xRect>1000){
-      xRect=1000;
+    else if(xRect>(screenCenter+300)){
+      xRect=(screenCenter+300);
     }
     sprite(xRect,yRect,"sdl_helper/sprites/turtle.bmp");
 }

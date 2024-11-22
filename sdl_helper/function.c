@@ -36,6 +36,9 @@ void checkPos(int x, int y){
     }
 }
 
+//Initialise les dimensions de l'écran
+SDL_Rect screenRect= {0};
+
 void init(int windowWidth, int windowHeight) {
     /** @brief initialise la fenêtre window et le renderer (moteur de rendu) renderer
      *  @param windowWidth la largeur de la fenêtre
@@ -51,8 +54,17 @@ void init(int windowWidth, int windowHeight) {
         SDL_Log("ERREUR : Init window and renderer > %s\nParametres passes %d , %d\n",SDL_GetError(), windowWidth, windowHeight);
         freeAndTerminate();
     }
-    SDL_SetWindowTitle(window, "Brick Breaker");
+    SDL_SetWindowTitle(window, "Jellyfish Breaker");
 
+    //gestion du full screen
+    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    //récupère le nombre d'écrans
+    int num_displays=SDL_GetNumVideoDisplays();
+    //récupération de la taille des écrans
+    for (int i=0;i<num_displays;i++){
+        int displayIndex=0; 
+        SDL_GetDisplayBounds (displayIndex, &screenRect);
+    }
 
     textInitializeTtfLibrary();
     constantsLoadFont();
