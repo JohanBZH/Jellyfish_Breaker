@@ -15,7 +15,7 @@
 #include "sdl_helper/audio_functions.h"
 #include "sdl_helper/constants.h"
 
-//menu à créer : retour à l'accueil / contrôle de la tortue / balle qui rebondi / pause
+
 void settings(){
     clear();
     background();
@@ -31,7 +31,7 @@ void spriteTuto(){
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
     sprite ((screenCenter-100),800,"sdl_helper/sprites/qKey.bmp");
     sprite (screenCenter,800,"sdl_helper/sprites/dKey.bmp");
-    sprite ((screenCenter-300),200,"sdl_helper/sprites/speedTuto.bmp");
+    sprite ((screenCenter-250),200,"sdl_helper/sprites/speedTuto.bmp");
     sprite ((screenCenter-80),625,"sdl_helper/sprites/sKey.bmp");
     sprite ((screenCenter+20),650,"sdl_helper/sprites/comet.bmp"); 
     textDrawText("Return MENU",xReturn,yReturn,comfortaaFont_28);

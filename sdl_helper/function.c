@@ -21,7 +21,7 @@ void checkPos(int x, int y){
         printf("ATTENTION position x < 0 (x = %d)\n", x);
         out();
     }
-    if (x > window_width) {
+    if (x > screenRect.w) {
         printf("ATTENTION position x > largeur de la fenetre (x = %d > %d)\n", x, window_width);
         out();
     }
@@ -30,7 +30,7 @@ void checkPos(int x, int y){
         printf("ATTENTION position y > hauteur de la fenetre (y = %d > %d)\n", y, window_height);
         out();
     }
-    if (y > window_height) {
+    if (y > screenRect.h) {
         printf("ATTENTION position y > hauteur de la fenetre (y = %d > %d)\n", y, window_height);
         out();
     }
@@ -44,14 +44,14 @@ void init(int windowWidth, int windowHeight) {
      *  @param windowWidth la largeur de la fenêtre
      *  @param windowHeight la hauteur de la fenêtre
      */
-    window_width = windowWidth;
-    window_height = windowHeight;
+    window_width = screenRect.w;//windowWidth;
+    window_height = screenRect.h;//windowHeight;
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        SDL_Log("ERREUR : Init SDL > %s\nParametres passes %d , %d\n",SDL_GetError(), windowWidth, windowHeight);
+        SDL_Log("ERREUR : Init SDL > %s\nParametres passes %d , %d\n",SDL_GetError(), screenRect.w, screenRect.h);//windowWidth, windowHeight);
         freeAndTerminate();
     }
     if (SDL_CreateWindowAndRenderer(windowWidth, windowHeight, 0, &window, &renderer)) {
-        SDL_Log("ERREUR : Init window and renderer > %s\nParametres passes %d , %d\n",SDL_GetError(), windowWidth, windowHeight);
+        SDL_Log("ERREUR : Init window and renderer > %s\nParametres passes %d , %d\n",SDL_GetError(), screenRect.w, screenRect.h);//windowWidth, windowHeight);
         freeAndTerminate();
     }
     SDL_SetWindowTitle(window, "Jellyfish Breaker");

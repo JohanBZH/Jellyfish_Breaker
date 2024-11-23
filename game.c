@@ -571,7 +571,7 @@ void vie(){
       }
 }
 void printVie(){
-    for (int i=0;i<=(nbVie);i++){
+    for (int i=0;i<(nbVie);i++){
         xheart=xheartInit+(50*i);
         sprite(xheart,yheart,"sdl_helper/sprites/heart.bmp");
     }

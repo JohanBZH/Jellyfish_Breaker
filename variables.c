@@ -115,11 +115,11 @@ void initPositions(){
     xeasy=screenCenter-200;
     xmedium=screenCenter-25;
     xhard=screenCenter+150;
-    xquit=screenCenter+500;
-    xSettings=screenCenter-650;
-    xReturn=screenCenter-695;
-    xReturnGame=screenCenter+505;
-    xheartInit=screenCenter-695;
-    xCometInit=screenCenter+655;
+    xquit=screenCenter+520;
+    xSettings=screenCenter-670;
+    xReturn=screenCenter-715;
+    xReturnGame=screenCenter+525;
+    xheartInit=screenCenter-715;
+    xCometInit=screenCenter+675;
     xBackground=screenCenter-700;
 }

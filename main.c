@@ -32,11 +32,11 @@ void drawGame(){
     clear();
     convertAngle();
     background();
-    printVie();
     echo();
     speed();
     jellyfishPrint();
     gameEnd();
+    printVie();
     choixInteraction();
     rebondBords();
     waterDrop();
@@ -160,10 +160,12 @@ void mouse(int xMouse, int yMouse){
     }
     //retour au menu depuis les settings
     else if (xMouse>=xReturn && xMouse<=(xReturn+400) && yMouse>=yReturn && yMouse<=yReturn+100){
+            clear();
             init_game();
     }
     //retour au menu depuis le jeu
     else if (xMouse>=xReturnGame && xMouse<=(xReturnGame+200) && yMouse>=yReturnGame && yMouse<=(yReturnGame+100)){
+            clear();
             init_game();
             nbVie=3;
     }
