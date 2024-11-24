@@ -611,6 +611,7 @@ void speed(){
 
 //interactions avec les bords et la tortue.  
 void rebondTortue(){
+    //Gauche
     if(y>(yRect-18) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+70)){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
         float posRebond;
@@ -678,7 +679,10 @@ void rebondBords(){
       y=11;
     }
 
-    else if (y>(yRect-28) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+200)) {
+    else if ((y>(yRect-18) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+70)) || 
+    (y>(yRect-28)) && y<(yRect+10) && x>(xRect+70) && x<(xRect+90) ||
+    (y>(yRect-28)) && y<(yRect+10) && x>(xRect+90) && x<(xRect+110) ||
+    y>(yRect-8) && y<(yRect+10) && x>=(xRect+110) && x<(xRect+200)) {
       rebondTortue();
     }
     else if (y>screenSize.height){

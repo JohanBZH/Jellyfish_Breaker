@@ -162,12 +162,14 @@ void mouse(int xMouse, int yMouse){
     else if (xMouse>=xReturn && xMouse<=(xReturn+400) && yMouse>=yReturn && yMouse<=yReturn+100){
             clear();
             init_game();
+            audioLoadAndPlay("sdl_helper/sound/silence.wav",7);
     }
     //retour au menu depuis le jeu
     else if (xMouse>=xReturnGame && xMouse<=(xReturnGame+200) && yMouse>=yReturnGame && yMouse<=(yReturnGame+100)){
             clear();
             init_game();
             nbVie=3;
+            audioLoadAndPlay("sdl_helper/sound/silence.wav",7);
     }
     else{}
 }
