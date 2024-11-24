@@ -13,6 +13,8 @@ typedef struct Point {
 
 void init(int windowWidth, int windowHeight);
 
+void initScreenSize();
+
 void freeWindow();
 
 void freeRenderer();
@@ -47,7 +49,6 @@ void sprite3(int posX, int posY, char *imgSrc, int *w,int *h);
 
 void spriteRotate(int posX, int posY, char *imgBMPSrc, float angleBall);
 
-void lastKeyPressed(SDL_Event *event);
+void spriteBackground(int posX, int posY, char *imgBMPSrc);
 
-//structure dimensions de l'écran
-extern SDL_Rect screenRect;
+void lastKeyPressed(SDL_Event *event);

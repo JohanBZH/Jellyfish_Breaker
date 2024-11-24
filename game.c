@@ -546,10 +546,10 @@ void gameEnd(){
 }
 
 void background(){
-    sprite(xBackground,0,"sdl_helper/sprites/background.bmp");
+    spriteBackground(0,0,"sdl_helper/sprites/background.bmp");
     changeColor( 88, 174, 245 );
-    drawLine((screenCenter-500),0,(screenCenter-500),1000);
-    drawLine((screenCenter+500),0,(screenCenter+500),1000);
+    drawLine((screenSize.center-500),0,(screenSize.center-500),screenSize.height);
+    drawLine((screenSize.center+500),0,(screenSize.center+500),screenSize.height);
 }
 
 //Défaite
@@ -603,15 +603,15 @@ void speed(){
         fullCenteredText("PAUSED",comfortaaFont_52);
     }
     //affiche la vitesse de la balle
-    sprite ((screenCenter-690),100, "sdl_helper/sprites/speed.bmp");
+    sprite ((screenSize.center-690),100, "sdl_helper/sprites/speed.bmp");
     char speedChar[50];
     sprintf(speedChar,"%d",speedVar);
-    textDrawText(speedChar,screenCenter-620,108,comfortaaFont_28);
+    textDrawText(speedChar,screenSize.center-620,108,comfortaaFont_28);
 }
 
 //interactions avec les bords et la tortue.  
 void rebondTortue(){
-    if(y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+70)){
+    if(y>(yRect-18) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+70)){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
         float posRebond;
         //crée un gradient de 0 à 1 suivant la position d'impact
@@ -623,24 +623,24 @@ void rebondTortue(){
             vx*=-1;
             }
             else {}
-        y=yRect-10;
+        y=yRect-20;
     }
     //centre gauche, pas de modification de la direction
-    else if((y>(yRect-8)) && y<(yRect+10) && x>(xRect+70) && x<(xRect+90)){
+    else if((y>(yRect-28)) && y<(yRect+10) && x>(xRect+70) && x<(xRect+90)){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
         angle=80;
         vecteurSpeed();
         vy*=-1;
         vx*=-1;
-        y=yRect-10;
+        y=yRect-30;
     }    
     //centre droit, pas de modification de la direction
-    else if((y>(yRect-8)) && y<(yRect+10) && x>(xRect+90) && x<(xRect+110)){
+    else if((y>(yRect-28)) && y<(yRect+10) && x>(xRect+90) && x<(xRect+110)){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
         angle=80;
         vecteurSpeed();
         vy*=-1;
-        y=yRect-10;
+        y=yRect-30;
     }
     //droite, renvoyer vers la droite
     else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+110) && x<(xRect+200)){
@@ -665,23 +665,23 @@ void rebondTortue(){
 }
 
 void rebondBords(){
-    if (x>(screenCenter+479)){   //window_width-hitbox-1 pour éviter le contact
+    if (x>(screenSize.center+479)){   //window_width-hitbox-1 pour éviter le contact
       vx*=-1;        //renvoie dans l'autre sens
-      x=(screenCenter+479);
+      x=(screenSize.center+479);
     }
-    else if(x<(screenCenter-499)){
+    else if(x<(screenSize.center-499)){
       vx*=-1;
-      x=(screenCenter-499);
+      x=(screenSize.center-499);
     }
     else if(y<11){
       vy*=-1;
       y=11;
     }
 
-    else if (y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+200)) {
+    else if (y>(yRect-28) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+200)) {
       rebondTortue();
     }
-    else if (y>1000){
+    else if (y>screenSize.height){
         audioLoadAndPlay("sdl_helper/sound/lost.wav", -1);
         vie();
     }
@@ -697,11 +697,11 @@ void turtle(){
     else if (deplacementDroite==1){
       xRect+=speedTortue;    
     }
-    if(xRect<(screenCenter-500)){
-      xRect=(screenCenter-500);
+    if(xRect<(screenSize.center-500)){
+      xRect=(screenSize.center-500);
     }
-    else if(xRect>(screenCenter+300)){
-      xRect=(screenCenter+300);
+    else if(xRect>(screenSize.center+300)){
+      xRect=(screenSize.center+300);
     }
     sprite(xRect,yRect,"sdl_helper/sprites/turtle.bmp");
 }

@@ -5,14 +5,16 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-//Milieu de l'écran
-float screenCenter=0;
+//Initialise les dimensions de l'écran
+SDL_Rect screenRect= {0};
+ScreenSize screenSize={0};
 
 //Lancement du jeu
 int launch;
 
 //Position du background
 float xBackground;
+
 //position de la balle dessiné dans drawGame()
 float x;
 float y = 700;
@@ -28,7 +30,7 @@ int xScan;
 int yScan=100;
 //position de la tortue
 int xRect;
-int yRect=920;
+int yRect;
 //position bouton level easy
 int xeasy;
 int yeasy=750;
@@ -40,16 +42,16 @@ int xhard;
 int yhard=750;
 //position bouton quit
 int xquit;
-int yquit=900;
+int yquit;
 //position bouton Settings
 int xSettings;
-int ySettings=920;
+int ySettings;   
 //position bouton retour depuis settings
 int xReturn;
 int yReturn=50;
 //position bouton retour depuis jeu
 int xReturnGame;
-int yReturnGame=850;
+int yReturnGame;
 
 //table des positions de la balle
 int positionEcho[2][1000];
@@ -106,20 +108,31 @@ SDL_Rect hitBoxSizeTurtle(){
     sprite3(0,0,"sdl_helper/sprites/turtle.bmp",&hitBox.w, &hitBox.h);
     return hitBox;
 }
+SDL_Rect hitBoxSizeBackground(){
+    SDL_Rect hitBox;
+    sprite3(0,0,"sdl_helper/sprites/background.bmp",&hitBox.w, &hitBox.h);
+    return hitBox;
+}
 
 void initPositions(){
-    x = screenCenter;
-    xTuto = screenCenter-300;
-    xScan=screenCenter-450;
-    xRect=screenCenter-100;
-    xeasy=screenCenter-200;
-    xmedium=screenCenter-25;
-    xhard=screenCenter+150;
-    xquit=screenCenter+520;
-    xSettings=screenCenter-670;
-    xReturn=screenCenter-715;
-    xReturnGame=screenCenter+525;
-    xheartInit=screenCenter-715;
-    xCometInit=screenCenter+675;
-    xBackground=screenCenter-700;
+    x = screenSize.center;
+    xTuto = screenSize.center-300;
+    xScan=screenSize.center-450;
+    xRect=screenSize.center-100;
+    yRect=screenSize.height-80;
+    xeasy=screenSize.center-200;
+    xmedium=screenSize.center-25;
+    xhard=screenSize.center+150;
+    xquit=screenSize.center+520;
+    yquit = screenSize.height-100;
+    xSettings=screenSize.center-670;
+    ySettings=screenSize.height-80; 
+    xReturn=screenSize.center-715;
+    xReturnGame=screenSize.center+535;
+    yReturnGame=screenSize.height -150;
+    xheartInit=screenSize.center-715;
+    xCometInit=screenSize.center+675;
+
+    SDL_Rect hitBoxBackground = hitBoxSizeBackground();
+    xBackground=(screenSize.center-hitBoxBackground.w/2);
 }

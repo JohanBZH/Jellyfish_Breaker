@@ -44,7 +44,7 @@ void drawGame(){
     turtle();
     printNbComet();
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
-    textDrawText("Return Menu",(screenCenter+505),850,comfortaaFont_28);
+    textDrawText("Return Menu",xReturnGame,yReturnGame,comfortaaFont_28);
     actualize();
     levelMoove();
     loop++;
@@ -174,8 +174,8 @@ void mouse(int xMouse, int yMouse){
 
 void gameLauncher (){
     if (launch==0) {
-        sprite (xBackground,0,"sdl_helper/sprites/background.bmp");
-        centeredText("WELCOME",300,comfortaaFont_52);    
+        spriteBackground (0,0,"sdl_helper/sprites/background.bmp");
+        centeredText("WELCOME",300,comfortaaFont_52);
         centeredText("TO",370,comfortaaFont_52);  
         centeredText("JELLYFISHY BREAKER",440,comfortaaFont_52);     
         centeredText("CHOOSE YOUR LEVEL",650,comfortaaFont_36);
@@ -226,7 +226,6 @@ void gameLoop() {
 int main(){
     srand(time(NULL));
     init(WINDOW_WIDTH, WINDOW_HEIGHT);
-    screenCenter=(screenRect.w/2);
     initPositions();
     init_game();
     gameLoop();

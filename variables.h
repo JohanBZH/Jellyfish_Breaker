@@ -2,13 +2,25 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-//Milieu de l'écran
-extern float screenCenter;
+//structure dimensions de l'écran
+typedef struct {
+	int height;
+	int width;
+	int center;
+	int middle;
+}ScreenSize;
+
+extern ScreenSize screenSize;
+extern SDL_Rect screenRect;
+
+
 //Lancement du jeu
 extern int launch;
 
 //Position du background
 extern float xBackground;
+
+
 //position de la balle dessiné dans drawGame()
 extern float x;
 extern float y;
@@ -93,6 +105,7 @@ extern int deplacementDroite;
 //Structure pour récupérer les dimensions de l'image
 SDL_Rect hitBoxSizeJellyfish();
 SDL_Rect hitBoxSizeTurtle();
+SDL_Rect hitBoxSizeBackground();
 
 //Initialise toutes les variables de position
 void initPositions();

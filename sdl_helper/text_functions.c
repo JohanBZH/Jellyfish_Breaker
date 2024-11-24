@@ -74,7 +74,7 @@ void fullCenteredText (char* textToDraw, TTF_Font* font){
 
     TTF_SizeText(font, textToDraw, &textWidth, &textHeight);
 
-    centerTextWidth=screenCenter-(textWidth/2);
+    centerTextWidth=screenSize.center-(textWidth/2);
     centerTextHeight=(screenRect.h/2)-(textHeight/2);
 
     textChangeColor( 255,255,255,255);
@@ -86,7 +86,7 @@ void centeredText (char* textToDraw, int posy, TTF_Font* font){
 
     TTF_SizeText(font, textToDraw, &textWidth, &textHeight);
 
-    centerTextWidth=screenCenter-(textWidth/2);
+    centerTextWidth=screenSize.center-(textWidth/2);
 
     textChangeColor( 255,255,255,255);
     textDrawText(textToDraw, centerTextWidth, posy, font);
