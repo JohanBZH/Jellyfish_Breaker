@@ -149,6 +149,9 @@ void mouse(int xMouse, int yMouse){
     else if (xMouse>=xhard && xMouse<=(xhard+75) && yMouse>=yhard && yMouse<=yhard+75){
             launch=1;
             numLevel=2;
+            if (decalage<0){
+                decalage*=-1;
+            }
             fileLog(numLevel);
     }
     else if (xMouse>=xSettings && xMouse<=(xSettings+400) && yMouse>=ySettings && yMouse<=ySettings+100){

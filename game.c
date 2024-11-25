@@ -540,7 +540,6 @@ void gameEnd(){
         actualize();
         usleep(6000000);
         nbVie=3;
-        launch=0; 
         init_game();
     }
 }
