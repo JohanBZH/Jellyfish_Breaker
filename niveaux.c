@@ -45,7 +45,7 @@ void level0 (){
   int index=0;
   for (int i=0;i<4;i++){
     if (i%2==0){
-      xScan=200;
+      xScan=screenSize.center-500;
       yScan=yScan+50*i;
       for (int j=0;j<9;j++){
         xScan=xScan+(2*50);
@@ -64,7 +64,7 @@ void level0 (){
       }
     }
     else{
-      xScan=150;
+      xScan=screenSize.center-550;
       yScan=yScan+50*i;
       for (int j=0;j<9;j++){
         xScan=xScan+(2*50);
@@ -101,7 +101,7 @@ void level0 (){
 void level1 (){
   int index=0; //n° de cellule
   for (int i=0;i<3;i++){  //deux boucles de for pour scanner la grille
-    xScan=250;
+    xScan=screenSize.center-450;
     yScan=yScan+100*i;
     for (int j=0;j<18;j++){
       xScan=xScan+50*j;
@@ -117,7 +117,7 @@ void level1 (){
         }
       }
     index=index+1;
-    xScan=250;
+    xScan=screenSize.center-450;
     }
   yScan=100;
   }
@@ -137,7 +137,7 @@ void level1 (){
 void level2 (){
   int index=0; //n° de cellule
   for (int i=0;i<4;i++){  //deux boucles de for pour scanner la grille
-    xScan = (i%2==0) ? 250 : 500;
+    xScan = (i%2==0) ? screenSize.center-450 : screenSize.center-200;
     yScan=yScan+80*i;
     for (int j=0;j<13;j++){
       xScan=xScan+50*j;
@@ -153,7 +153,7 @@ void level2 (){
         }
       }
     index=index+1;
-    xScan = (i%2==0) ? 250 : 500;
+    xScan = (i%2==0) ? screenSize.center-450 : screenSize.center-200;
     }
   yScan=100;
   }
@@ -179,7 +179,7 @@ void initPositionEcho(){
 
 //initialise la position de début de jeu
 void initVar(){
-    x = 700;
+    x = screenSize.center;
     y = 700;
     vx=cos(60*(3.14/180))*10;
     vy=-(60*(3.14/180))*10;

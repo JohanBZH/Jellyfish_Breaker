@@ -24,7 +24,7 @@ lm > librairie "math"
 
 Features à dev
 
-Créer un écho de la comète
+Full screen
 
 */
 
@@ -32,10 +32,11 @@ void drawGame(){
     clear();
     convertAngle();
     background();
-    printVie();
     echo();
     speed();
     jellyfishPrint();
+    gameEnd();
+    printVie();
     choixInteraction();
     rebondBords();
     waterDrop();
@@ -43,12 +44,12 @@ void drawGame(){
     turtle();
     printNbComet();
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
-    textDrawText("Return Menu",1205,850,comfortaaFont_28);
+    textDrawText("Return Menu",xReturnGame,yReturnGame,comfortaaFont_28);
     actualize();
     levelMoove();
     loop++;
     usleep(1000000 / FPS); // 60 images par seconde | 1000000 = 1 seconde
-    gameEnd();
+
 }
 
 void KeyPressed(SDL_Keycode touche){
@@ -159,20 +160,24 @@ void mouse(int xMouse, int yMouse){
     }
     //retour au menu depuis les settings
     else if (xMouse>=xReturn && xMouse<=(xReturn+400) && yMouse>=yReturn && yMouse<=yReturn+100){
+            clear();
             init_game();
+            audioLoadAndPlay("sdl_helper/sound/silence.wav",7);
     }
     //retour au menu depuis le jeu
-    else if (xMouse>=1200 && xMouse<=(1400) && yMouse>=800 && yMouse<=900){
+    else if (xMouse>=xReturnGame && xMouse<=(xReturnGame+200) && yMouse>=yReturnGame && yMouse<=(yReturnGame+100)){
+            clear();
             init_game();
             nbVie=3;
+            audioLoadAndPlay("sdl_helper/sound/silence.wav",7);
     }
     else{}
 }
 
 void gameLauncher (){
     if (launch==0) {
-        sprite (0,0,"sdl_helper/sprites/background.bmp");
-        centeredText("WELCOME",300,comfortaaFont_52);    
+        spriteBackground (0,0,"sdl_helper/sprites/background.bmp");
+        centeredText("WELCOME",300,comfortaaFont_52);
         centeredText("TO",370,comfortaaFont_52);  
         centeredText("JELLYFISHY BREAKER",440,comfortaaFont_52);     
         centeredText("CHOOSE YOUR LEVEL",650,comfortaaFont_36);
@@ -223,6 +228,7 @@ void gameLoop() {
 int main(){
     srand(time(NULL));
     init(WINDOW_WIDTH, WINDOW_HEIGHT);
+    initPositions();
     init_game();
     gameLoop();
     printf("Fin du programme\n");

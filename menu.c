@@ -15,7 +15,7 @@
 #include "sdl_helper/audio_functions.h"
 #include "sdl_helper/constants.h"
 
-//menu à créer : retour à l'accueil / contrôle de la tortue / balle qui rebondi / pause
+
 void settings(){
     clear();
     background();
@@ -29,15 +29,15 @@ void settings(){
 //tous les sprites et textes
 void spriteTuto(){
     sprite (xquit,yquit,"sdl_helper/sprites/quit.bmp");
-    sprite (600,800,"sdl_helper/sprites/qKey.bmp");
-    sprite (700,800,"sdl_helper/sprites/dKey.bmp");
-    sprite (400,200,"sdl_helper/sprites/speedTuto.bmp");
-    sprite (620,625,"sdl_helper/sprites/sKey.bmp");
-    sprite (720,650,"sdl_helper/sprites/comet.bmp"); 
+    sprite ((screenSize.center-100),800,"sdl_helper/sprites/qKey.bmp");
+    sprite (screenSize.center,800,"sdl_helper/sprites/dKey.bmp");
+    sprite ((screenSize.center-250),200,"sdl_helper/sprites/speedTuto.bmp");
+    sprite ((screenSize.center-80),625,"sdl_helper/sprites/sKey.bmp");
+    sprite ((screenSize.center+20),650,"sdl_helper/sprites/comet.bmp"); 
     textDrawText("Return MENU",xReturn,yReturn,comfortaaFont_28);
-    centeredText("'SPACE' to pause the game",500,comfortaaFont_36);
-    drawLine(400, 400, 400,430);
-    drawLine(1000, 400, 1000,430);
+    centeredText("'SPACE' to pause the game",550,comfortaaFont_36);
+    drawLine((screenSize.center-299), 400, (screenSize.center-299),430);
+    drawLine((screenSize.center+300), 400, (screenSize.center+300),430);
 }
 
 //faire rebondir la balle / activer comète
@@ -72,20 +72,20 @@ void speedTuto(){
     else if (pauseSwitch==-1){
         fullCenteredText("PAUSED",comfortaaFont_52);
     }
-    sprite (800,250, "sdl_helper/sprites/speed.bmp");
+    sprite ((screenSize.center+100),250, "sdl_helper/sprites/speed.bmp");
     char speedChar[50];
     sprintf(speedChar,"%d",speedVar);
-    textDrawText(speedChar, 870,258,comfortaaFont_28);
+    textDrawText(speedChar,(screenSize.center+170),258,comfortaaFont_28);
 }
 
 //Rebonds balle
 void rebondBordsTuto(){
-    if (xTuto>(970)){
+    if (xTuto>(screenSize.center+270)){
       vxTuto*=-1;
-      xTuto=969;
+      xTuto=(screenSize.center+269);
     }
-    else if(xTuto<401){
+    else if(xTuto<(screenSize.center-299)){
       vxTuto*=-1;
-      xTuto=401;
+      xTuto=(screenSize.center-299);
     }
 }

@@ -536,8 +536,9 @@ void gameEnd(){
       break;
       case 0:
         fullCenteredText("WIN",comfortaaFont_52);
+        audioLoadAndPlay("sdl_helper/sound/win.wav",7);
         actualize();
-        usleep(200000000 / FPS);
+        usleep(6000000);
         nbVie=3;
         launch=0; 
         init_game();
@@ -545,10 +546,10 @@ void gameEnd(){
 }
 
 void background(){
-    sprite(0,0,"sdl_helper/sprites/background.bmp");
+    spriteBackground(0,0,"sdl_helper/sprites/background.bmp");
     changeColor( 88, 174, 245 );
-    drawLine(200,0,200,1000);
-    drawLine(1200,0,1200,1000);
+    drawLine((screenSize.center-500),0,(screenSize.center-500),screenSize.height);
+    drawLine((screenSize.center+500),0,(screenSize.center+500),screenSize.height);
 }
 
 //Défaite
@@ -570,7 +571,7 @@ void vie(){
       }
 }
 void printVie(){
-    for (int i=0;i<=(nbVie);i++){
+    for (int i=0;i<(nbVie);i++){
         xheart=xheartInit+(50*i);
         sprite(xheart,yheart,"sdl_helper/sprites/heart.bmp");
     }
@@ -602,15 +603,16 @@ void speed(){
         fullCenteredText("PAUSED",comfortaaFont_52);
     }
     //affiche la vitesse de la balle
-    sprite (10,100, "sdl_helper/sprites/speed.bmp");
+    sprite ((screenSize.center-690),100, "sdl_helper/sprites/speed.bmp");
     char speedChar[50];
     sprintf(speedChar,"%d",speedVar);
-    textDrawText(speedChar, 80,108,comfortaaFont_28);
+    textDrawText(speedChar,screenSize.center-620,108,comfortaaFont_28);
 }
 
 //interactions avec les bords et la tortue.  
 void rebondTortue(){
-    if(y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+70)){
+    //Gauche
+    if(y>(yRect-18) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+70)){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
         float posRebond;
         //crée un gradient de 0 à 1 suivant la position d'impact
@@ -622,24 +624,24 @@ void rebondTortue(){
             vx*=-1;
             }
             else {}
-        y=yRect-10;
+        y=yRect-20;
     }
     //centre gauche, pas de modification de la direction
-    else if((y>(yRect-8)) && y<(yRect+10) && x>(xRect+70) && x<(xRect+90)){
+    else if((y>(yRect-28)) && y<(yRect+10) && x>(xRect+70) && x<(xRect+90)){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
         angle=80;
         vecteurSpeed();
         vy*=-1;
         vx*=-1;
-        y=yRect-10;
+        y=yRect-30;
     }    
     //centre droit, pas de modification de la direction
-    else if((y>(yRect-8)) && y<(yRect+10) && x>(xRect+90) && x<(xRect+110)){
+    else if((y>(yRect-28)) && y<(yRect+10) && x>(xRect+90) && x<(xRect+110)){
         audioLoadAndPlay("sdl_helper/sound/ping_turtle.wav", -1);
         angle=80;
         vecteurSpeed();
         vy*=-1;
-        y=yRect-10;
+        y=yRect-30;
     }
     //droite, renvoyer vers la droite
     else if(y>(yRect-8) && y<(yRect+10) && x>=(xRect+110) && x<(xRect+200)){
@@ -664,23 +666,26 @@ void rebondTortue(){
 }
 
 void rebondBords(){
-    if (x>(1179)){   //window_width-hitbox-1 pour éviter le contact
+    if (x>(screenSize.center+479)){   //window_width-hitbox-1 pour éviter le contact
       vx*=-1;        //renvoie dans l'autre sens
-      x=1179;
+      x=(screenSize.center+479);
     }
-    else if(x<201){
+    else if(x<(screenSize.center-499)){
       vx*=-1;
-      x=201;
+      x=(screenSize.center-499);
     }
     else if(y<11){
       vy*=-1;
       y=11;
     }
 
-    else if (y>(yRect-8) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+200)) {
+    else if ((y>(yRect-18) && y<(yRect+10) && x>(xRect-20) && x<=(xRect+70)) || 
+    (y>(yRect-28)) && y<(yRect+10) && x>(xRect+70) && x<(xRect+90) ||
+    (y>(yRect-28)) && y<(yRect+10) && x>(xRect+90) && x<(xRect+110) ||
+    y>(yRect-8) && y<(yRect+10) && x>=(xRect+110) && x<(xRect+200)) {
       rebondTortue();
     }
-    else if (y>1000){
+    else if (y>screenSize.height){
         audioLoadAndPlay("sdl_helper/sound/lost.wav", -1);
         vie();
     }
@@ -691,16 +696,16 @@ void rebondBords(){
 //Déplacement de la raquette
 void turtle(){
     if (deplacementGauche==1){
-      xRect-=20;
+      xRect-=speedTortue;
     }
     else if (deplacementDroite==1){
-      xRect+=20;    
+      xRect+=speedTortue;    
     }
-    if(xRect<200){
-      xRect=200;
+    if(xRect<(screenSize.center-500)){
+      xRect=(screenSize.center-500);
     }
-    else if(xRect>1000){
-      xRect=1000;
+    else if(xRect>(screenSize.center+300)){
+      xRect=(screenSize.center+300);
     }
     sprite(xRect,yRect,"sdl_helper/sprites/turtle.bmp");
 }

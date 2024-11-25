@@ -2,11 +2,24 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-//Dimensions de l'écran
-extern int largeurEcran;
-extern int hauteurEcran;
+//structure dimensions de l'écran
+typedef struct {
+	int height;
+	int width;
+	int center;
+	int middle;
+}ScreenSize;
+
+extern ScreenSize screenSize;
+extern SDL_Rect screenRect;
+
+
 //Lancement du jeu
 extern int launch;
+
+//Position du background
+extern float xBackground;
+
 
 //position de la balle dessiné dans drawGame()
 extern float x;
@@ -42,11 +55,16 @@ extern int ySettings;
 //position bouton retour
 extern int xReturn;
 extern int yReturn;
+//position bouton retour depuis jeu
+extern int xReturnGame;
+extern int yReturnGame;
 
 //table des positions de la balle
 extern int positionEcho[2][1000];
 
-//variable de la vitesse
+//vitesse de la tortue
+extern int speedTortue;
+//vitesse de la balle
 extern int speedVar;
 //angle du rebond en degrés. Initialisation à 60°
 extern double angle;
@@ -87,3 +105,7 @@ extern int deplacementDroite;
 //Structure pour récupérer les dimensions de l'image
 SDL_Rect hitBoxSizeJellyfish();
 SDL_Rect hitBoxSizeTurtle();
+SDL_Rect hitBoxSizeBackground();
+
+//Initialise toutes les variables de position
+void initPositions();

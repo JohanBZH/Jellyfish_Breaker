@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "audio_functions.h"
 #include "text_functions.h"
+#include "../variables.h"
 
 #include <stdlib.h>
 #include <SDL2/SDL.h>
@@ -21,7 +22,7 @@ void checkPos(int x, int y){
         printf("ATTENTION position x < 0 (x = %d)\n", x);
         out();
     }
-    if (x > window_width) {
+    if (x > screenRect.w) {
         printf("ATTENTION position x > largeur de la fenetre (x = %d > %d)\n", x, window_width);
         out();
     }
@@ -30,7 +31,7 @@ void checkPos(int x, int y){
         printf("ATTENTION position y > hauteur de la fenetre (y = %d > %d)\n", y, window_height);
         out();
     }
-    if (y > window_height) {
+    if (y > screenRect.h) {
         printf("ATTENTION position y > hauteur de la fenetre (y = %d > %d)\n", y, window_height);
         out();
     }
@@ -41,22 +42,39 @@ void init(int windowWidth, int windowHeight) {
      *  @param windowWidth la largeur de la fenêtre
      *  @param windowHeight la hauteur de la fenêtre
      */
-    window_width = windowWidth;
-    window_height = windowHeight;
+    window_width = screenRect.w;//windowWidth;
+    window_height = screenRect.h;//windowHeight;
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        SDL_Log("ERREUR : Init SDL > %s\nParametres passes %d , %d\n",SDL_GetError(), windowWidth, windowHeight);
+        SDL_Log("ERREUR : Init SDL > %s\nParametres passes %d , %d\n",SDL_GetError(), screenRect.w, screenRect.h);//windowWidth, windowHeight);
         freeAndTerminate();
     }
     if (SDL_CreateWindowAndRenderer(windowWidth, windowHeight, 0, &window, &renderer)) {
-        SDL_Log("ERREUR : Init window and renderer > %s\nParametres passes %d , %d\n",SDL_GetError(), windowWidth, windowHeight);
+        SDL_Log("ERREUR : Init window and renderer > %s\nParametres passes %d , %d\n",SDL_GetError(), screenRect.w, screenRect.h);//windowWidth, windowHeight);
         freeAndTerminate();
     }
-    SDL_SetWindowTitle(window, "Brick Breaker");
+    SDL_SetWindowTitle(window, "Jellyfish Breaker");
 
+    //gestion du full screen
+    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    //récupère le nombre d'écrans
+    int num_displays=SDL_GetNumVideoDisplays();
+    //récupération de la taille des écrans
+    for (int i=0;i<num_displays;i++){
+        int displayIndex=0; 
+        SDL_GetDisplayBounds (displayIndex, &screenRect);
+    }
+    initScreenSize();
 
     textInitializeTtfLibrary();
     constantsLoadFont();
     audioInitializeMixer();
+}
+
+void initScreenSize(){
+    screenSize.height = screenRect.h;
+    screenSize.width = screenRect.w;
+    screenSize.center = (screenRect.w/2);
+    screenSize.middle = (screenRect.h/2);
 }
 
 void freeWindow() {
@@ -330,6 +348,44 @@ void spriteRotate(int posX, int posY, char *imgBMPSrc, float angleBall) {
     freeTexture(textureImg);
 }
 
+void spriteBackground(int posX, int posY, char *imgBMPSrc) {
+    /** @brief affiche un image .bmp sur le renderer
+     *  @param posX position sur l'axe horizontale du coin supérieur gauche de l'image
+     *  @param posY position sur l'axe verticale du coin supérieur gauche de l'image
+     *  @param imgBMPSrc le chemin vers l'image que l'on veut afficher
+     */
+    checkPos(posX, posY);
+    SDL_Texture *textureImg = NULL;
+    SDL_Surface *surfaceImg = NULL;
+    if (!(surfaceImg = SDL_LoadBMP(imgBMPSrc))) {
+        SDL_Log("ERREUR : chargement img > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeAndTerminate();
+    }
+    textureImg = SDL_CreateTextureFromSurface(renderer, surfaceImg);
+    SDL_FreeSurface(surfaceImg);
+    if (textureImg == NULL) {
+        SDL_Log("ERREUR : chargement texture > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }
+
+    SDL_Rect rectangle;
+    if (SDL_QueryTexture(textureImg, 0, 0, &rectangle.w, &rectangle.h)) {
+        SDL_Log("ERREUR : image : query texture > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }
+    rectangle.x = posX;
+    rectangle.y = posY;
+    rectangle.w = screenSize.width;
+    rectangle.h = screenSize.height;
+    if (SDL_RenderCopy(renderer, textureImg, NULL, &rectangle) != 0) {
+        SDL_Log("ERREUR: image : RenderCopy > %s\nParametres passes %d , %d, %s\n",SDL_GetError(), posX, posY, imgBMPSrc);
+        freeTexture(textureImg);
+        freeAndTerminate();
+    }
+    freeTexture(textureImg);
+}
 
 void lastKeyPressed(SDL_Event *event) {
     /** @brief affiche dans le terminal le caractère associé à la dernière touche appuyée
