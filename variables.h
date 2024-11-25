@@ -98,6 +98,9 @@ extern int decalage;
 //variable d'activation de la fonction pause
 extern int pauseSwitch;
 
+//active ou désactive la musique de background
+extern int backgroundMusicSwitch;
+
 //active ou non le déplacement de la tortue via keyPressed et keyUp
 extern int deplacementGauche;
 extern int deplacementDroite;

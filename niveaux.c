@@ -1,6 +1,7 @@
 #include "niveaux.h"
 #include "variables.h"
 #include "game.h"
+#include "sdl_helper/audio_functions.h"
 
 //Déclare le nombre de niveaux
 struct Level level[3];
@@ -189,6 +190,13 @@ void initVar(){
     initPositionEcho();
 }
 
+//joue la musique de fond. 28860 = durée de la chanson en s * FPS
+void backgroundMusic(){
+    if (backgroundMusicSwitch==1 && loop%28860 ==1){
+        audioLoadAndPlay("sdl_helper/sound/underWaterAmbiance.wav",6);
+    }
+}
+
 void init_game(){
   level0();
   level1();
@@ -198,4 +206,5 @@ void init_game(){
   nbComet=0;
   loop=1;
   loopMoove=0;
+  backgroundMusic();
 }
