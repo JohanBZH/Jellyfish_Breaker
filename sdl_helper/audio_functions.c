@@ -15,7 +15,7 @@ void audioInitializeMixer() {
     }
 
     // Initialize SDL_mixer
-    if (Mix_OpenAudio(32000, MIX_DEFAULT_FORMAT, 2, 4096) < 0) {
+    if (Mix_OpenAudio(32000, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
         SDL_Quit();  // Clean up SDL if SDL_mixer fails to initialize
         return;

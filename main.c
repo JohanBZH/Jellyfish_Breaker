@@ -65,10 +65,10 @@ void KeyPressed(SDL_Keycode touche){
             break;  
         //activation du pouvoir de la comète
         case SDLK_s:
-            if (nbComet>0){
+            if (nbComet>0 && compteurGreen==0){
                 compteurGreen = vy<0 ? 1 : 2;
+                nbComet--;
             }
-            nbComet = (nbComet == 0) ? nbComet : nbComet-1;
             break; 
 
         //touche debug forçage comète
