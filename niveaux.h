@@ -23,4 +23,6 @@ void initPositionEcho();
 //initialise la position de début de jeu
 void initVar();
 
+void backgroundMusic();
+
 void init_game();

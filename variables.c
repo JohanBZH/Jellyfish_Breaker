@@ -92,6 +92,9 @@ int decalage=25;
 //variable d'activation de la fonction pause
 int pauseSwitch=1;
 
+//active ou désactive la musique de background
+int backgroundMusicSwitch=1;
+
 //active ou non le déplacement de la tortue via keyPressed et keyUp
 int deplacementGauche=0;
 int deplacementDroite=0;

@@ -11,4 +11,3 @@ void audioLoadAndPlay(char* file, int channel);
 void audioSimpleLoadAndPlay(char* file);
 
 void audioCleanup();
-

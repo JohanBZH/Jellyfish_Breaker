@@ -32,6 +32,7 @@ void drawGame(){
     clear();
     convertAngle();
     background();
+    backgroundMusic();
     echo();
     speed();
     jellyfishPrint();
@@ -64,10 +65,10 @@ void KeyPressed(SDL_Keycode touche){
             break;  
         //activation du pouvoir de la comète
         case SDLK_s:
-            if (nbComet>0){
+            if (nbComet>0 && compteurGreen==0){
                 compteurGreen = vy<0 ? 1 : 2;
+                nbComet--;
             }
-            nbComet = (nbComet == 0) ? nbComet : nbComet-1;
             break; 
 
         //touche debug forçage comète
@@ -110,6 +111,16 @@ void KeyPressed(SDL_Keycode touche){
         case SDLK_SPACE:
             pauseSwitch*=-1;
             break;
+        //Pause ou relance la musique de fond
+        case SDLK_f:
+            backgroundMusicSwitch*=-1;
+            if (backgroundMusicSwitch==1){
+                audioLoadAndPlay("sdl_helper/sound/underWaterAmbiance.wav",6);
+            }
+            else if (backgroundMusicSwitch==-1){
+                audioLoadAndPlay("sdl_helper/sound/silence.wav",6);
+            }
+            break;
         case SDLK_ESCAPE:
         audioCleanup();
             freeAndTerminate();
@@ -144,13 +155,14 @@ void mouse(int xMouse, int yMouse){
     else if (xMouse>=xmedium && xMouse<=(xmedium+75) && yMouse>=ymedium && yMouse<=ymedium+75){
             launch=1;
             numLevel=1;
-            fileLog(numLevel);
-    }
+            fileLog(numLevel);    }
     else if (xMouse>=xhard && xMouse<=(xhard+75) && yMouse>=yhard && yMouse<=yhard+75){
             launch=1;
             numLevel=2;
-            fileLog(numLevel);
-    }
+            if (decalage<0){
+                decalage*=-1;
+            }
+            fileLog(numLevel);    }
     else if (xMouse>=xSettings && xMouse<=(xSettings+400) && yMouse>=ySettings && yMouse<=ySettings+100){
             launch=2;
     }
@@ -162,7 +174,6 @@ void mouse(int xMouse, int yMouse){
     else if (xMouse>=xReturn && xMouse<=(xReturn+400) && yMouse>=yReturn && yMouse<=yReturn+100){
             clear();
             init_game();
-            audioLoadAndPlay("sdl_helper/sound/silence.wav",7);
     }
     //retour au menu depuis le jeu
     else if (xMouse>=xReturnGame && xMouse<=(xReturnGame+200) && yMouse>=yReturnGame && yMouse<=(yReturnGame+100)){

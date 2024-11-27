@@ -536,11 +536,12 @@ void gameEnd(){
       break;
       case 0:
         fullCenteredText("WIN",comfortaaFont_52);
+        backgroundMusicSwitch=-1;
         audioLoadAndPlay("sdl_helper/sound/win.wav",7);
         actualize();
         usleep(6000000);
+        backgroundMusicSwitch=1;
         nbVie=3;
-        launch=0; 
         init_game();
     }
 }
