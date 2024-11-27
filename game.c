@@ -238,26 +238,33 @@ int indexBriquesCollision (int xBriqueCollision, int yBriqueCollision){
     }
 }
 
-//supprime toutes les briques sur une croix de -50px autour de la brique orange avec effet de propagation.
+//supprime toutes les briques sur une croix autour de la brique orange avec effet de propagation.
 void collisionOrange(int xtest,int ytest){
     int propagation;
     int compteur=1;
     audioLoadAndPlay("sdl_helper/sound/ping_redbrick.wav", -1);
+    
     //Défini le range de l'explosion en fonction du niveau
     int xExplosionG, xExplosionD, yExplosionH, yExplosionB;
     if (numLevel==0){
+        sprite(xtest-100,ytest-100,"sdl_helper/sprites/deflagration.bmp");
+        usleep(40000);
         xExplosionG=xtest-100;
         xExplosionD=xtest+100;
         yExplosionH=ytest-100;
         yExplosionB=ytest+100;
     }
     else if (numLevel==1){
+        sprite(xtest-50,ytest-100,"sdl_helper/sprites/deflagration2.bmp");
+        usleep(40000);
         xExplosionG=xtest-50;
         xExplosionD=xtest+50;
         yExplosionH=ytest-100;
         yExplosionB=ytest+100;
     }
     else if (numLevel==2){
+        sprite(xtest-50,ytest-100,"sdl_helper/sprites/deflagration2.bmp");
+        usleep(40000);
         xExplosionG=xtest-50;
         xExplosionD=xtest+50;
         yExplosionH=ytest-80;
