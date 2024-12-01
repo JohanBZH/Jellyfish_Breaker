@@ -39,17 +39,17 @@ void checkPos(int x, int y){
 
 void init(int windowWidth, int windowHeight) {
     /** @brief initialise la fenêtre window et le renderer (moteur de rendu) renderer
-     *  @param windowWidth la largeur de la fenêtre
-     *  @param windowHeight la hauteur de la fenêtre
+     *  @param screenRect.w la largeur de la fenêtre
+     *  @param screnRect.h la hauteur de la fenêtre
      */
-    window_width = screenRect.w;//windowWidth;
-    window_height = screenRect.h;//windowHeight;
+    window_width = screenRect.w;
+    window_height = screenRect.h;
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        SDL_Log("ERREUR : Init SDL > %s\nParametres passes %d , %d\n",SDL_GetError(), screenRect.w, screenRect.h);//windowWidth, windowHeight);
+        SDL_Log("ERREUR : Init SDL > %s\nParametres passes %d , %d\n",SDL_GetError(), screenRect.w, screenRect.h);
         freeAndTerminate();
     }
     if (SDL_CreateWindowAndRenderer(windowWidth, windowHeight, 0, &window, &renderer)) {
-        SDL_Log("ERREUR : Init window and renderer > %s\nParametres passes %d , %d\n",SDL_GetError(), screenRect.w, screenRect.h);//windowWidth, windowHeight);
+        SDL_Log("ERREUR : Init window and renderer > %s\nParametres passes %d , %d\n",SDL_GetError(), screenRect.w, screenRect.h);
         freeAndTerminate();
     }
     SDL_SetWindowTitle(window, "Jellyfish Breaker");

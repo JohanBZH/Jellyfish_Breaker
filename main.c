@@ -19,12 +19,12 @@
 gcc main.c game.c variables.c niveaux.c menu.c sdl_helper/audio_functions.c sdl_helper/constants.c sdl_helper/function.c sdl_helper/text_functions.c -o main.out -lSDL2main -lSDL2 -lm -lSDL2_mixer -lSDL2_ttf
 
 lm > librairie "math"
- lSDL2_mixer > librairie audio
- lSDL2_ttf >librairie texte
+lSDL2_mixer > librairie audio
+lSDL2_ttf >librairie texte
 
 Features à dev
 
-Full screen
+Choix du screen
 
 */
 

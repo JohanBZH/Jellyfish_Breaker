@@ -27,7 +27,7 @@ int vxTuto=1;
 int vyTuto=0;
 //Position initiale des briques
 int xScan;
-int yScan=100;
+int yScan=200;
 //position de la tortue
 int xRect;
 int yRect;
