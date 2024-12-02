@@ -35,7 +35,8 @@ void spriteTuto(){
     sprite ((screenSize.center-80),625,"sdl_helper/sprites/sKey.bmp");
     sprite ((screenSize.center+20),650,"sdl_helper/sprites/comet.bmp"); 
     textDrawText("Return MENU",xReturn,yReturn,comfortaaFont_28);
-    centeredText("'SPACE' to pause the game",550,comfortaaFont_36);
+    centeredText("'SPACE' to pause the game",500,comfortaaFont_36);
+    centeredText("'F' to pause the music",560,comfortaaFont_36);
     drawLine((screenSize.center-299), 400, (screenSize.center-299),430);
     drawLine((screenSize.center+300), 400, (screenSize.center+300),430);
 }
