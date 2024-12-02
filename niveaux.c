@@ -187,6 +187,7 @@ void initVar(){
     compteurGreen=0;
     speedVar=10;
     angle=60;
+    pauseSwitch=1;
     initPositionEcho();
 }
 
