@@ -1,3 +1,6 @@
+Pour lancer le jeu, utilisez la commande ./lancement.sh
+
+
 SDL_lib_v2+
 
 A installer:
