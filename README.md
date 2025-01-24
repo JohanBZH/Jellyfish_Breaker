@@ -1,110 +1,43 @@
-Pour lancer le jeu, utilisez la commande ./lancement.sh
+# Jellyfish breaker
 
+Jellyfish breaker run on the [SDL_lib_v2](https://gitlab.com/ilanlo/sdl_lib_v2.git)
 
-SDL_lib_v2+
+# Libs to install
 
-A installer:
+    sudo aptitude install libsdl2-dev
+    sudo aptitude install libsdl2-mixer-dev
+    sudo aptitude install libsdl2-ttf-dev
 
-SDL2 (sudo apt-get install libsdl2-dev)
-SDL2_mixer (sudo apt-get install libsdl2-mixer-dev)
-SDL2_ttf (sudo apt-get install libsdl2-ttf-dev)
+SDL2 - for the display  
+SDL2_mixer - for the sound  
+SDL2_ttf - for the text  
 
+To run the game the easy way, bash
+    ./lancement.sh
 
-Ce qu'il y'a en plus de l'autre SDL_lib_v2:
+To compile exemple.c:
 
-Gestion de l'audio
-Gestion de textes
-
-
-Un petit exemple!
-
-Pour compiler le fichier exemple.c:
-
-Se placer dans SDL_lib_v2-master, et taper la commande:
+Set yourself in Jellyfish breaker, then run :  
 gcc exemple.c sdl_helper/audio_functions.c sdl_helper/constants.c sdl_helper/function.c sdl_helper/text_functions.c -o main.out -lSDL2 -lSDL2main -lSDL2_mixer -lSDL2_ttf
 
+How to use it ?
 
-Comment set-up la librairie?
+In the file where you've put your main function, at the very beginning :
 
-Rien de plus simple, il suffit de mettre le fichier sdl_helper entier dans le répertoire de votre projet.
+    #include "sdl_helper/function.h"
+    #include "sdl_helper/text_functions.h"
+    #include "sdl_helper/audio_functions.h"
+    #include "sdl_helper/constants.h"
 
+See directly in the sdl_helper files for the differents functions.
 
-Et comment s'en servir?
+## NOTE 1
 
-En haut de votre fichier contenant la fonction main:
+Only one audio can be played by channel. If you need multiple audio being played at the same time, you'll need to use different channels. The max channel number is set at 8 by default. It can be changed line 19 of constant.h : #define MAX_AUDIO_CHANNELS (int)  
 
-Pour les fonctions de SDL_lib_v2:   #include "sdl_helper/function.h"
-Pour les fonctions de texte:        #include "sdl_helper/text_functions.h"
-Pour les fonctions d'audio:         #include "sdl_helper/audio_functions.h"
-Et pour des variables utilisées:    #include "sdl_helper/constants.h"
+When you play an audio and set the channel to -1, it will be set to the first free channel.  
+Another way to do it is to use, audioSimpleLoadAndPlay(char* cheminVersFichierWAV).
 
+## NOTE 2
 
-Comment se servir de la librairie:
-
-Les fonctions sont classées en "rubriques". Elles commencent par:
-
-"text" pour une commande concernant du texte
-"audio" pour une commande concernant de l'audio
-
-## Pour changer la couleur du texte, et ensuite écrire quelque chose:
-
-
-textChangeColor(int r, int g, int b, int a)
-
-
-Paramètre r: le taux de rouge (de 0 à 255)
-
-
-Paramètre g: le taux de vert (de 0 à 255)
-
-
-Paramètre b: le taux de bleu (de 0 à 255)
-
-
-Paramètre a: le taux du canal alpha (de 0 à 255). Cela gère l'opacité du texte. Donc de 0 pour transparent à 255 pour totalement visible.
-
-
-textDrawText(char* texte, int positionX, int postionY, TTF_Font* policeEcriture)
-
-
-Paramètre texte: le texte à écrire
-
-
-Paramètre positionX: la position X du texte
-
-
-Paramètre positionY: la position Y du texte
-
-
-Paramètre policeEcriture: la police d'écriture à utiliser. Par defaut j'en ai créé 6: comfortaaFont_16, comfortaaFont_18, comfortaaFont_24, comfortaaFont_28, comfortaaFont_36, comfortaaFont_52. (Le chiffre signifie la taille (en px) de la police.)
-
-
-
-Pour voir un exemple de comment sont appelées ces fonctions dans un programme, voir exemple.c, fonction drawGame().
-
-Pour jouer un audio:
-
-audioLoadAndPlay(char* cheminVersFichierWAV, int channel)
-Paramètre cheminVersFichierWAV: votre chemin d'accès vers le fichier audio
-Paramètre channel: le channel audio sur lequel votre audio doit être joué (voir note 1)
-
-
-NOTE 1:
-
-Un channel peut jouer UN SEUL audio à la fois, d'où la nécessité d'en avoir plusieurs si on veut que plusieurs sont puissent être joués en même temps.
-Par défaut, j'ai défini ce nombre à 8. Mais, vous pouvez le changer dans le fichier constants.h, ligne 19: #define MAX_AUDIO_CHANNELS (int)
-De plus, en passant comme paramètre -1, l'audio sera joué sur le premier channel de libre.
-
-
-Sinon, la fonction audioSimpleLoadAndPlay(char* cheminVersFichierWAV) mettra tout seul le premier channel de libre.
-
-NOTE 2:
-
-Pour correctement "éteindre" le gestionnaire de son, il faut appeller la commande audioCleanup().
-Je l'ai rajouté à la fonction freeAndTerminate() déjà existante.
-Mais, si vous avez une autre manière pour quitter l'application, il serait préférable d'ajouter cette fonction également.
-
-
-Pour voir un exemple de la fonction _audio_loadAndPlay(), voir exemple.c, fonction gameLoop(), case SDL_MOUSEBUTTONUP.
-
-FIN
+audioCleanup() is to be used to correctly shutdown the sound manager. It is integrated to freeAndTerminate().
